@@ -1,22 +1,10 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 import Slideshow from '../components/Slideshow.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Collaborative Interior Design</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Montserrat', sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <Slideshow />
-    <ProjectGrid />
-  </body>
-</html>
+<BaseLayout title="Home" description="Welcome to Collaborative Interior Design.">
+  <Slideshow />
+  <ProjectGrid />
+</BaseLayout>
