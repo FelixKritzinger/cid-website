@@ -1,6 +1,5 @@
 ---
 ---
-
 <style>
   .slideshow {
     position: relative;
@@ -52,6 +51,7 @@
   let currentIndex = 0;
   const slides = document.getElementById('slides');
   const totalSlides = slides.children.length;
+  const slideshow = document.getElementById('slideshow');
 
   function showSlide(index) {
     currentIndex = (index + totalSlides) % totalSlides;
@@ -62,7 +62,19 @@
     showSlide(currentIndex + n);
   }
 
-  setInterval(() => {
+  let slideInterval = setInterval(() => {
     plusSlides(1);
   }, 4000);
+
+  // Pause on hover
+  slideshow.addEventListener('mouseenter', () => {
+    clearInterval(slideInterval);
+  });
+
+  // Resume on leave
+  slideshow.addEventListener('mouseleave', () => {
+    slideInterval = setInterval(() => {
+      plusSlides(1);
+    }, 4000);
+  });
 </script>
