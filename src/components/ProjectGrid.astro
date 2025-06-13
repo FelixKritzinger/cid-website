@@ -1,0 +1,47 @@
+---
+const projects = Array(8).fill({
+  title: 'Project Name',
+  href: '/project-page', // change per project
+  image: '/images/Edited-font-elevation-with-palm-tree.jpg'
+});
+---
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .project {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .project img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+  }
+</style>
+
+<div class="grid">
+  {projects.map((project) => (
+    <a class="project" href={project.href}>
+      <img src={project.image} alt={project.title} />
+      <div class="overlay">{project.title}</div>
+    </a>
+  ))}
+</div>
