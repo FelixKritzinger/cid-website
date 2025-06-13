@@ -30,7 +30,11 @@ const navLinks = [
     </header>
 
     <main class="site-main">
-      <slot />
+      <div class="slideshow-container">
+        <slot />
+      </div>
+
+      <!-- Other main content can go here -->
     </main>
 
     <style>
@@ -71,9 +75,19 @@ const navLinks = [
       }
 
       .site-main {
+        max-width: 1200px;
+        margin: 0 auto;
         padding: 2rem 1rem;
-        max-width: 100%; /* changed from 1200px */
-        margin: 0;       /* removed auto margin */
+      }
+
+      /* Breakout container: full viewport width, centered visually */
+      .slideshow-container {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
       }
 
       @media (max-width: 600px) {
