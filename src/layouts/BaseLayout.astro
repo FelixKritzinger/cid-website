@@ -33,26 +33,26 @@ const navLinks = [
       <div class="slideshow-container">
         <slot />
       </div>
-
       <!-- Other main content can go here -->
     </main>
 
     <style>
       body {
         margin: 0;
-        padding: 0 10px;
         font-family: sans-serif;
         background: #f5f5f5;
         color: #222;
+        /* No horizontal padding here */
       }
 
       .site-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem; /* full width with internal padding */
         background: #111;
         color: #fff;
+        margin: 0; /* no margin */
       }
 
       .logo img {
@@ -78,17 +78,18 @@ const navLinks = [
       .site-main {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 2rem 20px; /* add side padding here */
       }
 
-      /* Breakout container: full viewport width, centered visually */
+      /* Breakout container for slideshow with side margins */
       .slideshow-container {
-        width: 100vw;
+        width: calc(100vw - 40px); /* full viewport width minus site-main horizontal padding */
         position: relative;
         left: 50%;
         right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
+        margin-left: calc(-50vw + 20px);
+        margin-right: calc(-50vw + 20px);
+        box-sizing: border-box;
       }
 
       @media (max-width: 600px) {
