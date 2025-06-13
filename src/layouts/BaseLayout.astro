@@ -24,6 +24,7 @@ const navLinks = [
         font-display: swap;
       }
 
+      /* Base Styles */
       body {
         margin: 0;
         font-family: 'Montserrat', sans-serif;
@@ -36,26 +37,34 @@ const navLinks = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1.2rem 2rem; /* Increased for taller header */
+        padding: 1.2rem 2rem;
         background: #f0f0f0;
         color: #000;
         font-weight: 500;
+        flex-wrap: wrap; /* allow wrapping on small screens */
       }
 
       .logo img {
-        height: 100px; /* Increased logo size */
+        height: 80px;
         width: auto;
+        max-width: 100%;
+        height: auto;
       }
 
       .navigation {
         display: flex;
         gap: 1.5rem;
+        flex-wrap: wrap; /* allow nav links to wrap on narrow screens */
+        justify-content: flex-end;
+        flex-grow: 1;
+        min-width: 200px;
       }
 
       .navigation a {
         color: #000;
         text-decoration: none;
         font-weight: 500;
+        white-space: nowrap;
       }
 
       .navigation a:hover {
@@ -66,6 +75,7 @@ const navLinks = [
         max-width: 1200px;
         margin: 0 auto;
         padding: 2rem 20px;
+        box-sizing: border-box;
       }
 
       .slideshow-container {
@@ -78,14 +88,65 @@ const navLinks = [
         box-sizing: border-box;
       }
 
-      @media (max-width: 600px) {
+      /* Responsive adjustments for smaller screens */
+      @media (max-width: 900px) {
+        .site-header {
+          padding: 1rem 1rem;
+          justify-content: center;
+          gap: 1rem;
+        }
+
         .navigation {
-          flex-direction: column;
-          align-items: flex-end;
+          justify-content: center;
+          min-width: auto;
+          gap: 1rem;
         }
 
         .logo img {
-          height: 80px;
+          height: 60px;
+        }
+
+        .site-main {
+          padding: 1.5rem 10px;
+        }
+      }
+
+      /* Mobile and vertical orientation */
+      @media (max-width: 600px), (orientation: portrait) {
+        .site-header {
+          flex-direction: column;
+          align-items: center;
+          padding: 1rem;
+        }
+
+        .logo img {
+          height: 50px;
+          margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 1rem;
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        .navigation a {
+          font-size: 0.9rem;
+          white-space: normal;
+        }
+
+        .site-main {
+          padding: 1rem 10px;
+        }
+
+        .slideshow-container {
+          width: 100vw;
+          margin-left: 0;
+          margin-right: 0;
+          padding: 0 10px;
         }
       }
     </style>
@@ -95,7 +156,7 @@ const navLinks = [
     <header class="site-header">
       <div class="logo">
         <a href="/">
-          <img src="/blog-placeholder-2.jpg" alt="Site Logo" />
+          <img src="/cid_logo.jpg" alt="Site Logo" />
         </a>
       </div>
       <nav class="navigation">
