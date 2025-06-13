@@ -27,9 +27,9 @@ const navLinks = [
       body {
         margin: 0;
         font-family: 'Montserrat Variable', sans-serif;
-        font-weight: 600;
+        font-weight: 400;
         background: #f5f5f5;
-        color: #ffffff;
+        color: #222;
       }
 
       .site-header {
@@ -38,8 +38,10 @@ const navLinks = [
         justify-content: space-between;
         padding: 0.5rem 1rem;
         background: #f0f0f0;
-        color: #000000;
+        color: #000;
         margin: 0;
+        font-weight: 800; /* << visibly bold header text */
+        font-variation-settings: "wght" 800;
       }
 
       .logo img {
@@ -53,9 +55,10 @@ const navLinks = [
       }
 
       .navigation a {
-        color: #000000;
+        color: #000;
         text-decoration: none;
-        font-weight: 400; /* medium weight */
+        font-weight: 700; /* << increase link boldness */
+        font-variation-settings: "wght" 700;
       }
 
       .navigation a:hover {
