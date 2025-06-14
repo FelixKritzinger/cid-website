@@ -15,13 +15,16 @@ const navLinks = [
   <head>
     <BaseHead {title} {description} {image} />
     <style>
-      /* Load Montserrat Medium font */
       @font-face {
         font-family: 'Montserrat';
         src: url('/fonts/Montserrat-Medium.woff') format('woff');
         font-weight: 500;
         font-style: normal;
         font-display: swap;
+      }
+
+      * {
+        box-sizing: border-box;
       }
 
       body {
@@ -35,10 +38,11 @@ const navLinks = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem;
+        padding: 1rem 5%;
         background: #f0f0f0;
-        color: #000000;
+        color: #000;
         flex-wrap: wrap;
+        position: relative;
       }
 
       .logo {
@@ -47,7 +51,7 @@ const navLinks = [
       }
 
       .logo img {
-        height: 100px;
+        height: 10vh;
         width: auto;
       }
 
@@ -57,7 +61,7 @@ const navLinks = [
       }
 
       .navigation a {
-        color: #000000;
+        color: #000;
         text-decoration: none;
         font-weight: 500;
         font-size: 1.1rem;
@@ -67,43 +71,78 @@ const navLinks = [
         text-decoration: underline;
       }
 
-      .site-main {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1rem;
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
       }
 
-      .slideshow-container {
-        width: 100vw;
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
         padding: 1rem 1.5rem;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
+        gap: 1rem;
+        z-index: 100;
+        min-width: 150px;
       }
 
-      /* Responsive for smaller screens */
+      .dropdown-menu a {
+        font-weight: 500;
+        color: #000;
+        font-size: 1.1rem;
+        text-decoration: none;
+      }
+
+      .dropdown-menu a:hover {
+        text-decoration: underline;
+      }
+
+      .dropdown-menu.open {
+        display: flex;
+      }
+
+      @media (max-width: 1024px) {
+        .site-header {
+          padding: 1rem 3%;
+        }
+      }
+
       @media (max-width: 768px) {
         .site-header {
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
-          text-align: center;
-          padding: 1rem;
+          padding: 1rem 5%;
         }
 
         .logo img {
           height: 50px;
-          margin-bottom: 0.5rem;
         }
 
         .navigation {
-          flex-direction: column;
-          gap: 0.75rem;
+          display: none;
         }
 
-        .navigation a {
-          font-size: 1rem;
+        .hamburger {
+          display: block;
+        }
+      }
+
+      .site-main {
+        width: 100%;
+        padding: 0 5%;
+      }
+
+      @media (max-width: 768px) {
+        .site-main {
+          padding: 0 3%;
         }
       }
     </style>
@@ -113,7 +152,7 @@ const navLinks = [
     <header class="site-header">
       <div class="logo">
         <a href="/">
-          <img src="/cid_logo.jpg" alt="Site Logo" />
+          <img src="/CID Website Logo.png" alt="Site Logo" />
         </a>
       </div>
 
@@ -122,12 +161,50 @@ const navLinks = [
           <a href={link.href}>{link.name}</a>
         ))}
       </nav>
+
+      <button
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        id="hamburgerBtn"
+        type="button"
+      >
+        ☰
+      </button>
+
+      <div
+        class="dropdown-menu"
+        id="dropdownMenu"
+        role="menu"
+        aria-hidden="true"
+      >
+        {navLinks.map((link) => (
+          <a href={link.href} role="menuitem" tabindex="0">{link.name}</a>
+        ))}
+      </div>
     </header>
 
     <main class="site-main">
-      <div class="slideshow-container">
-        <slot />
-      </div>
+      <slot /> <!-- 👈 This is where <Slideshow /> + <ProjectGrid /> will be injected -->
     </main>
+
+    <script>
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = dropdownMenu.classList.toggle('open');
+
+        if (isOpen) {
+          hamburgerBtn.innerHTML = '×';
+          hamburgerBtn.setAttribute('aria-expanded', 'true');
+          dropdownMenu.setAttribute('aria-hidden', 'false');
+        } else {
+          hamburgerBtn.innerHTML = '☰';
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          dropdownMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+    </script>
   </body>
 </html>
