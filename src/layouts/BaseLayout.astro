@@ -24,6 +24,10 @@ const navLinks = [
         font-display: swap;
       }
 
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
         font-family: 'Montserrat', sans-serif;
@@ -35,9 +39,9 @@ const navLinks = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem;
+        padding: 1rem 5%;
         background: #f0f0f0;
-        color: #000000;
+        color: #000;
         flex-wrap: wrap;
       }
 
@@ -47,7 +51,7 @@ const navLinks = [
       }
 
       .logo img {
-        height: 100px;
+        height: 80px;
         width: auto;
       }
 
@@ -57,7 +61,7 @@ const navLinks = [
       }
 
       .navigation a {
-        color: #000000;
+        color: #000;
         text-decoration: none;
         font-weight: 500;
         font-size: 1.1rem;
@@ -68,28 +72,34 @@ const navLinks = [
       }
 
       .site-main {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1rem;
+        width: 100%;
+        padding: 2rem 5%;
       }
 
       .slideshow-container {
-        width: 100vw;
-        padding: 1rem 1.5rem;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
       }
 
-      /* Responsive for smaller screens */
+      /* Responsive adjustments for medium screens */
+      @media (max-width: 1024px) {
+        .site-header {
+          padding: 1rem 3%;
+        }
+
+        .site-main {
+          padding: 2rem 3%;
+        }
+      }
+
+      /* Responsive for small screens (phones) */
       @media (max-width: 768px) {
         .site-header {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          padding: 1rem;
+          padding: 1rem 5%;
         }
 
         .logo img {
@@ -99,11 +109,16 @@ const navLinks = [
 
         .navigation {
           flex-direction: column;
+          align-items: center;
           gap: 0.75rem;
         }
 
         .navigation a {
           font-size: 1rem;
+        }
+
+        .site-main {
+          padding: 1rem 5%;
         }
       }
     </style>
