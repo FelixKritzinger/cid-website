@@ -1,5 +1,6 @@
 ---
 --- 
+--- 
 <style>
   .slideshow-wrapper {
     width: 100%;
@@ -15,17 +16,23 @@
     border-radius: 0.5rem; /* Optional: soften edges */
   }
 
+
   .slides {
     display: flex;
     transition: transform 0.5s ease-in-out;
   }
+
 
   .slide {
     min-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
 
   .slide img {
     width: 100%;
@@ -33,10 +40,12 @@
     object-fit: cover;
   }
 
+
   .arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 2rem;
@@ -97,6 +106,7 @@
     plusSlides(1);
   }, 4000);
 
+  slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
   slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
   slideshow.addEventListener('mouseleave', () => {
     slideInterval = setInterval(() => {
