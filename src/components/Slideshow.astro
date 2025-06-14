@@ -1,50 +1,47 @@
 ---
----  
+---
 <style>
   .slideshow-wrapper {
     width: 100%;
-    margin: 0; /* Zero by default, we’ll handle spacing inside */
+    margin: 0;
   }
 
   .slideshow {
     position: relative;
     width: 100%;
-    height: 86vh;
-    margin: 2vh 2%; /* 2% margin left and right for breathing room */
+    height: 86vh;           /* Capped by viewport height */
+    margin: 2vh auto;       /* Centered horizontally with auto margins */
     overflow: hidden;
-    border-radius: 0.5rem; /* Optional: soften edges */
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
 
   .slides {
     display: flex;
     transition: transform 0.5s ease-in-out;
   }
 
-
   .slide {
     min-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
-
 
   .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100vw;       /* Prevent overflow horizontally */
+    max-height: 86vh;       /* Prevent overflow vertically */
+    width: auto;
+    height: auto;
+    object-fit: contain;    /* Scale down, preserve aspect ratio */
   }
-
 
   .arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 2rem;
@@ -60,7 +57,7 @@
 
   @media (max-width: 1024px) {
     .slideshow {
-      margin: 2vh 3%;
+      margin: 2vh auto;
     }
   }
 
@@ -68,7 +65,12 @@
     .slideshow {
       height: auto;
       aspect-ratio: 16 / 9;
-      margin: 2vh 5%;
+      margin: 2vh auto;
+    }
+
+    .slide img {
+      max-width: 100vw;
+      max-height: 100%;
     }
   }
 </style>
@@ -105,7 +107,6 @@
     plusSlides(1);
   }, 4000);
 
-  slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
   slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
   slideshow.addEventListener('mouseleave', () => {
     slideInterval = setInterval(() => {
