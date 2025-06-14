@@ -43,6 +43,7 @@ const navLinks = [
         background: #f0f0f0;
         color: #000;
         flex-wrap: wrap;
+        position: relative;
       }
 
       .logo {
@@ -51,7 +52,7 @@ const navLinks = [
       }
 
       .logo img {
-        height: 80px;
+        height: 10vh;
         width: auto;
       }
 
@@ -71,15 +72,45 @@ const navLinks = [
         text-decoration: underline;
       }
 
-      .site-main {
-        width: 100%;
-        padding: 2rem 5%;
+      /* Hamburger Button */
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
       }
 
-      .slideshow-container {
-        width: 100%;
-        padding: 0;
-        margin: 0 auto;
+      /* Dropdown menu */
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+        z-index: 100;
+        min-width: 150px;
+      }
+
+      .dropdown-menu a {
+        font-weight: 500;
+        color: #000;
+        font-size: 1.1rem;
+        text-decoration: none;
+      }
+
+      .dropdown-menu a:hover {
+        text-decoration: underline;
+      }
+
+      /* Show dropdown when open */
+      .dropdown-menu.open {
+        display: flex;
       }
 
       /* Responsive adjustments for medium screens */
@@ -96,29 +127,24 @@ const navLinks = [
       /* Responsive for small screens (phones) */
       @media (max-width: 768px) {
         .site-header {
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
-          text-align: center;
           padding: 1rem 5%;
         }
 
         .logo img {
           height: 50px;
-          margin-bottom: 0.5rem;
+          margin: 0;
         }
 
+        /* Hide the horizontal nav on small screens */
         .navigation {
-          flex-direction: column;
-          align-items: center;
-          gap: 0.75rem;
+          display: none;
         }
 
-        .navigation a {
-          font-size: 1rem;
-        }
-
-        .site-main {
-          padding: 1rem 5%;
+        /* Show hamburger on small screens */
+        .hamburger {
+          display: block;
         }
       }
     </style>
@@ -128,7 +154,7 @@ const navLinks = [
     <header class="site-header">
       <div class="logo">
         <a href="/">
-          <img src="/cid_logo.jpg" alt="Site Logo" />
+          <img src="/CID Website Logo.png" alt="Site Logo" />
         </a>
       </div>
 
@@ -137,6 +163,27 @@ const navLinks = [
           <a href={link.href}>{link.name}</a>
         ))}
       </nav>
+
+      <button
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        id="hamburgerBtn"
+        type="button"
+      >
+        ☰
+      </button>
+
+      <div
+        class="dropdown-menu"
+        id="dropdownMenu"
+        role="menu"
+        aria-hidden="true"
+      >
+        {navLinks.map((link) => (
+          <a href={link.href} role="menuitem" tabindex="0">{link.name}</a>
+        ))}
+      </div>
     </header>
 
     <main class="site-main">
@@ -144,5 +191,24 @@ const navLinks = [
         <slot />
       </div>
     </main>
+
+    <script>
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = dropdownMenu.classList.toggle('open');
+
+        if (isOpen) {
+          hamburgerBtn.innerHTML = '×';
+          hamburgerBtn.setAttribute('aria-expanded', 'true');
+          dropdownMenu.setAttribute('aria-hidden', 'false');
+        } else {
+          hamburgerBtn.innerHTML = '☰';
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          dropdownMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+    </script>
   </body>
 </html>
