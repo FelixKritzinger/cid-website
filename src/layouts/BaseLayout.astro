@@ -39,12 +39,9 @@ const navLinks = [
         align-items: center;
         justify-content: space-between;
         padding: 1rem 5%;
-        padding: 1rem 5%;
         background: #f0f0f0;
         color: #000;
-        color: #000;
         flex-wrap: wrap;
-        position: relative;
         position: relative;
       }
 
@@ -55,7 +52,6 @@ const navLinks = [
 
       .logo img {
         height: 10vh;
-        height: 10vh;
         width: auto;
       }
 
@@ -65,7 +61,6 @@ const navLinks = [
       }
 
       .navigation a {
-        color: #000;
         color: #000;
         text-decoration: none;
         font-weight: 500;
@@ -123,9 +118,7 @@ const navLinks = [
       @media (max-width: 768px) {
         .site-header {
           flex-direction: row;
-          flex-direction: row;
           align-items: center;
-          padding: 1rem 5%;
           padding: 1rem 5%;
         }
 
@@ -133,9 +126,7 @@ const navLinks = [
           height: 50px;
         }
 
-        /* Hide the horizontal nav on small screens */
         .navigation {
-          display: none;
           display: none;
         }
 
@@ -161,7 +152,6 @@ const navLinks = [
     <header class="site-header">
       <div class="logo">
         <a href="/">
-          <img src="/CID Website Logo.png" alt="Site Logo" />
           <img src="/CID Website Logo.png" alt="Site Logo" />
         </a>
       </div>
@@ -192,51 +182,11 @@ const navLinks = [
           <a href={link.href} role="menuitem" tabindex="0">{link.name}</a>
         ))}
       </div>
-
-      <button
-        class="hamburger"
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-        id="hamburgerBtn"
-        type="button"
-      >
-        ☰
-      </button>
-
-      <div
-        class="dropdown-menu"
-        id="dropdownMenu"
-        role="menu"
-        aria-hidden="true"
-      >
-        {navLinks.map((link) => (
-          <a href={link.href} role="menuitem" tabindex="0">{link.name}</a>
-        ))}
-      </div>
     </header>
 
     <main class="site-main">
-      <slot /> <!-- 👈 This is where <Slideshow /> + <ProjectGrid /> will be injected -->
+      <slot />
     </main>
-
-    <script>
-      const hamburgerBtn = document.getElementById('hamburgerBtn');
-      const dropdownMenu = document.getElementById('dropdownMenu');
-
-      hamburgerBtn.addEventListener('click', () => {
-        const isOpen = dropdownMenu.classList.toggle('open');
-
-        if (isOpen) {
-          hamburgerBtn.innerHTML = '×';
-          hamburgerBtn.setAttribute('aria-expanded', 'true');
-          dropdownMenu.setAttribute('aria-hidden', 'false');
-        } else {
-          hamburgerBtn.innerHTML = '☰';
-          hamburgerBtn.setAttribute('aria-expanded', 'false');
-          dropdownMenu.setAttribute('aria-hidden', 'true');
-        }
-      });
-    </script>
 
     <script>
       const hamburgerBtn = document.getElementById('hamburgerBtn');
