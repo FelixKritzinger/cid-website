@@ -1,68 +1,70 @@
 ---
 const projects = [
   {
-    title: 'Modern Living Room',
-    href: '/projects/living-room',
-    image: '/Edited font elevation with palm tree.jpg'
+    title: 'Island Organic Modern',
+    href: '/projects/island-orgo',
+    image: '/Island_Orgo_Modern.jpg'
   },
   {
-    title: 'Elegant Kitchen',
-    href: '/projects/kitchen',
-    image: '/Edited font elevation with palm tree.jpg'
+    title: 'Lake Norman Indoor-Outdoor Living Remodel',
+    href: '/projects/lkn-indoor-outdoor',
+    image: '/LKN_Indoor_Outdoor.jpg'
   },
   {
-    title: 'Outdoor Patio',
-    href: '/about',
-    image: '/Edited font elevation with palm tree.jpg'
+    title: 'Maine Cottage Inspired Sunroom Addition',
+    href: '/projects/maine-cottage-sunroom',
+    image: '/Maine_Cottage_Sunroom.jpg'
   },
   {
-    title: 'Cozy Bedroom',
-    href: '/projects/bedroom',
-    image: '/images/bedroom.jpg'
+    title: 'Lake Norman - Nature Inspired Bathroom',
+    href: '/projects/lkn-nature-bath',
+    image: '/LKN_Nature_Bath.jpg'
   },
   {
-    title: 'Luxury Bathroom',
-    href: '/projects/bathroom',
-    image: '/images/bathroom.jpg'
+    title: 'Lake Norman Cottage Remodel',
+    href: '/projects/lkn-cottage',
+    image: '/LKN_Cottage.jpg'
   },
   {
-    title: 'Home Office',
-    href: '/projects/office',
-    image: '/images/office.jpg'
+    title: 'Cornelius Primary Bathroom Remodel',
+    href: '/projects/cornelius-bath',
+    image: '/Cornelius_Bath.jpg'
   },
   {
-    title: 'Entryway Design',
-    href: '/projects/entryway',
-    image: '/images/entryway.jpg'
+    title: 'Huntersville Home Office for Two',
+    href: '/projects/office-42',
+    image: '/Huntersville_Office.jpg'
   },
   {
-    title: 'Dining Area',
-    href: '/projects/dining',
-    image: '/images/dining.jpg'
+    title: 'TBD',
+    href: '/projects',
+    image: '/TBA_Project.jpg'
   },
 ];
 ---
 
 <style>
   .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .project {
-    position: relative;
-    overflow: hidden;
-    border-radius: 6px;
-  }
-  .project img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin-inline: auto;     /* 👈 Centers the entire grid */
+}
+
+.project {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  aspect-ratio: 16 / 9;   /* 👈 Ensures consistent aspect ratio for each project block */
+  max-width: 45vw;
+}
+
+.project img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
   .overlay {
     position: absolute;
     bottom: 0;
@@ -70,15 +72,34 @@ const projects = [
     color: #fff;
     width: 100%;
     padding: 0.5rem 1rem;
-    font-size: 1.1rem;
+    font-size: clamp(0.2rem, 1.4vw, 1.4rem); /* 👈 Responsive font size */
+  }
+  .coming-soon-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 30, 30, 0.85);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(0.4rem, 2vw, 20rem);
+    font-weight: 200;
+    text-align: center;
   }
 </style>
 
 <div class="grid">
-  {projects.map((project) => (
-    <a class="project" href={project.href}>
-      <img src={project.image} alt={project.title} />
-      <div class="overlay">{project.title}</div>
-    </a>
+  {projects.map((project, index) => (
+    index === 7 ? (
+      <div class="project">
+        <img src={project.image} alt={project.title} />
+        <div class="coming-soon-overlay">More Coming Soon</div>
+      </div>
+    ) : (
+      <a class="project" href={project.href}>
+        <img src={project.image} alt={project.title} />
+        <div class="overlay">{project.title}</div>
+      </a>
+    )
   ))}
 </div>
