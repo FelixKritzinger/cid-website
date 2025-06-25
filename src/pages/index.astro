@@ -7,4 +7,189 @@ import ProjectGrid from '../components/ProjectGrid.astro';
 <BaseLayout title="Home" description="Welcome to Collaborative Interior Design.">
   <Slideshow />
   <ProjectGrid />
+
+  <style>
+    @font-face {
+      font-family: 'MontserratVariable';
+      src: url('/fonts/Montserrat-VariableFont_wght.woff2') format('woff2'),
+           url('/fonts/Montserrat-VariableFont_wght.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    img {
+      border: 0;
+      outline: none;
+      border-radius: 0;
+    }
+
+    .two-column-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      max-width: 90vw;
+      margin: 4rem auto;
+    }
+
+    .two-column-section__image {
+      max-height: 70vh;
+      height: auto;
+      width: auto;
+      max-width: 35vw;
+    }
+
+    .two-column-section__content {
+      flex: 1 1 45%;
+      max-width: 40vw;
+      padding-left: 1rem;
+      color: #333;
+      text-align: left;
+    }
+
+    .two-column-section__content h2 {
+      font-size: clamp(0.5rem, 1.6vw, 3.5rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: #000;
+    }
+
+    .two-column-section__content p {
+      font-size: clamp(0.25rem, 1vw, 2.5rem);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-start;
+    }
+
+    .badges__item img {
+      height: clamp(1.75rem, 5vw, 4.75rem);
+      width: auto;
+      display: block;
+    }
+
+    .who-we-are {
+      background-color: #3f3f3f;
+      color: #fff;
+      width: 100%;
+      max-width: 91vw;
+      margin: 3rem auto;
+      height: clamp(4rem, 25vw, 20rem);
+      min-height: 4rem;
+      max-height: 20rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .who-we-are h2 {
+      font-size: clamp(1rem, 2.5vw, 2rem);
+      margin: 0;
+      font-weight: 100;
+      color: #fff;
+    }
+
+    .who-we-are p {
+      font-size: clamp(0.6rem, 1.75vw, 1.5rem);
+      max-width: 70ch;
+      margin: 0 auto;
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .two-column-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .two-column-section__image {
+        max-width: 80vw;
+        height: auto;
+      }
+
+      .two-column-section__content {
+        flex: 1 1 45%;
+        max-width: 80vw;
+        padding-left: 1rem;
+        color: #333;
+        text-align: left;
+      }
+
+      .two-column-section__content h2 {
+        font-size: clamp(0.5rem, 2.6vw, 3.5rem);
+      }
+
+      .two-column-section__content p {
+        font-size: clamp(0.25rem, 2vw, 2.5rem);
+      }
+
+      .badges {
+        justify-content: center;
+      }
+
+      .who-we-are {
+        height: auto;
+        padding: 3rem 1.5rem;
+      }
+    }
+  </style>
+
+  <!-- "Who We Are" gray box -->
+  <section class="who-we-are">
+    <h2>WHO WE ARE</h2>
+    <p>
+      Your home should be a place that looks and feels like a physical expression of you and your family. I help you translate your thoughts and ideas into design that feels personal.
+    </p>
+  </section>
+
+  <!-- "Create Your Dream Home" section -->
+  <section class="two-column-section">
+    <img
+      class="two-column-section__image"
+      src="/Maine_Cottage_Square.jpg"
+      alt="Interior Design Example"
+    />
+
+    <div class="two-column-section__content">
+      <h2>Create Your Dream Home</h2>
+      <p>
+        Whether you are working with an architect or builder on a house design, looking to redo a kitchen or bathroom or choosing finishing touches like fabric, colors, furniture etc. I am able to help make sure that you are getting a beautiful and functional home.
+        <br /><br />
+        I have been working with clients in the Lake Norman and Charlotte areas for over seven years with styles ranging from rustic lake front, to urban industrial, to contemporary.
+      </p>
+
+      <a href="https://www.houzz.com/badges/user/sandykritzinger" class="badges">
+        <div class="badges__item"><img alt="Best of Houzz 2025 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_66_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2024 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_63_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2024 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_64_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2023 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_59_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2023 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_60_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2022 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_56_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2022 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_57_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2021 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_53_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2021 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_54_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2020 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_48_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2020 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_49_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2019 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_47_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2018 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_44_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Houzz Pro Software User" src="https://st.hzcdn.com/res/29172818/pic/badge_52_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Recommended on Houzz" src="https://st.hzcdn.com/res/29172818/pic/badge_20_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="25,000 Ideabook Saves" src="https://st.hzcdn.com/res/29172818/pic/badge_34_7@2x.png?v=29172818" /></div>
+      </a>
+    </div>
+  </section>
 </BaseLayout>
