@@ -1,182 +1,392 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About - Collaborative Interior Design</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="Learn more about Collaborative Interior Design.">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: #fff;
-      color: #222;
-      line-height: 1.6;
+    @font-face {
+      font-family: 'MontserratVariable';
+      src: url('/fonts/Montserrat-VariableFont_wght.woff2') format('woff2'),
+           url('/fonts/Montserrat-VariableFont_wght.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
     }
 
-    header {
-      padding: 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid #ccc;
+    @font-face {
+      font-family: 'MontserratLight';
+      src: url('/fonts/Montserrat-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
+    @font-face {
+      font-family: 'MontserratLightItalic';
+      src: url('/fonts/Montserrat-LightItalic.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
     }
 
-    nav {
-      margin-top: 0.5rem;
+    @font-face {
+      font-family: 'MontserratRegular';
+      src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
     }
 
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
+    @font-face {
+      font-family: 'MontserratItalic';
+      src: url('/fonts/Montserrat-Italic.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
     }
 
-    .hero {
+    .hero-section {
+      margin-top: 2.5rem;
       position: relative;
-      max-width: 900px;
-      margin: 2rem auto;
-    }
-
-    .hero img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 50vh;
+      background-image: url('/Who_We_Are.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
     }
 
-    .hero-text {
+    .hero-overlay {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      color: white;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
+      inset: 0;
+      background: rgba(25, 25, 25, 0.6);
+      z-index: 1;
     }
 
-    .section {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
     }
 
-    .section h2 {
-      font-size: 1.5rem;
+    .hero-content h1 {
+      color: #fff;
+      font-family: 'MontserratRegular', sans-serif;
+      font-size: clamp(2rem, 2vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
       margin-bottom: 0.5rem;
     }
 
-    .trust-section {
+    .hero-content p {
+      font-family: 'MontserratRegular', sans-serif;
+      font-size: clamp(1rem, 1.25vw, 2rem);
+      letter-spacing: 0.1em;
+      font-weight: 300;
+    }
+
+    .two-column-section {
       display: flex;
       flex-wrap: wrap;
-      gap: 2rem;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      max-width: 90vw;
+      margin: 4rem auto;
     }
 
-    .trust-section img {
-      max-width: 100%;
+    .two-column-section__image {
+      max-height: 70vh;
+      border-radius:0px;
       height: auto;
-      flex: 1 1 300px;
-      border-radius: 6px;
+      width: auto;
+      max-width: 35vw;
     }
 
-    .trust-text {
-      flex: 2 1 400px;
+    .two-column-section__content {
+      flex: 1 1 45%;
+      max-width: 49vw;
+      padding-left: 1rem;
+      color: #333;
+      text-align: left;
     }
 
-    .awards {
-      margin-top: 1.5rem;
-    }
-
-    .awards img {
-      height: 40px;
-      margin: 0.3rem;
-    }
-
-    .testimonial {
-      background: #f5f5f5;
-      padding: 2rem 1rem;
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    .testimonial h3 {
-      font-size: 1.3rem;
+    .two-column-section__content h2 {
+      font-family: 'MontserratRegular', sans-serif;
+      letter-spacing: 0.1em;
+      font-size: clamp(0.5rem, 1.2vw, 3.5rem);
+      font-weight: 300;
       margin-bottom: 1rem;
+      color: #000;
+    }
+
+    .two-column-section__content p {
+      font-family: 'MontserratRegular', sans-serif;
+      font-size: clamp(0.25rem, .8vw, 2.5rem);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-start;
+    }
+
+    .badges__item img {
+      height: clamp(1.75rem, 5vw, 4.75rem);
+      border-radius:0px;
+      width: auto;
+      display: block;
+    }
+
+    .reviews-section h2 {
+      margin-top: 3rem;
+      font-family: 'MontserratRegular', sans-serif;
+      font-size: clamp(.5rem, 1.25vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+
+    .reviews-section {
+      max-width: 90vw;
+      margin: 5rem auto;
+      text-align: center;
+      padding: 0;
+    }
+
+    .slideshow {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column; /* stack title + slides vertically */
+      align-items: center;
+      background-color: #f8f8f8;  /* unified background */
+      border-radius: 0rem;
+      padding: 2rem 1.5rem 3rem;
+      box-sizing: border-box;
+    }
+
+    /* Move title styling inside slideshow */
+    .slideshow-title {
+      font-size: clamp(0.5rem, 4vw, 3rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: #222;
+      font-family: 'MontserratRegular', sans-serif;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform .5s ease-in-out;
+      width: 100%;
+      will-change: transform;
+    }
+
+    .slide {
+      width: 100%;
+      flex-shrink: 0;
+      padding: 2rem;
+      background-color: transparent; /* inherit from slideshow */
+      border-radius: 0rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #333;
     }
 
     .stars {
-      color: gold;
-      font-size: 1.2rem;
+      color: #f5c518;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      padding: 2rem 0;
-      color: #777;
+    .review-text {
+      font-family: 'MontserratItalic', sans-serif;
+      font-size: clamp(.5rem, .8vw, 1.5rem);
+      line-height: 1.6;
+      color: #333;
+      max-width: 60vw;
     }
 
-    a.phone-link {
-      color: #0077cc;
-      text-decoration: none;
-      font-weight: bold;
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      z-index: 100;
+      color: #222;
+    }
+
+    .arrow svg.carousel-arrow {
+      width: 2rem;
+      height: 2rem;
+      fill: currentColor;
+    }
+
+
+    .arrow.left { left: 30px; }
+    .arrow.right { right: 30px; }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 1.5rem;
+      }
+
+      .two-column-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .two-column-section__image {
+        max-width: 80vw;
+        height: auto;
+      }
+
+      .two-column-section__content {
+        max-width: 80vw;
+        text-align: left;
+      }
+
+      .badges {
+        justify-content: center;
+      }
     }
   </style>
-</head>
-<body>
 
-  <header>
-    <h1>Collaborative Interior Design</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">More</a>
-    </nav>
-  </header>
-
-  <div class="hero">
-    <img src="https://via.placeholder.com/900x400?text=Kitchen+Interior" alt="Interior Design Hero Image" />
-    <div class="hero-text">
-      <h2 style="margin: 0;">WHO WE ARE</h2>
-      <p style="margin: 0;">North Mecklenburg’s Personalized Interior Design Services</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>WHO WE ARE</h1>
+      <p>North Mecklenburg's Personalized Interior Design Services</p>
     </div>
-  </div>
+  </section>
 
-  <div class="section trust-section">
-    <img src="https://via.placeholder.com/400x300?text=Team+Photo" alt="Team Photo" />
-    <div class="trust-text">
+  <!-- Two Column Section -->
+  <section class="two-column-section">
+    <img
+      class="two-column-section__image"
+      src="/Family_Photo.jpg"
+      alt="Interior Design Example"
+    />
+
+    <div class="two-column-section__content">
       <h2>EXPERIENCE YOU CAN TRUST</h2>
-      <p>Your home should be a place that looks and feels like a physical expression of you and your family. I help you translate your thoughts and ideas into a design that feels personal. It is often overwhelming to look at your home and try navigate how to get to a desired look and functionality when you start realizing how many decisions go into making a space look and feel great.</p>
+      <p>
+        Your home should be a place that looks and feels like a physical expression of you and your family. I help you translate your thoughts and ideas into design that feels personal. It is often overwhelming to look at your home and try navigate how to get to a desired look and functionality when you start realizing how many decisions go into making a space look and feel great.
+        <br /><br />
+        Whether you are working with an architect or builder on a house design, looking to redo a kitchen or bathroom or choosing finishing touches like fabric, colors, furniture etc. I am able to help make sure that you are getting a beautiful and functional home.
+        <br /><br />
+        I have been working with clients in the Lake Norman and Charlotte areas for over seven years with styles ranging from rustic lake front, to urban industrial, to contemporary.
+      </p>
 
-      <p>Whether you are working with a builder/architect on a house design, looking to redo a kitchen or bathroom or choosing finishing touches like fabric, colors, furniture etc. I am able to help make sure that you are getting a beautiful and functional home.</p>
-
-      <p>I have been working with clients in the Lake Norman and Charlotte areas for over seven years with styles ranging from rustic lake front, to urban industrial, to contemporary.</p>
-
-      <div class="awards">
-        <img src="https://via.placeholder.com/50x40?text=2024" alt="Award 2024"/>
-        <img src="https://via.placeholder.com/50x40?text=2023" alt="Award 2023"/>
-        <img src="https://via.placeholder.com/50x40?text=2022" alt="Award 2022"/>
-        <img src="https://via.placeholder.com/50x40?text=2021" alt="Award 2021"/>
-        <img src="https://via.placeholder.com/50x40?text=25K+" alt="Award 25K"/>
-      </div>
+      <a href="https://www.houzz.com/badges/user/sandykritzinger" class="badges">
+        <div class="badges__item"><img alt="Best of Houzz 2025 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_66_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2024 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_63_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2024 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_64_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2023 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_59_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2023 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_60_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2022 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_56_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2022 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_57_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2021 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_53_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2021 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_54_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2020 - Design" src="https://st.hzcdn.com/res/29172818/pic/badge_48_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2020 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_49_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2019 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_47_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Best of Houzz 2018 - Client Satisfaction" src="https://st.hzcdn.com/res/29172818/pic/badge_44_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Houzz Pro Software User" src="https://st.hzcdn.com/res/29172818/pic/badge_52_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="Recommended on Houzz" src="https://st.hzcdn.com/res/29172818/pic/badge_20_7@2x.png?v=29172818" /></div>
+        <div class="badges__item"><img alt="25,000 Ideabook Saves" src="https://st.hzcdn.com/res/29172818/pic/badge_34_7@2x.png?v=29172818" /></div>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <div class="testimonial">
-    <h3>OUR HAPPY CLIENTS</h3>
-    <div class="stars">★★★★★</div>
-    <p>We couldn’t be happier with the outcome of our new home. Building a home is such a complex and long process, and the support of a well-respected, detail-oriented builder and an outstanding designer makes everything run so smoothly...</p>
-    <p><strong>– Tracey McKenna</strong></p>
-    <p><a class="phone-link" href="tel:7046547990">(704) 654-7990</a></p>
-  </div>
+   <!-- Our Happy Clients Section -->
+  <section class="reviews-section">
+    <div class="slideshow" id="slideshow">
+      <h2 class="slideshow-title">OUR HAPPY CLIENTS</h2>
 
-  <footer>
-    &copy; 2025 Collaborative Interior Design
-  </footer>
+      <div class="slides" id="slides">
+        <div class="slide">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">
+              We couldn't be happier with the outcome of our new home. Building a home is such a complex and taxing process. Sandy was instrumental in helping with the design and build our custom home. She was always there any time of day or weekend to help us move forward and assist us with every detail. Our builder had an aggressive timeframe, and making builder selections on time and within budget was a priority. Sandy also took the time to understand our preferred style. Her creativity and eye for detail made the entire project come together beautifully, and she managed to get ahead of as many of the supply chain issues as possible so that we could function in our new home right after we moved in... <br><br><span style="font-family:MontserratRegular">Tracey McKenna</span>
+            </div>
+          </div>
+        </div>
+        <div class="slide">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">
+              We wanted to update our new (old) home and have more efficient use of existing space. We found Sandy Kritzinger (Collaborative Interior Design) on Houzz.com and she stood out among others. Sandy understood what we were trying to solve for, brought us creative solutions, and helped us envision things through her design boards that we may not have otherwise considered. The project with Sandy involved a family room and kitchen remodel, as well as working through plans for future phases of renovation/additions. She helped us pull together the architectural/construction, design, and decorating phases of our renovation. Sandy understood our desire to do some of the legwork and installation ourselves...<br><br><span style="font-family:MontserratRegular">Donna Korte</span>
+            </div>
+          </div>
+        </div>
+        <div class="slide">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">
+              My husband and I recently completed a full house reno on our 20 year old townhome as it was in desperate need of updating and modernizing.   This was the first time we had done a reno and the task seemed quite daunting given all the work involved, decisions required and the fact that my husband and I are polar opposites on the design spectrum.  We were very fortunate to work with Sandy as she made the entire endeavour seem easy as she shepherded us through the project from start to finish.  She was able to take our disparate tastes and objectives to design around our eclectic art collection and collections from our travels to a create a wonderful haven.  Sandy was very patient with us in addressing our many questions... <br><br><span style="font-family:MontserratRegular">Houzz User</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-</body>
-</html>
+      <button class="arrow left" onclick="plusSlides(-1)" aria-label="Previous slide">
+        <svg class="carousel-arrow" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M13.088 18.162l-7.279-7.279c-.226-.226-.366-.539-.366-.884s.14-.658.366-.884l7.279-7.279 1.325 1.325-6.836 6.837 6.836 6.838z"/>
+        </svg>
+      </button>
+
+      <button class="arrow right" onclick="plusSlides(1)" aria-label="Next slide">
+        <svg class="carousel-arrow" viewBox="0 0 20 20" aria-hidden="true" style="transform: scaleX(-1);">
+          <path d="M13.088 18.162l-7.279-7.279c-.226-.226-.366-.539-.366-.884s.14-.658.366-.884l7.279-7.279 1.325 1.325-6.836 6.837 6.836 6.838z"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <script is:inline>
+    let currentIndex = 0;
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const slideshow = document.getElementById('slideshow');
+
+    function showSlide(index) {
+      currentIndex = (index + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function plusSlides(n) {
+      showSlide(currentIndex + n);
+    }
+
+    let slideInterval = setInterval(() => {
+      plusSlides(1);
+    }, 4000);
+
+    slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    slideshow.addEventListener('mouseleave', () => {
+      slideInterval = setInterval(() => {
+        plusSlides(1);
+      }, 4000);
+    });
+  </script>
+</BaseLayout>

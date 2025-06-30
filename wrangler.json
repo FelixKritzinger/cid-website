@@ -12,3 +12,12 @@
   },
   "upload_source_maps": true
 }
+
+{
+  "routes": [
+    {
+      "pattern": "cidlove.com",
+      "custom_domain": true
+    }
+  ]
+}
