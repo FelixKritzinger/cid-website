@@ -11,10 +11,15 @@
     "enabled": true
   },
   "upload_source_maps": true,
+
   "routes": [
-    {
-      "pattern": "cidlove.com",
-      "custom_domain": true
-    }
-  ]
+  {
+    "pattern": "cidlove.com",
+    "custom_domain": true
+  },
+  {
+    "pattern": "www.cidlove.com",
+    "custom_domain": true
+  }
+]
 }
