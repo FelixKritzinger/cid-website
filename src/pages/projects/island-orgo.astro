@@ -5,8 +5,8 @@ const title = "Island Organic Modern";
 const description = "Explore our curated selection of design photos.";
 
 const images = [
-  '/1.jpg',
-  '../2.jpg',
+  '../project-imgs/1.jpg',
+  '../project-imgs/2.jpg',
   '../project-imgs/3.jpg',
   '../project-imgs/4.jpg',
   '../project-imgs/5.jpg',
@@ -159,12 +159,12 @@ const evenImages = images.filter(src => {
     <div class="gallery">
       <div class="column">
         {oddImages.map((src) => (
-          <img src={src} alt="Gallery image" loading="lazy" data-index={images.indexOf(src)} />
+          <img src={src} alt="Gallery image" data-index={images.indexOf(src)} />
         ))}
       </div>
       <div class="column">
         {evenImages.map((src) => (
-          <img src={src} alt="Gallery image" loading="lazy" data-index={images.indexOf(src)} />
+          <img src={src} alt="Gallery image" data-index={images.indexOf(src)} />
         ))}
       </div>
     </div>
