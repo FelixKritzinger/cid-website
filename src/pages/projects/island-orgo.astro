@@ -5,34 +5,34 @@ const title = "Island Organic Modern";
 const description = "Explore our curated selection of design photos.";
 
 const images = [
-  '../project-imgs/1.jpg',
-  '../project-imgs/2.jpg',
-  '../project-imgs/3.jpg',
-  '../project-imgs/4.jpg',
-  '../project-imgs/5.jpg',
-  '../project-imgs/6.jpg',
-  '../project-imgs/7.jpg',
-  '../project-imgs/8.jpg',
-  '../project-imgs/9.jpg',
-  '../project-imgs/10.jpg',
-  '../project-imgs/11.jpg',
-  '../project-imgs/12.jpg',
-  '../project-imgs/13.jpg',
-  '../project-imgs/14.jpg',
-  '../project-imgs/15.jpg',
-  '../project-imgs/16.jpg',
-  '../project-imgs/17.jpg',
-  '../project-imgs/18.jpg',
-  '../project-imgs/19.jpg',
-  '../project-imgs/20.jpg',
-  '../project-imgs/21.jpg',
-  '../project-imgs/22.jpg',
-  '../project-imgs/23.jpg',
-  '../project-imgs/24.jpg',
-  '../project-imgs/25.jpg',
-  '../project-imgs/26.jpg',
-  '../project-imgs/27.jpg',
-  '../project-imgs/29.jpg'
+  '/project-imgs/1.jpg',
+  '/project-imgs/2.jpg',
+  '/project-imgs/3.jpg',
+  '/project-imgs/4.jpg',
+  '/project-imgs/5.jpg',
+  '/project-imgs/6.jpg',
+  '/project-imgs/7.jpg',
+  '/project-imgs/8.jpg',
+  '/project-imgs/9.jpg',
+  '/project-imgs/10.jpg',
+  '/project-imgs/11.jpg',
+  '/project-imgs/12.jpg',
+  '/project-imgs/13.jpg',
+  '/project-imgs/14.jpg',
+  '/project-imgs/15.jpg',
+  '/project-imgs/16.jpg',
+  '/project-imgs/17.jpg',
+  '/project-imgs/18.jpg',
+  '/project-imgs/19.jpg',
+  '/project-imgs/20.jpg',
+  '/project-imgs/21.jpg',
+  '/project-imgs/22.jpg',
+  '/project-imgs/23.jpg',
+  '/project-imgs/24.jpg',
+  '/project-imgs/25.jpg',
+  '/project-imgs/26.jpg',
+  '/project-imgs/27.jpg',
+  '/project-imgs/29.jpg'
 ];
 
 const oddImages = images.filter(src => {
@@ -159,12 +159,12 @@ const evenImages = images.filter(src => {
     <div class="gallery">
       <div class="column">
         {oddImages.map((src) => (
-          <img src={src} alt="Gallery image" data-index={images.indexOf(src)} />
+          <img src={src} alt="Gallery image" loading="lazy" data-index={images.indexOf(src)} />
         ))}
       </div>
       <div class="column">
         {evenImages.map((src) => (
-          <img src={src} alt="Gallery image" data-index={images.indexOf(src)} />
+          <img src={src} alt="Gallery image" loading="lazy" data-index={images.indexOf(src)} />
         ))}
       </div>
     </div>
