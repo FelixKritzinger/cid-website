@@ -18,7 +18,7 @@ const currentPath = Astro.url.pathname;
     <BaseHead {title} {description} {image} />
     <style>
       @font-face {
-        font-family: 'Montserrat';
+        font-family: 'MontserratMedium';
         src: url('/fonts/Montserrat-Medium.woff') format('woff');
         font-weight: 500;
         font-style: normal;
@@ -31,7 +31,7 @@ const currentPath = Astro.url.pathname;
 
       body {
         margin: 0;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'MontserratMedium', sans-serif;
         background: #fff;
         color: #222;
       }
@@ -40,7 +40,8 @@ const currentPath = Astro.url.pathname;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 5%;
+        padding: 1.5rem 5%;
+        padding-left:3%;
         background: #fafafa;
         color: #000;
         flex-wrap: wrap;
@@ -53,13 +54,13 @@ const currentPath = Astro.url.pathname;
       }
 
       .logo img {
-        height: 10vh;
+        height: 9vh;
         width: auto;
       }
 
       .navigation {
         display: flex;
-        gap: 1.5rem; /* Fix: set a proper gap here */
+        gap: 1.5rem;
       }
 
       .navigation a {
@@ -230,7 +231,7 @@ const currentPath = Astro.url.pathname;
     <header class="site-header">
       <div class="logo">
         <a href="/">
-          <img src="/CID Website Logo.png" alt="Site Logo" />
+          <img src="/CID Logo - txt seperated.png" alt="Site Logo" />
         </a>
       </div>
 

@@ -1,0 +1,387 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "Island Organic Modern";
+const description = "Explore our curated selection of design photos.";
+
+const images = [
+  { src: "/project-imgs/edisto/1.jpg", caption: "Smooth white stucco and vertical cedar siding invite you to relax and enjoy the beauty of the salt marsh and creek with ocean views beyond." },
+  { src: "/project-imgs/edisto/2.jpg", caption: "The house fronts on Scott Creek with access to the beach via boat. Great crabbing and fishing off the dock." },
+  { src: "/project-imgs/edisto/4.jpg", caption: "The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces. The decking is a treated pine made to resist weathering, mold and mildew. This material was selected as an alternate to Ipe which is vulnerable to overharvesting." },
+  { src: "/project-imgs/edisto/3.jpg", caption: "The elevated swimming pool relates directly to the main living floor of the house. The expansive windows and doors open up to views of the marsh, creek and ocean beyond." },
+  { src: "/project-imgs/edisto/6.jpg", caption: "Sunrise over the marsh." },
+  { src: "/project-imgs/edisto/5.jpg", caption: "Outdoor covered dining and living spaces bookend the pool and sun deck. The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces." },
+  { src: "/project-imgs/edisto/8.jpg", caption: "A decked walkway winds through the palmettos and live oak trees to the dock." },
+  { src: "/project-imgs/edisto/7.jpg", caption: " " },
+  { src: "/project-imgs/edisto/10.jpg", caption: " " },
+  { src: "/project-imgs/edisto/9.jpg", caption: "Outdoor shower opens to back yard views of the marsh." },
+  { src: "/project-imgs/edisto/11.jpg", caption: "Open plan living/dining/kitchen areas all open to the outdoor deck and patios. The 20' sliding doors in the living room pocket into the walls, merging inside and out. A similar set of doors in the kitchen connects it to the outdoor dining and grilling area." },
+  { src: "/project-imgs/edisto/12.jpg", caption: " " },
+  { src: "/project-imgs/edisto/13.jpg", caption: "The plastered fireplace adds beautiful texture to the modern fireplace in the living room. The floating bench below the TV was fabricated from a reclaimed barn beam adding warmth to the space and the heavy linen slip covered sofas invite lounging." },
+  { src: "/project-imgs/edisto/14.jpg", caption: "Open plan spaces invite casual living. The covered outdoor dining and grilling space is easily accessed from the kitchen via full height glass sliding doors. A scullery off the kitchen provides out of view clean up space and extra storage. The clean lines of the furniture mirror the contemporary cabinetry and lighting." },
+  { src: "/project-imgs/edisto/15.jpg", caption: "The studio office has large, full height sliding glass doors facing the marsh and ocean just beyond. The slatted cedar wall on the patio provides privacy, still allowing air and light through." },
+  { src: "/project-imgs/edisto/16.jpg", caption: "" },
+  { src: "/project-imgs/edisto/17.jpg", caption: "A modern stair case with custom iron hand rail leads to the bedrooms upstairs. A massive window at the landing provides natural light and draws the eye up the stairwell. The elongated second step creates a unique bench seat at the front door." },
+  { src: "/project-imgs/edisto/18.jpg", caption: "" },
+  { src: "/project-imgs/edisto/19.jpg", caption: "Soft, organic fabrics and rugs add texture and casual sophistication to the bedrooms. The large windows in all the bedrooms open to marsh and ocean views." },
+  { src: "/project-imgs/edisto/20.jpg", caption: "The bathrooms have poured concrete floors with zero entry showers. Custom vanities are made from reclaimed barn wood with concrete look countertops. The windows open wide, blurring the lines between inside and outside." },
+  { src: "/project-imgs/edisto/21.jpg", caption: "" },
+  { src: "/project-imgs/edisto/23.jpg", caption: "Detail" },
+  { src: "/project-imgs/edisto/22.jpg", caption: "The bunk room bed was designed to include large storage closets utilizing the space under the ladders. A queen bed with twins above provide comfortable sleeping for 4!" },
+  { src: "/project-imgs/edisto/25.jpg", caption: "Detail" },
+  { src: "/project-imgs/edisto/27.jpg", caption: "Detail" },
+  { src: "/project-imgs/edisto/24.jpg", caption: "Detail" },
+  { src: "/project-imgs/edisto/26.jpg", caption: "Detail" },
+  { src: "/project-imgs/edisto/29.jpg", caption: "Detail" },
+];
+
+
+const oddImages = images.filter(({ src }) => {
+  const number = parseInt(src.match(/\d+/)?.[0] || '0', 10);
+  return number % 2 === 1;
+});
+
+const evenImages = images.filter(({ src }) => {
+  const number = parseInt(src.match(/\d+/)?.[0] || '0', 10);
+  return number % 2 === 0;
+});
+---
+
+<BaseLayout {title} {description}>
+  <style>
+    .page-wrapper {
+      max-width: 70vw;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(.5rem, 1.8vw, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: clamp(.25rem, .9vw, 1.25rem);
+      margin-bottom: 2.5rem;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column img {
+      border-radius:0;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .column img:hover {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        flex-direction: column;
+      }
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      flex-direction: column;
+      overflow: hidden;
+      padding-bottom: 3rem;
+    }
+
+    .overlay.active {
+      display: flex;
+    }
+
+
+    .caption-container {
+      margin-top: 1rem;
+      color: white;
+      max-width: 70vw;
+      text-align: center;
+      transition: max-height 0.3s ease;
+      overflow: hidden;
+    }
+
+    .caption-container.collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+
+
+    .overlay.caption-collapsed img {
+      border-radius:0;
+      padding-top:2.5vh;
+      max-height: 90vh;
+      max-width: 90vw;
+    }
+
+    .overlay img {
+      padding-top:2px;
+      border-radius:0;
+      max-height: 80vh;
+      max-width:90vw;
+      transition: max-height 0.3s ease;
+    }
+
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .toggle-caption-btn {
+      position: absolute;
+      bottom: 1.5rem; /* distance from bottom of image */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.35);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      padding: 0;
+    }
+
+    .toggle-caption-btn .arrow-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-caption-btn.expanded .arrow-icon {
+      transform: rotate(-180deg);
+    }
+
+
+    .close-btn,
+    .nav-btn {
+      position: absolute;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .close-btn {
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .nav-btn.prev {
+      top: 50%;
+      left: 2.5vw;
+      transform: translateY(-50%);
+    }
+
+    .nav-btn.next {
+      top: 50%;
+      right: 2.5vw;
+      transform: translateY(-50%);
+    }
+  </style>
+
+  <div class="page-wrapper">
+    <h1>{title}</h1>
+    <p>
+      A family home on Edisto Island, designed to be relaxed and welcoming. A blend of modern forms and organic materials and furnishings encourages peaceful living and happy times. 
+      The home was designed to take full advantage of the sea breezes and the incredible views of the marsh and Atlantic Ocean beyond.
+    </p>
+
+    <div class="gallery">
+      <div class="column">
+        {oddImages.map(({ src }, i) => (
+          <img src={src} alt="Gallery image left" loading="lazy" data-index={images.findIndex(img => img.src === src)} />
+        ))}
+      </div>
+      <div class="column">
+        {evenImages.map(({ src }, i) => (
+          <img src={src} alt="Gallery image" loading="lazy" data-index={images.findIndex(img => img.src === src)} />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <button class="close-btn" id="closeBtn">&times;</button>
+    <button class="nav-btn prev" id="prevBtn">&#10094;</button>
+    <div class="image-wrapper">
+      <img id="overlayImg" src="" alt="Expanded view" />
+      <button class="toggle-caption-btn" id="toggleCaptionBtn" aria-label="Toggle Caption">
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+    <button class="nav-btn next" id="nextBtn">&#10095;</button>
+
+
+    <div class="caption-container" id="captionContainer">
+      <p id="overlayCaption"></p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlayImg');
+    const overlayCaption = document.getElementById('overlayCaption');
+    const captionContainer = document.getElementById('captionContainer');
+    const toggleCaptionBtn = document.getElementById('toggleCaptionBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const allImages = [...document.querySelectorAll('.gallery img')];
+    let currentIndex = 0;
+    let captionExpanded = true;
+
+    const imageData = [
+      { src: "/project-imgs/edisto/1.jpg", caption: "Smooth white stucco and vertical cedar siding invite you to relax and enjoy the beauty of the salt marsh and creek with ocean views beyond." },
+      { src: "/project-imgs/edisto/2.jpg", caption: "The house fronts on Scott Creek with access to the beach via boat. Great crabbing and fishing off the dock." },
+      { src: "/project-imgs/edisto/4.jpg", caption: "The elevated swimming pool relates directly to the main living floor of the house. The expansive windows and doors open up to views of the marsh, creek and ocean beyond." },
+      { src: "/project-imgs/edisto/3.jpg", caption: "The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces. The decking is a treated pine made to resist weathering, mold and mildew. This material was selected as an alternate to Ipe which is vulnerable to overharvesting." },
+      { src: "/project-imgs/edisto/6.jpg", caption: "Outdoor covered dining and living spaces bookend the pool and sun deck. The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces." },
+      { src: "/project-imgs/edisto/5.jpg", caption: "Sunrise over the marsh." },
+      { src: "/project-imgs/edisto/8.jpg", caption: " " },
+      { src: "/project-imgs/edisto/7.jpg", caption: "A decked walkway winds through the palmettos and live oak trees to the dock." },
+      { src: "/project-imgs/edisto/10.jpg", caption: "Outdoor shower opens to back yard views of the marsh." },
+      { src: "/project-imgs/edisto/9.jpg", caption: " " },
+      { src: "/project-imgs/edisto/11.jpg", caption: "Open plan living/dining/kitchen areas all open to the outdoor deck and patios. The 20' sliding doors in the living room pocket into the walls, merging inside and out. A similar set of doors in the kitchen connects it to the outdoor dining and grilling area." },
+      { src: "/project-imgs/edisto/12.jpg", caption: " " },
+      { src: "/project-imgs/edisto/13.jpg", caption: "The plastered fireplace adds beautiful texture to the modern fireplace in the living room. The floating bench below the TV was fabricated from a reclaimed barn beam adding warmth to the space and the heavy linen slip covered sofas invite lounging." },
+      { src: "/project-imgs/edisto/14.jpg", caption: "Open plan spaces invite casual living. The covered outdoor dining and grilling space is easily accessed from the kitchen via full height glass sliding doors. A scullery off the kitchen provides out of view clean up space and extra storage. The clean lines of the furniture mirror the contemporary cabinetry and lighting." },
+      { src: "/project-imgs/edisto/15.jpg", caption: "The studio office has large, full height sliding glass doors facing the marsh and ocean just beyond. The slatted cedar wall on the patio provides privacy, still allowing air and light through." },
+      { src: "/project-imgs/edisto/16.jpg", caption: "" },
+      { src: "/project-imgs/edisto/17.jpg", caption: "A modern stair case with custom iron hand rail leads to the bedrooms upstairs. A massive window at the landing provides natural light and draws the eye up the stairwell. The elongated second step creates a unique bench seat at the front door." },
+      { src: "/project-imgs/edisto/18.jpg", caption: "" },
+      { src: "/project-imgs/edisto/19.jpg", caption: "Soft, organic fabrics and rugs add texture and casual sophistication to the bedrooms. The large windows in all the bedrooms open to marsh and ocean views." },
+      { src: "/project-imgs/edisto/20.jpg", caption: "The bathrooms have poured concrete floors with zero entry showers. Custom vanities are made from reclaimed barn wood with concrete look countertops. The windows open wide, blurring the lines between inside and outside." },
+      { src: "/project-imgs/edisto/21.jpg", caption: "" },
+      { src: "/project-imgs/edisto/23.jpg", caption: "The bunk room bed was designed to include large storage closets utilizing the space under the ladders. A queen bed with twins above provide comfortable sleeping for 4!" },
+      { src: "/project-imgs/edisto/22.jpg", caption: "Detail" },
+      { src: "/project-imgs/edisto/25.jpg", caption: "Detail" },
+      { src: "/project-imgs/edisto/27.jpg", caption: "Detail" },
+      { src: "/project-imgs/edisto/24.jpg", caption: "Detail" },
+      { src: "/project-imgs/edisto/26.jpg", caption: "Detail" },
+      { src: "/project-imgs/edisto/29.jpg", caption: "Detail" }
+    ];
+
+
+
+    function openOverlay(index) {
+      currentIndex = index;
+      const { src, caption } = imageData[index];
+      overlayImg.src = src;
+      overlayCaption.textContent = caption;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      captionContainer.classList.remove('collapsed');
+      toggleCaptionBtn.classList.add('expanded');
+      captionExpanded = true;
+    }
+
+
+    function closeOverlay() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function preloadImage(index) {
+      const next = new Image();
+      next.src = imageData[index].src;
+    }
+
+    function showImage(index) {
+      const { src, caption } = imageData[index];
+      overlayImg.src = src;
+      overlayCaption.textContent = caption;
+
+      if (!captionExpanded) {
+        captionContainer.classList.add('collapsed');
+        toggleCaptionBtn.classList.remove('expanded');
+      }
+
+      // Preload next and previous images
+      preloadImage((index + 1) % imageData.length);
+      preloadImage((index - 1 + imageData.length) % imageData.length);
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+      showImage(currentIndex);
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % imageData.length;
+      showImage(currentIndex);
+    }
+
+    toggleCaptionBtn.addEventListener('click', () => {
+      captionExpanded = !captionExpanded;
+      captionContainer.classList.toggle('collapsed');
+      toggleCaptionBtn.classList.toggle('expanded');
+      overlay.classList.toggle('caption-collapsed');
+    });
+
+
+    allImages.forEach((img) => {
+      img.addEventListener('click', () => {
+        const index = parseInt(img.dataset.index, 10);
+        openOverlay(index);
+      });
+    });
+
+
+    closeBtn.addEventListener('click', closeOverlay);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('active')) return;
+      if (e.key === 'Escape') closeOverlay();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    });
+  </script>
+</BaseLayout>

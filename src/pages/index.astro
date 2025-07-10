@@ -10,10 +10,17 @@ import ProjectGrid from '../components/ProjectGrid.astro';
 
   <style>
     @font-face {
-      font-family: 'MontserratVariable';
-      src: url('/fonts/Montserrat-VariableFont_wght.woff2') format('woff2'),
-           url('/fonts/Montserrat-VariableFont_wght.woff') format('woff');
-      font-weight: 100 900;
+      font-family: 'MontserratMedium';
+      src: url('/fonts/Montserrat-Medium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Montserrat';
+      src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -42,6 +49,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     }
 
     .two-column-section__content {
+      font-family: 'Montserrat', sans-serif; 
       flex: 1 1 45%;
       max-width: 40vw;
       padding-left: 1rem;
@@ -50,14 +58,16 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     }
 
     .two-column-section__content h2 {
-      font-size: clamp(0.5rem, 1.6vw, 3.5rem);
+      font-family: 'MontserratMedium', sans-serif;
+      letter-spacing: 0.1em;
+      font-size: clamp(0.25rem, 1.4vw, 4.5rem);
       font-weight: 300;
       margin-bottom: 1rem;
       color: #000;
     }
 
     .two-column-section__content p {
-      font-size: clamp(0.25rem, 1vw, 2.5rem);
+      font-size: clamp(0.25rem, .95vw, 2.5rem);
       line-height: 1.6;
       margin-bottom: 2rem;
       color: #666;
@@ -71,7 +81,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     }
 
     .badges__item img {
-      height: clamp(1.75rem, 5vw, 4.75rem);
+      height: clamp(1.75rem, 4.5vw, 4.75rem);
       width: auto;
       display: block;
     }
@@ -134,7 +144,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
       }
 
       .two-column-section__content p {
-        font-size: clamp(0.25rem, 2vw, 2.5rem);
+        font-size: clamp(0.25rem, 2vw, 3rem);
       }
 
       .badges {
@@ -165,7 +175,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     />
 
     <div class="two-column-section__content">
-      <h2>Create Your Dream Home</h2>
+      <h2>CREATE YOUR DREAM HOME</h2>
       <p>
         Whether you are working with an architect or builder on a house design, looking to redo a kitchen or bathroom or choosing finishing touches like fabric, colors, furniture etc. I am able to help make sure that you are getting a beautiful and functional home.
         <br /><br />
