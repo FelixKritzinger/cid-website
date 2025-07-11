@@ -207,6 +207,9 @@ const description = "Edisto design photos";
   </div>
 
   <script>
+  const manualLeftIndices = [25, 26];   // zero-based index for images 26 and 27
+  const manualRightIndices = [27];      // zero-based index for image 28
+
   const overlay = document.getElementById('overlay');
   const overlayImg = document.getElementById('overlayImg');
   const overlayCaption = document.getElementById('overlayCaption');
@@ -338,13 +341,20 @@ const description = "Edisto design photos";
 
       await new Promise((resolve) => {
         img.onload = () => {
-          // Insert first
-          if (col1Height <= col2Height) {
+          // 🧠 Manual override first
+          if (manualLeftIndices.includes(i)) {
             col1.appendChild(img);
-            col1Height += img.getBoundingClientRect().height;
-          } else {
+          } else if (manualRightIndices.includes(i)) {
             col2.appendChild(img);
-            col2Height += img.getBoundingClientRect().height;
+          } else {
+            // 🤖 Automatic placement by column height
+            if (col1Height <= col2Height) {
+              col1.appendChild(img);
+              col1Height += img.getBoundingClientRect().height;
+            } else {
+              col2.appendChild(img);
+              col2Height += img.getBoundingClientRect().height;
+            }
           }
 
           img.addEventListener('click', () => openOverlay(i));
@@ -365,6 +375,7 @@ const description = "Edisto design photos";
       });
     }
   }
+
 </script>
 
 
