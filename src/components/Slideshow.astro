@@ -75,24 +75,24 @@
 <div class="slideshow-wrapper">
   <div class="slideshow" id="slideshow">
     <div class="slides" id="slides">
-      <div class="slide"><img src="/project-imgs/edisto/1.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/7.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/11.jpg" alt="Slide 3" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/13.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/15.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/project-imgs/joye/11.jpg" alt="Slide 3" /></div>
-      <div class="slide"><img src="/project-imgs/joye/13.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/joye/15.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/project-imgs/joye/22.jpg" alt="Slide 3" /></div>
-      <div class="slide"><img src="/project-imgs/joye/25.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/joye/31.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/Huntersville_Office.jpg" alt="Slide 3" /></div>
-      <div class="slide"><img src="/project-imgs/polly-webb/1.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/polly-webb/3.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/project-imgs/saint/1.jpg" alt="Slide 3" /></div>
-      <div class="slide"><img src="/project-imgs/saint/2.jpg" alt="Slide 1" /></div>
-      <div class="slide"><img src="/project-imgs/saint/9.jpg" alt="Slide 2" /></div>
-      <div class="slide"><img src="/project-imgs/wandel/2.jpg" alt="Slide 3" /></div>
+      <div class="slide"><img src="/project-imgs/edisto/1.jpg" alt="Slide 1" data-link="/projects/island-orgo"/></div>
+      <div class="slide"><img src="/project-imgs/edisto/7.jpg" alt="Slide 2" data-link="/projects/island-orgo"/></div>
+      <div class="slide"><img src="/project-imgs/edisto/11.jpg" alt="Slide 3" data-link="/projects/island-orgo"/></div>
+      <div class="slide"><img src="/project-imgs/edisto/13.jpg" alt="Slide 4" data-link="/projects/island-orgo"/></div>
+      <div class="slide"><img src="/project-imgs/edisto/15.jpg" alt="Slide 5" data-link="/projects/island-orgo"/></div>
+      <div class="slide"><img src="/project-imgs/joye/11.jpg" alt="Slide 6" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/project-imgs/joye/13.jpg" alt="Slide 7" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/project-imgs/joye/15.jpg" alt="Slide 8" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/project-imgs/joye/22.jpg" alt="Slide 9" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/project-imgs/joye/25.jpg" alt="Slide 10" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/project-imgs/joye/31.jpg" alt="Slide 11" data-link="/projects/lkn-indoor-outdoor"/></div>
+      <div class="slide"><img src="/Huntersville_Office.jpg" alt="Slide 12" data-link="/projects/office-42"/></div>
+      <div class="slide"><img src="/project-imgs/polly-webb/1.jpg" alt="Slide 13" data-link="/projects/maine-cottage-sunroom"/></div>
+      <div class="slide"><img src="/project-imgs/polly-webb/3.jpg" alt="Slide 14" data-link="/projects/maine-cottage-sunroom"/></div>
+      <div class="slide"><img src="/project-imgs/saint/1.jpg" alt="Slide 15" data-link="/projects/lkn-nature-bath"/></div>
+      <div class="slide"><img src="/project-imgs/saint/2.jpg" alt="Slide 16" data-link="/projects/lkn-nature-bath"/></div>
+      <div class="slide"><img src="/project-imgs/saint/9.jpg" alt="Slide 17" data-link="/projects/lkn-nature-bath"/></div>
+      <div class="slide"><img src="/project-imgs/wandel/2.jpg" alt="Slide 18" data-link="/projects/cornelius-bath"/></div>
     </div>
 
     <div class="arrow left" onclick="plusSlides(-1)">❮</div>
@@ -114,6 +114,17 @@
   }
 
   shuffleSlides();
+
+  // Add click listeners to all images in the slideshow
+  document.querySelectorAll('#slides img').forEach(img => {
+    img.addEventListener('click', () => {
+      const link = img.getAttribute('data-link');
+      if (link) {
+        window.location.href = link;
+      }
+    });
+  });
+
 
 
   let currentIndex = 0;

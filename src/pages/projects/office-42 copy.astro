@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const title = "Island Organic Modern";
-const description = "Edisto design photos";
+const title = "Huntersville Home Office for Two";
+const description = "Office for Two";
 ---
-<BaseLayout {title} {description} showScrollButton = true>
+<BaseLayout {title} {description}>
   <style>
     .page-wrapper {
       max-width: 67.5vw;
@@ -177,8 +177,8 @@ const description = "Edisto design photos";
   <div class="page-wrapper">
     <h1>{title}</h1>
     <p>
-      A family home on Edisto Island, designed to be relaxed and welcoming. A blend of modern forms and organic materials and furnishings encourages peaceful living and happy times. 
-      The home was designed to take full advantage of the sea breezes and the incredible views of the marsh and Atlantic Ocean beyond.
+      The homeowners were looking for a stylish update to their home office that would serve them both. 
+      The redesign adds function and a wow factor to their front entry area where the office is located with a custom built T-shape desk and floating shelves.
     </p>
 
     <div class="gallery" id="gallery">
@@ -207,8 +207,8 @@ const description = "Edisto design photos";
   </div>
 
   <script>
-  const manualLeftIndices = [25, 26];   // zero-based index for images 26 and 27
-  const manualRightIndices = [27];      // zero-based index for image 28
+  const manualLeftIndices = [];   // zero-based index for images 26 and 27
+  const manualRightIndices = [];      // zero-based index for image 28
 
   const overlay = document.getElementById('overlay');
   const overlayImg = document.getElementById('overlayImg');
@@ -224,34 +224,11 @@ const description = "Edisto design photos";
   let failedCount = 0;
 
     const imageData = [
-    { src: "/project-imgs/edisto/1.jpg", caption: "Smooth white stucco and vertical cedar siding invite you to relax and enjoy the beauty of the salt marsh and creek with ocean views beyond." },
-    { src: "/project-imgs/edisto/2.jpg", caption: "The house fronts on Scott Creek with access to the beach via boat. Great crabbing and fishing off the dock." },
-    { src: "/project-imgs/edisto/3.jpg", caption: "The elevated swimming pool relates directly to the main living floor of the house. The expansive windows and doors open up to views of the marsh, creek and ocean beyond." },
-    { src: "/project-imgs/edisto/4.jpg", caption: "The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces. The decking is a treated pine made to resist weathering, mold and mildew. This material was selected as an alternate to Ipe which is vulnerable to overharvesting." },
-    { src: "/project-imgs/edisto/5.jpg", caption: "Outdoor covered dining and living spaces bookend the pool and sun deck. The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces." },
-    { src: "/project-imgs/edisto/6.jpg", caption: "Sunrise over the marsh." },
-    { src: "/project-imgs/edisto/7.jpg", caption: " " },
-    { src: "/project-imgs/edisto/8.jpg", caption: "A decked walkway winds through the palmettos and live oak trees to the dock." },
-    { src: "/project-imgs/edisto/9.jpg", caption: "Outdoor shower opens to back yard views of the marsh." },
-    { src: "/project-imgs/edisto/10.jpg", caption: " " },
-    { src: "/project-imgs/edisto/11.jpg", caption: "Open plan living/dining/kitchen areas all open to the outdoor deck and patios. The 20' sliding doors in the living room pocket into the walls, merging inside and out. A similar set of doors in the kitchen connects it to the outdoor dining and grilling area." },
-    { src: "/project-imgs/edisto/12.jpg", caption: " " },
-    { src: "/project-imgs/edisto/13.jpg", caption: "The plastered fireplace adds beautiful texture to the modern fireplace in the living room. The floating bench below the TV was fabricated from a reclaimed barn beam adding warmth to the space and the heavy linen slip covered sofas invite lounging." },
-    { src: "/project-imgs/edisto/14.jpg", caption: "Open plan spaces invite casual living. The covered outdoor dining and grilling space is easily accessed from the kitchen via full height glass sliding doors. A scullery off the kitchen provides out of view clean up space and extra storage. The clean lines of the furniture mirror the contemporary cabinetry and lighting." },
-    { src: "/project-imgs/edisto/15.jpg", caption: "The studio office has large, full height sliding glass doors facing the marsh and ocean just beyond. The slatted cedar wall on the patio provides privacy, still allowing air and light through." },
-    { src: "/project-imgs/edisto/16.jpg", caption: "" },
-    { src: "/project-imgs/edisto/17.jpg", caption: "A modern stair case with custom iron hand rail leads to the bedrooms upstairs. A massive window at the landing provides natural light and draws the eye up the stairwell. The elongated second step creates a unique bench seat at the front door." },
-    { src: "/project-imgs/edisto/18.jpg", caption: "" },
-    { src: "/project-imgs/edisto/19.jpg", caption: "Soft, organic fabrics and rugs add texture and casual sophistication to the bedrooms. The large windows in all the bedrooms open to marsh and ocean views." },
-    { src: "/project-imgs/edisto/20.jpg", caption: "The bathrooms have poured concrete floors with zero entry showers. Custom vanities are made from reclaimed barn wood with concrete look countertops. The windows open wide, blurring the lines between inside and outside." },
-    { src: "/project-imgs/edisto/21.jpg", caption: "" },
-    { src: "/project-imgs/edisto/22.jpg", caption: "The bunk room bed was designed to include large storage closets utilizing the space under the ladders. A queen bed with twins above provide comfortable sleeping for 4!" },
-    { src: "/project-imgs/edisto/23.jpg", caption: "Detail" },
-    { src: "/project-imgs/edisto/24.jpg", caption: "Detail" },
-    { src: "/project-imgs/edisto/25.jpg", caption: "Detail" },
-    { src: "/project-imgs/edisto/26.jpg", caption: "Detail" },
-    { src: "/project-imgs/edisto/27.jpg", caption: "Detail" },
-    { src: "/project-imgs/edisto/28.jpg", caption: "Detail" },
+    { src: "/project-imgs/office/1.jpg", caption: "The T-shaped custom built desk provides work surface and storage for two. The dark painted shiplap feature wall with floating shelves, a graphic rug and a statement light add design wow to the space." },
+    { src: "/project-imgs/office/2.jpg", caption: "The open plan office as viewed from the front door entry hall." },
+    { src: "/project-imgs/office/3.jpg", caption: "DETAIL" },
+    { src: "/project-imgs/office/4.jpg", caption: "Design concept hand sketch" },
+    { src: "/project-imgs/office/5.jpg", caption: "BEFORE" }
   ];
 
   function openOverlay(index) {
@@ -341,13 +318,13 @@ const description = "Edisto design photos";
 
       await new Promise((resolve) => {
         img.onload = () => {
-          // Manual override
+          // 🧠 Manual override first
           if (manualLeftIndices.includes(i)) {
             col1.appendChild(img);
           } else if (manualRightIndices.includes(i)) {
             col2.appendChild(img);
           } else {
-            // Automatic placement by column height
+            // 🤖 Automatic placement by column height
             if (col1Height <= col2Height) {
               col1.appendChild(img);
               col1Height += img.getBoundingClientRect().height;

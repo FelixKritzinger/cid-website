@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 
-const { title, description, image } = Astro.props;
+const { title, description, image, showScrollButton = false} = Astro.props;
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -224,6 +224,59 @@ const currentPath = Astro.url.pathname;
         width: 2em;
         height: 2em;
       }
+
+      #scrollToTopBtn {
+        position: fixed;
+        top: 87.5vh;
+        right: 3rem;
+        background-color: rgb(255,255,255,1);
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 200;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    #scrollToTopBtn.show {
+        opacity: 0.8;
+
+        visibility: visible;
+    }
+
+    #scrollToTopBtn:hover {
+        opacity: 1;
+        gap: .5rem;
+        height: 4.85rem;           /* taller to accommodate label */
+        border-radius: 1.5rem;  /* round vertical rectangle */
+    }
+
+    #scrollToTopBtn .label {
+        font-size: 1rem;
+        opacity: 0;
+        max-height: 0;
+        transition: opacity 0.3s, max-height 0.3s;
+        line-height: 1;
+    }
+
+    #scrollToTopBtn:hover .label {
+        opacity: 1;
+        max-height: 1rem;
+    }
+
+
     </style>
   </head>
 
@@ -317,6 +370,18 @@ const currentPath = Astro.url.pathname;
       </div>
     </footer>
 
+    {Astro.props.showScrollButton && (
+      <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 12 9 20 17" />
+        </svg>
+        <span class="label">Top</span>
+      </button>
+    )}
+
+
+
+
     <script>
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const dropdownMenu = document.getElementById('dropdownMenu');
@@ -334,6 +399,22 @@ const currentPath = Astro.url.pathname;
           dropdownMenu.setAttribute('aria-hidden', 'true');
         }
       });
+
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight) {
+          scrollToTopBtn.classList.add('show');
+        } else {
+          scrollToTopBtn.classList.remove('show');
+        }
+      });
+
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
     </script>
+
   </body>
 </html>
