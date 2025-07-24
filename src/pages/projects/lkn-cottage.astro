@@ -47,6 +47,32 @@ const description = "Daniel Lake House";
       cursor: pointer;
     }
 
+    :global(.image-badge-wrapper) {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .image-badge-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+
+    :global(.badge) {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      pointer-events: none;
+    }
+
 
     @media (max-width: 768px) {
       .gallery {
@@ -244,9 +270,7 @@ const description = "Daniel Lake House";
     { src: "/project-imgs/daniel/17.jpg", caption: "DETAIL - repurposed antique cabinet. Carrera marble top with a semi recessed vessel sink finished the unit." },
     { src: "/project-imgs/daniel/18.jpg", caption: "DETAIL - Carrera marble top with a semi recessed vessel sink finished the unit." },
     { src: "/project-imgs/daniel/19.jpg", caption: "Guest bedroom" }
-
-  ];
-
+    ];
   function openOverlay(index) {
     currentIndex = index;
     const { src, caption } = imageData[index];
@@ -322,30 +346,36 @@ const description = "Daniel Lake House";
     let col2Height = 0;
 
     for (let i = 0; i < images.length; i++) {
-      const { src } = images[i];
+      const { src, badge } = images[i];
       const img = new Image();
       img.src = src;
       img.alt = `Gallery image ${i + 1}`;
       img.dataset.index = i;
-      img.style.width = '100%';
-      img.style.display = 'block';
-      img.style.marginBottom = '1.5rem';
-      img.style.cursor = 'pointer';
 
       await new Promise((resolve) => {
         img.onload = () => {
-          // 🧠 Manual override first
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('image-badge-wrapper');
+
+          if (badge) {
+            const badgeElem = document.createElement('div');
+            badgeElem.classList.add('badge');
+            badgeElem.textContent = badge;
+            wrapper.appendChild(badgeElem);
+          }
+
+          wrapper.appendChild(img);
+
           if (manualLeftIndices.includes(i)) {
-            col1.appendChild(img);
+            col1.appendChild(wrapper);
           } else if (manualRightIndices.includes(i)) {
-            col2.appendChild(img);
+            col2.appendChild(wrapper);
           } else {
-            // 🤖 Automatic placement by column height
             if (col1Height <= col2Height) {
-              col1.appendChild(img);
+              col1.appendChild(wrapper);
               col1Height += img.getBoundingClientRect().height;
             } else {
-              col2.appendChild(img);
+              col2.appendChild(wrapper);
               col2Height += img.getBoundingClientRect().height;
             }
           }

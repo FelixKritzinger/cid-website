@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = "Island Organic Modern";
-const description = "Edisto design photos";
+const alt_description = "Edisto design photos";
 ---
-<BaseLayout {title} {description} showScrollButton = true>
+<BaseLayout {title} {alt_description} showScrollButton = true>
   <style>
     .page-wrapper {
       max-width: 67.5vw;
@@ -23,7 +23,7 @@ const description = "Edisto design photos";
     }
 
     p {
-      font-size: clamp(.25rem, .85vw, 1.25rem);
+      font-size: clamp(.25rem, 1vw, 2.25rem);
       margin-bottom: 2.5rem;
     }
 
@@ -45,6 +45,32 @@ const description = "Edisto design photos";
       display: block;
       margin-bottom: 1.5rem;
       cursor: pointer;
+    }
+
+    :global(.image-badge-wrapper) {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .image-badge-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+
+    :global(.badge) {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      pointer-events: none;
     }
 
 
@@ -76,9 +102,14 @@ const description = "Edisto design photos";
       margin-top: 1rem;
       color: white;
       max-width: 70vw;
+      height: 15vh;
       text-align: center;
       transition: max-height 0.3s ease;
       overflow: hidden;
+    }
+
+    .caption-container p{
+      font-size: clamp(.25rem, 1.1vw, 2.25rem);
     }
 
     .caption-container.collapsed {
@@ -94,8 +125,8 @@ const description = "Edisto design photos";
     }
 
     .overlay img {
+      padding-top: 2.5vh;
       border-radius: 0;
-      padding-top: 2px;
       max-height: 80vh;
       max-width: 90vw;
       transition: max-height 0.3s ease;
@@ -224,7 +255,7 @@ const description = "Edisto design photos";
   let failedCount = 0;
 
     const imageData = [
-    { src: "/project-imgs/edisto/1.jpg", caption: "Smooth white stucco and vertical cedar siding invite you to relax and enjoy the beauty of the salt marsh and creek with ocean views beyond." },
+    { src: "/project-imgs/edisto/1.jpg", caption: "Smooth white stucco and vertical cedar siding invite you to relax and enjoy the beauty of the salt marsh and creek with ocean views beyond."},
     { src: "/project-imgs/edisto/2.jpg", caption: "The house fronts on Scott Creek with access to the beach via boat. Great crabbing and fishing off the dock." },
     { src: "/project-imgs/edisto/3.jpg", caption: "The elevated swimming pool relates directly to the main living floor of the house. The expansive windows and doors open up to views of the marsh, creek and ocean beyond." },
     { src: "/project-imgs/edisto/4.jpg", caption: "The pool is elevated so it relates directly to the living room and outdoor covered dining and lounge spaces. The decking is a treated pine made to resist weathering, mold and mildew. This material was selected as an alternate to Ipe which is vulnerable to overharvesting." },
@@ -329,30 +360,36 @@ const description = "Edisto design photos";
     let col2Height = 0;
 
     for (let i = 0; i < images.length; i++) {
-      const { src } = images[i];
+      const { src, badge } = images[i];
       const img = new Image();
       img.src = src;
       img.alt = `Gallery image ${i + 1}`;
       img.dataset.index = i;
-      img.style.width = '100%';
-      img.style.display = 'block';
-      img.style.marginBottom = '1.5rem';
-      img.style.cursor = 'pointer';
 
       await new Promise((resolve) => {
         img.onload = () => {
-          // Manual override
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('image-badge-wrapper');
+
+          if (badge) {
+            const badgeElem = document.createElement('div');
+            badgeElem.classList.add('badge');
+            badgeElem.textContent = badge;
+            wrapper.appendChild(badgeElem);
+          }
+
+          wrapper.appendChild(img);
+
           if (manualLeftIndices.includes(i)) {
-            col1.appendChild(img);
+            col1.appendChild(wrapper);
           } else if (manualRightIndices.includes(i)) {
-            col2.appendChild(img);
+            col2.appendChild(wrapper);
           } else {
-            // Automatic placement by column height
             if (col1Height <= col2Height) {
-              col1.appendChild(img);
+              col1.appendChild(wrapper);
               col1Height += img.getBoundingClientRect().height;
             } else {
-              col2.appendChild(img);
+              col2.appendChild(wrapper);
               col2Height += img.getBoundingClientRect().height;
             }
           }
