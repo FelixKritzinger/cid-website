@@ -137,12 +137,16 @@ const alt_description = "Edisto design photos";
     }
 
     .image-wrapper {
+      max-height: 80vh;
       max-width: 85vw;
-      border-radius: 0;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .image-wrapper.caption-collapsed {
+      max-height: 90vh;
     }
 
     .toggle-caption-btn {
