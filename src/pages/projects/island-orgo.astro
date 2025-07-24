@@ -74,9 +74,13 @@ const alt_description = "Edisto design photos";
     }
 
 
-    @media (max-width: 768px) {
-      .gallery {
-        flex-direction: column;
+    @media (max-width: 1200px) {
+      .overlay.caption-collapsed img {
+        max-height: 80vh;
+      }
+
+      .overlay img {
+        max-height: 70vh;
       }
     }
 
@@ -122,7 +126,6 @@ const alt_description = "Edisto design photos";
       padding-top: 2.5vh;
       max-height: 90vh;
       max-width: 85vw;
-      aspect-ratio: auto;
     }
 
     .overlay img {
