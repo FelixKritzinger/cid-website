@@ -86,6 +86,11 @@ const alt_description = "Edisto design photos";
           gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
         }*/
       }
+    @media (max-width: 768px) {
+      .gallery {
+        flex-direction: column;
+      }
+    }
 
     .overlay {
       border-radius: 0;
@@ -417,7 +422,40 @@ const alt_description = "Edisto design photos";
         };
       });
     }
+
+    if (window.innerWidth < 500) {
+      reflowColumnsForMobile();
+    }
   }
+
+  function reflowColumnsForMobile() {
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    const gallery = document.getElementById('gallery');
+
+    const combined = [];
+    const col1Children = Array.from(col1.children);
+    const col2Children = Array.from(col2.children);
+    const maxLength = Math.max(col1Children.length, col2Children.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      if (col1Children[i]) combined.push(col1Children[i]);
+      if (col2Children[i]) combined.push(col2Children[i]);
+    }
+
+    // Clear columns
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+
+    // Create single column
+    const singleCol = document.createElement('div');
+    singleCol.classList.add('column');
+    combined.forEach((el) => singleCol.appendChild(el));
+
+    gallery.innerHTML = '';
+    gallery.appendChild(singleCol);
+  }
+
 
 </script>
 
