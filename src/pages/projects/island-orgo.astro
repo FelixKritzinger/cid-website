@@ -86,7 +86,7 @@ const alt_description = "Edisto design photos";
           gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
         }*/
       }
-    @media (max-width: 768px) {
+    @media (max-width: 500px) {
       .gallery {
         flex-direction: column;
       }
@@ -146,13 +146,12 @@ const alt_description = "Edisto design photos";
     }
 
     .image-wrapper {
-      max-height: 80dvh;
-      max-width: 85dvw;
       position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: inline-block; /* shrinkwrap the image */
+      width: auto;
+      height: auto;
     }
+
 
     .image-wrapper.caption-collapsed {
       max-height: 90dvh;
@@ -160,7 +159,7 @@ const alt_description = "Edisto design photos";
 
     .toggle-caption-btn {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 7dvh;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
@@ -199,8 +198,8 @@ const alt_description = "Edisto design photos";
     }
 
     .close-btn {
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 2.5dvh;
+      right: 2.5dvw;
     }
 
     .nav-btn.prev {
