@@ -41,7 +41,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     }
 
     .two-column-section__image {
-      max-height: 70vh;
+      max-height: 70dvh;
       height: auto;
       width: auto;
       max-width: 35vw;
@@ -59,14 +59,16 @@ import ProjectGrid from '../components/ProjectGrid.astro';
     .two-column-section__content h2 {
       font-family: 'MontserratMedium', sans-serif;
       letter-spacing: 0.1em;
-      font-size: clamp(0.25rem, 1.4vw, 4.5rem);
+      //font-size: clamp(0.25rem, 1.4vw, 4.5rem);
+      font-size: clamp(.25rem, 1.3*(.6rem + .35dvw + .2dvh), 4.25rem);
       font-weight: 300;
       margin-bottom: 1rem;
       color: #000;
     }
 
     .two-column-section__content p {
-      font-size: clamp(0.25rem, .95vw, 2.5rem);
+      //font-size: clamp(0.25rem, .95vw, 2.5rem);
+      font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
       line-height: 1.6;
       margin-bottom: 2rem;
       color: #666;
