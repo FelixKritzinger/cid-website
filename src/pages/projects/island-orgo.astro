@@ -9,8 +9,18 @@ const alt_description = "Edisto design photos";
     .page-wrapper {
       max-width: 67.5vw;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 1rem 1rem;
     }
+
+    @media (max-width: 1300px) {
+        .page-wrapper {
+          padding: 1rem 0rem;
+          max-width: 90dvw;
+        }
+        .gallery {
+          gap: 1rem;
+        }
+      }
 
     h1, p {
       text-align: center;
@@ -31,6 +41,7 @@ const alt_description = "Edisto design photos";
 
     .gallery {
       display: flex;
+      //gap: clamp(.5rem, .7dvw + 1.2dvh + .5rem, 2rem);
       gap: 1.5rem;
     }
 
