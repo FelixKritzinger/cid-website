@@ -9,8 +9,8 @@
   .slideshow {
     position: relative;
     width: 100%;
-    height: 78vh;           /* Capped by viewport height */
-    margin: 2vh auto;       /* Centered horizontally with auto margins */
+    height: 78dvh;           /* Capped by viewport height */
+    margin: 2dvh auto;       /* Centered horizontally with auto margins */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@
 
   .slide img {
     max-width: 100vw;       /* Prevent overflow horizontally */
-    max-height: 80vh;       /* Prevent overflow vertically */
+    max-height: 80dvh;       /* Prevent overflow vertically */
     width: auto;
     height: auto;
     object-fit: contain;    /* Scale down, preserve aspect ratio */
@@ -55,14 +55,14 @@
 
   @media (max-width: 1024px) {
     .slideshow {
-      margin: 2vh auto;
+      margin: 2dvh auto;
     }
   }
 
   @media (max-width: 768px), (orientation: portrait) {
     .slideshow {
       height: auto;
-      margin: 2vh auto;
+      margin: 2dvh auto;
     }
 
     .slide img {
