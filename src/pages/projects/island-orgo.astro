@@ -73,17 +73,6 @@ const alt_description = "Edisto design photos";
       pointer-events: none;
     }
 
-/*
-    @media (max-width: 1200px) {
-      .overlay.caption-collapsed img {
-        max-height: 80vh;
-      }
-
-      .overlay img {
-        max-height: 70vh;
-      }
-    }
-*/
     .overlay {
       border-radius: 0;
       position: fixed;
@@ -106,14 +95,14 @@ const alt_description = "Edisto design photos";
       margin-top: .25rem;
       color: white;
       width: 80dvw;
-      height: 15dvh;
+      height: 12.5dvh;
       text-align: center;
       transition: max-height 0.3s ease;
       overflow: hidden;
     }
 
     .caption-container p{
-      font-size: clamp(.25rem, 1.1vw, 2.25rem);
+      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
     }
 
     .caption-container.collapsed {
@@ -123,13 +112,14 @@ const alt_description = "Edisto design photos";
     }
 
     .overlay.caption-collapsed img {
-      padding-top: 2.5dvh;
+      padding-top: 5dvh;
       max-height: 90dvh;
       max-width: 85dvw;
     }
 
     .overlay img {
-      padding-top: 2.5dvh;
+      padding-top: 5dvh;
+      padding-bottom:2.5dvh;
       border-radius: 0;
       max-height: 80dvh;
       max-width: 85dvw;
