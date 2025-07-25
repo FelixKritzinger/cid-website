@@ -103,7 +103,7 @@ const alt_description = "Edisto design photos";
       z-index: 999;
       flex-direction: column;
       overflow: hidden;
-      padding-bottom: 3rem;
+      padding-bottom: 0rem;
     }
 
     .overlay.active {
@@ -111,7 +111,6 @@ const alt_description = "Edisto design photos";
     }
 
     .caption-container {
-      margin-top: .25rem;
       color: white;
       width: 80dvw;
       height: 12.5dvh;
@@ -131,14 +130,13 @@ const alt_description = "Edisto design photos";
     }
 
     .overlay.caption-collapsed img {
-      padding-top: 5dvh;
+      padding-top: 0dvh;
       max-height: 90dvh;
       max-width: 85dvw;
     }
 
     .overlay img {
-      padding-top: 5dvh;
-      padding-bottom:2.5dvh;
+      padding-top: 0dvh;
       border-radius: 0;
       max-height: 80dvh;
       max-width: 85dvw;
@@ -159,7 +157,7 @@ const alt_description = "Edisto design photos";
 
     .toggle-caption-btn {
       position: absolute;
-      bottom: 7dvh;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
@@ -354,10 +352,39 @@ const alt_description = "Edisto design photos";
 
   document.addEventListener('keydown', (e) => {
     if (!overlay.classList.contains('active')) return;
-    if (e.key === 'Escape') closeOverlay();
-    if (e.key === 'ArrowLeft') showPrev();
-    if (e.key === 'ArrowRight') showNext();
+
+    // Block repeated triggers only for caption-related keys
+    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
+
+    switch (e.key) {
+      case 'Escape':
+        closeOverlay();
+        break;
+      case 'ArrowLeft':
+        showPrev(); // Allow holding
+        break;
+      case 'ArrowRight':
+        showNext(); // Allow holding
+        break;
+      case 'ArrowDown':
+        if (!captionExpanded) {
+          toggleCaptionBtn.click(); // expand
+        }
+        break;
+      case 'ArrowUp':
+        if (captionExpanded) {
+          toggleCaptionBtn.click(); // collapse
+        }
+        break;
+      case 'c':
+      case 'C':
+        toggleCaptionBtn.click(); // toggle
+        break;
+    }
   });
+
+
+
 
   document.addEventListener('DOMContentLoaded', () => {
     const col1 = document.getElementById('col1');
@@ -454,6 +481,7 @@ const alt_description = "Edisto design photos";
     gallery.innerHTML = '';
     gallery.appendChild(singleCol);
   }
+
 
 
 </script>
