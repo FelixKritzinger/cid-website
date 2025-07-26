@@ -7,7 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     @font-face {
       font-family: 'MontserratMedium';
       src: url('/fonts/Montserrat-Medium.woff') format('woff');
-      font-weight: 100 900;
+      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -208,10 +208,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .stars {
       color: #f5c518;
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .review-text {
+      display: block;
       font-family: 'MontserratItalic', sans-serif;
       font-size: clamp(.25rem, (.6rem + .35dvw + .2dvh), 4.25rem);
       line-height: 1.6;
@@ -330,25 +331,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="slide">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text">
+            <a href="/reviews" class="review-text" style="text-decoration: none;">
               We couldn't be happier with the outcome of our new home. Building a home is such a complex and taxing process. Sandy was instrumental in helping with the design and build our custom home. She was always there any time of day or weekend to help us move forward and assist us with every detail. Our builder had an aggressive timeframe, and making builder selections on time and within budget was a priority. Sandy also took the time to understand our preferred style. Her creativity and eye for detail made the entire project come together beautifully, and she managed to get ahead of as many of the supply chain issues as possible so that we could function in our new home right after we moved in... <br><br><span style="font-family:MontserratRegular">Tracey McKenna</span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="slide">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text">
+            <a href="/reviews" class="review-text" style="text-decoration: none;">
               We wanted to update our new (old) home and have more efficient use of existing space. We found Sandy Kritzinger (Collaborative Interior Design) on Houzz.com and she stood out among others. Sandy understood what we were trying to solve for, brought us creative solutions, and helped us envision things through her design boards that we may not have otherwise considered. The project with Sandy involved a family room and kitchen remodel, as well as working through plans for future phases of renovation/additions. She helped us pull together the architectural/construction, design, and decorating phases of our renovation. Sandy understood our desire to do some of the legwork and installation ourselves...<br><br><span style="font-family:MontserratRegular">Donna Korte</span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="slide">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text">
+            <a href="/reviews" class="review-text" style="text-decoration: none;">
               My husband and I recently completed a full house reno on our 20 year old townhome as it was in desperate need of updating and modernizing.   This was the first time we had done a reno and the task seemed quite daunting given all the work involved, decisions required and the fact that my husband and I are polar opposites on the design spectrum.  We were very fortunate to work with Sandy as she made the entire endeavour seem easy as she shepherded us through the project from start to finish.  She was able to take our disparate tastes and objectives to design around our eclectic art collection and collections from our travels to a create a wonderful haven.  Sandy was very patient with us in addressing our many questions... <br><br><span style="font-family:MontserratRegular">Houzz User</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>
