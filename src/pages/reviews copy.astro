@@ -1,0 +1,176 @@
+---
+// reviews.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Reviews" description="Client testimonials for Collaborative Interior Design.">
+  <style>
+
+  @font-face {
+    font-family: 'MontserratItalic';
+    src: url('/fonts/Montserrat-Italic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'MontserratRegular';
+    src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+    .reviews-page {
+      max-width: 90vw;
+      margin: 2rem 0rem;
+      padding: 2rem;
+      border-radius: 0;
+      text-align: left;
+      font-family: 'MontserratRegular', sans-serif;
+    }
+
+    .reviews-page h1 {
+      font-size: clamp(.25rem, 2*(.6rem + .35dvw + .2dvh), 4.25rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      text-align: left;
+    }
+
+    .review {
+      margin-bottom: 2rem;
+      text-align: left;
+      max-width: 80vw;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .stars-inline {
+      color: #f5c518;
+      font-size: 1.2rem;
+    }
+
+    .review-text {
+      font-size: clamp(.25rem, (.6rem + .35dvw + .2dvh), 4.25rem);
+      line-height: 1.6;
+      color: #333;
+      overflow: hidden;
+      transition: height 0.5s ease;
+      position: relative;
+      font-family: 'MontserratItalic', sans-serif;
+    }
+
+    .review-text.collapsed::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3rem;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255,255,255, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #000;
+      font-family: 'MontserratRegular', sans-serif;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.45rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .arrow-icon {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .arrow-icon.rotate {
+      transform: rotate(180deg);
+    }
+  </style>
+
+  <section class="reviews-page">
+    <h1>CLIENT TESTIMONIALS</h1>
+
+    <div class="review">
+      <div class="reviewer">
+        <span>Tracey McKenna</span><span class="stars-inline">★★★★★</span>
+      </div>
+      <div class="review-text collapsed" id="review1">
+        <p>We couldn't be happier with the outcome of our new home. Building a home is such a complex and taxing process. Sandy was instrumental in helping with the design and build our custom home. 
+        She was always there any time of day or weekend to help us move forward and assist us with every detail. Our builder had an aggressive timeframe, and making builder selections on time and within budget was a priority. </p> 
+        <p>Sandy also took the time to understand our preferred style. Her creativity and eye for detail made the entire project come together beautifully, and she managed to get ahead of as many of the supply chain issues as possible so that we could function in our new home right after we moved in.</p> 
+        <p>She was an absolute pleasure to work with and extremely organized and on point. We highly recommend Sandy for any project. We LOVE our new home!!</p>
+      </div>
+      <button class="read-more-btn" data-target="review1">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- More reviews can be added similarly -->
+    <!-- <p>We wanted to update our new (old) home and have more efficient use of existing space. We found Sandy Kritzinger (Collaborative Interior Design) on Houzz.com and she stood out among others. 
+        Sandy understood what we were trying to solve for, brought us creative solutions, and helped us envision things through her design boards that we may not have otherwise considered. 
+        The project with Sandy involved a family room and kitchen remodel, as well as working through plans for future phases of renovation/additions. She helped us pull together the architectural/construction, design, and decorating phases of our renovation.  </p> 
+        <p>Sandy understood our desire to do some of the legwork and installation ourselves to help keep costs down. She reviewed our architect’s drawings for current and future phases; 
+        worked with us on the design, selections, and sourcing for the family room and kitchen; and plans for future phases/additions. We used some of the tradesmen and resources that Sandy recommended, and she kept us up to date on the status of each. 
+        They were good to work with and we could tell how well-respected Sandy is in the industry.   </p> 
+        <p>We love the transformation to our home! With Sandy’s help, we have achieved the look and feel of a peaceful and welcoming rustic, lake cottage.</p> -->
+  </section>
+
+  <script>
+    document.querySelectorAll('.read-more-btn').forEach(button => {
+      const reviewId = button.getAttribute('data-target');
+      const reviewText = document.getElementById(reviewId);
+      const arrow = button.querySelector('.arrow-icon');
+      const text = button.querySelector('.button-text');
+
+      const collapsedHeight = 120; // px
+      reviewText.style.height = collapsedHeight + 'px';
+
+      button.addEventListener('click', () => {
+        const isCollapsed = reviewText.classList.contains('collapsed');
+
+        if (isCollapsed) {
+          const fullHeight = reviewText.scrollHeight + 'px';
+          reviewText.style.height = fullHeight;
+          reviewText.classList.remove('collapsed');
+          text.textContent = 'Read less';
+          arrow.classList.add('rotate');
+
+          setTimeout(() => {
+            reviewText.style.height = 'auto';
+          }, 500);
+        } else {
+          const currentHeight = reviewText.scrollHeight + 'px';
+          reviewText.style.height = currentHeight;
+
+          requestAnimationFrame(() => {
+            reviewText.style.height = collapsedHeight + 'px';
+            reviewText.classList.add('collapsed');
+            text.textContent = 'Read more';
+            arrow.classList.remove('rotate');
+          });
+        }
+      });
+    });
+  </script>
+</BaseLayout>

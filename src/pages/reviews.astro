@@ -1,24 +1,26 @@
 ---
+// reviews.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Reviews" description="Client testimonials for Collaborative Interior Design.">
   <style>
-    @font-face {
-      font-family: 'MontserratRegular';
-      src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
 
-    @font-face {
-      font-family: 'MontserratItalic';
-      src: url('/fonts/Montserrat-Italic.woff2') format('woff2');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
+  @font-face {
+    font-family: 'MontserratItalic';
+    src: url('/fonts/Montserrat-Italic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'MontserratRegular';
+    src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
 
     .reviews-page {
       max-width: 90vw;
@@ -47,10 +49,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: clamp(.25rem, 1.05*(.6rem + .35dvw + .2dvh), 4.25rem);
-      font-weight: 700;
-      color: #000;
-      font-family: 'MontserratRegular', sans-serif;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
 
     .stars-inline {
@@ -62,34 +62,59 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       font-size: clamp(.25rem, (.6rem + .35dvw + .2dvh), 4.25rem);
       line-height: 1.6;
       color: #333;
+      overflow: hidden;
+      transition: height 0.5s ease;
+      position: relative;
       font-family: 'MontserratItalic', sans-serif;
     }
 
-    /* Collapsed state using line clamp */
-    .review-text.collapsed {
-      display: -webkit-box;
-      -webkit-line-clamp: 3; /* number of lines to show */
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      position: relative;
+    .review-text p {
+      margin-bottom: 0rem;
     }
+
+
+    .review-text.collapsed::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3rem;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255,255,255, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    .review-date {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
 
     .read-more-btn {
       background: none;
       border: none;
-      color: #007acc;
+      color: #000;
       font-family: 'MontserratRegular', sans-serif;
       cursor: pointer;
       padding: 0;
-      margin-top: 0.25rem;
-      font-size: 1rem;
+      margin-top: 0.45rem;
+      font-size: 1.1rem;
+      font-weight: 600;
       user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    @media (max-width: 768px) {
-      .review {
-        max-width: 85vw;
-      }
+    .arrow-icon {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .arrow-icon.rotate {
+      transform: rotate(-180deg);
     }
   </style>
 
@@ -100,50 +125,170 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="reviewer">
         <span>Tracey McKenna</span><span class="stars-inline">★★★★★</span>
       </div>
-      <div class="review-text collapsed" id="review1">
+      <div class="review-text collapsed" id="McKenna">
         <p>We couldn't be happier with the outcome of our new home. Building a home is such a complex and taxing process. Sandy was instrumental in helping with the design and build our custom home. 
-        She was always there any time of day or weekend to help us move forward and assist us with every detail. Our builder had an aggressive timeframe, and making builder selections on time and within budget was a priority. </p>
-        <p>Sandy also took the time to understand our preferred style.  
-        Her creativity and eye for detail made the entire project come together beautifully, 
-        and she managed to get ahead of as many of the supply chain issues as possible so that we could function in our new home right after we moved in.</p>
+        She was always there any time of day or weekend to help us move forward and assist us with every detail. Our builder had an aggressive timeframe, and making builder selections on time and within budget was a priority. </p> 
+        <p>Sandy also took the time to understand our preferred style. Her creativity and eye for detail made the entire project come together beautifully, and she managed to get ahead of as many of the supply chain issues as possible so that we could function in our new home right after we moved in.</p> 
         <p>She was an absolute pleasure to work with and extremely organized and on point. We highly recommend Sandy for any project. We LOVE our new home!!</p>
       </div>
-      <button class="read-more-btn" data-target="review1">Read more</button>
+      <button class="read-more-btn" data-target="McKenna">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
     </div>
 
     <div class="review">
       <div class="reviewer">
-        <span>Donna Korte</span><span class="stars-inline">★★★★★</span> 
+        <span>Joye Huseby</span><span class="stars-inline">★★★★★</span>
       </div>
-      <p class="review-text collapsed" id="review2">
-        We wanted to update our new (old) home and have more efficient use of existing space. We found Sandy Kritzinger (Collaborative Interior Design) on Houzz.com and she stood out among others. Sandy understood what we were trying to solve for, brought us creative solutions, and helped us envision things through her design boards that we may not have otherwise considered. The project with Sandy involved a family room and kitchen remodel, as well as working through plans for future phases of renovation/additions. She helped us pull together the architectural/construction, design, and decorating phases of our renovation. Sandy understood our desire to do some of the legwork and installation ourselves...
-      </p>
-      <button class="read-more-btn" data-target="review2">Read more</button>
+      <div class="review-text collapsed" id="Huseby">
+        <p>Full indoor and outdoor renovation, refinishing hardwood floors, replacing all interior trim, lighting, 
+        staircase, refinishing kitchen island, replacing carpeting, three full-bath remodels,  interior finishes and fixtures, full furnishing and window treatments etc, and a complete outdoor living space addition, 
+        outdoor living room, open deck area, outdoor kitchen, and landscaping.  </p> 
+        <p>Exceptional experience working the Sandy.  Her attention to detail is unsurpassed.   Sandy is super easy to work with.  Her communication is great.  We worked very closely on my project for several months.  
+        She is fully committed to making sure the client gets what they want.  Sandy has a knack for being able to customize most anything to fit certain spaces perfectly.  Would highly recommend her.   </p> 
+      </div>
+      <button class="read-more-btn" data-target="Huseby">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+
+
+    <div class="review">
+      <div class="reviewer">
+        <span>Jean Rupprecht</span><span class="stars-inline">★★★★★</span>
+      </div>
+      <div class="review-text collapsed" id="JRupprecht">
+        <p>Sandy was wonderful to work with from beginning of our house remodel project until the end.  She was responsive to phone calls/emails/texts and always projected a calm confidence that made the whole process much easier to live through.  She was professional and we could count on her showing up at our house whenever she was scheduled to.   She was also flexible when I requested a couple changes to our original plan (which I asked for early enough in the process that things could still be changed out.)  </p> 
+        <p>All in all, I would highly recommend Sandy and would be pleased to work with her again in the future.</p>  
+      </div>
+      <button class="read-more-btn" data-target="JRupprecht">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
     </div>
 
     <div class="review">
       <div class="reviewer">
-        <span>Houzz User</span><span class="stars-inline">★★★★★</span>
+        <span>D L</span><span class="stars-inline">★★★★★</span>
       </div>
-      <p class="review-text collapsed" id="review3">
-        My husband and I recently completed a full house reno on our 20 year old townhome as it was in desperate need of updating and modernizing. This was the first time we had done a reno and the task seemed quite daunting given all the work involved, decisions required and the fact that my husband and I are polar opposites on the design spectrum. We were very fortunate to work with Sandy as she made the entire endeavour seem easy as she shepherded us through the project from start to finish. She was able to take our disparate tastes and objectives to design around our eclectic art collection and collections from our travels to a create a wonderful haven. Sandy was very patient with us in addressing our many questions...
-      </p>
-      <button class="read-more-btn" data-target="review3">Read more</button>
+      <div class="review-text collapsed" id="DL">
+        <p>This was my second project with Sandy, and it was just as great of an experience as the first. This one focused on a condo renovation in Southend. The entire place needed a facelift, but the main focus was a bathroom gut rehab. 
+        We went with a loft/industrial style, because the space allowed for it, and it’s also my personal preference. The end result is awesome. In terms of the experience with Sandy, the main points mirror those from my other project (Feb 2020 review).</p> 
+        <p>Her approach is a collaborative one, so she and I made the decisions in partnership. We had to work together to balance our ideal scenario with the budget and with the condo’s potential market value. 
+        Sandy was again helpful in weighing the costs/benefits of options, so that the selections represented good design choices AND good financial decisions. </p>  
+        <p>Also, I used two of Sandy’s preferred contractors for the work. They were both excellent, in price and quality. 
+        Sandy’s vendor referrals represent tangible value for me, as it saves me days of research, and I’ve yet to be disappointed with any of her people. (Many of her recommendations are folks she’s used for her own projects.)</p>
+        <p>Lastly, the entire process was simply enjoyable. Even with my two projects overlapping a bit (potentially confusing and stressful), Sandy helped keep things on track and the design process was honestly fun. 
+        I hope to be done with renovations for a bit.  But whenever I do tackle another project, I will definitely pull in Sandy.</p>
+      </div>
+      <button class="read-more-btn" data-target="DL">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
     </div>
+
+
+    <div class="review">
+      <div class="reviewer">
+        <span>Karen Wandel</span><span class="stars-inline">★★★★★</span>
+      </div>
+      <div class="review-text collapsed" id="Wandel">
+        <p>We turned our entire house over to Collaborative Interior Design. (Seriously!) We built our home 18 years ago. We love our location and neighbors, but the house needed refreshing after years of wear and tear from our active family.  
+        We didn’t have the expertise to pull off a cohesive plan, and frankly didn’t have the time.</p> 
+        <p>Sandy took care of everything.  She helped us pick a beautiful, modern color palette, and created a design plan that greatly enhanced the look and function of our home.  
+        She found high quality flooring, carpeting, cabinets, fixtures, furniture and accessories for our project. Due to her extensive list of contacts, we were able to contract with the best craftsmen and tradespeople in the area. </p>  
+        <p>Our kitchen is a cook’s dream. Our bathrooms are gorgeous, spacious and bright. The teenagers have fun, functional spaces that highlight their individuality and creativity. 
+        Our new family room beautifully accommodates large functions and smaller gatherings. She even transformed the exterior with a new front door, planters and carriage lights. </p>
+        <p>Sandy is a talented designer and an astute project manager. She was easy to work with and completed our (huge) project on time and under budget.</p>
+      </div>
+      <button class="read-more-btn" data-target="Wandel">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="review">
+      <div class="reviewer">
+        <span>Polly Webb</span><span class="stars-inline">★★★★★</span>
+      </div>
+      <div class="review-text collapsed" id="Webb">
+        <p>I built a new home completed in October of 2016 and wanted to finish it after the one year warranty time was up.  I had moved belongings from both a suburban home and a northern lake house and wanted to make the furnishings all fit together, which, with painting, required a whole house redo.  
+        Sandy was just the ticket.  She is professional, knowledgeable, and so creative.  Where I saw blank space, she saw a vision.  Her ideas were in sync with mine and she always had the right person or resource to turn to to complete a task.  
+        The project from start to finish seemed to complete so quickly and I'm thrilled with my new home. Oh, and she's really warm with a wonderful sense of humor.  You can't go wrong.</p> 
+      </div>
+      <button class="read-more-btn" data-target="Webb">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="review">
+      <div class="reviewer">
+        <span>John Paxton</span><span class="stars-inline">★★★★★</span>
+      </div>
+      <div class="review-text collapsed" id="Paxton">
+        <p>I could not be happier with the work Sandy did on my new place....Shes a true pro that is always punctual and really worked to make sure I understood my options while always making sure I was getting the most for the money.  
+        The place looks awesome...very creative.  Its a place now that I can show off.  I highly recommend Sandy!!</p> 
+        <p> Very pleased!</p>
+      </div>
+      <button class="read-more-btn" data-target="Paxton">
+        <span class="button-text">Read more</span>
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+
+
   </section>
 
   <script>
     document.querySelectorAll('.read-more-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const targetId = button.getAttribute('data-target');
-        const reviewText = document.getElementById(targetId);
+      const reviewId = button.getAttribute('data-target');
+      const reviewText = document.getElementById(reviewId);
+      const arrow = button.querySelector('.arrow-icon');
+      const text = button.querySelector('.button-text');
 
-        if (reviewText.classList.contains('collapsed')) {
+      const collapsedHeight = 120; // px
+      reviewText.style.height = collapsedHeight + 'px';
+
+      button.addEventListener('click', () => {
+        const isCollapsed = reviewText.classList.contains('collapsed');
+
+        if (isCollapsed) {
+          const fullHeight = reviewText.scrollHeight + 'px';
+          reviewText.style.height = fullHeight;
           reviewText.classList.remove('collapsed');
-          button.textContent = 'Read less';
+          text.textContent = 'Read less';
+          arrow.classList.add('rotate');
+
+          setTimeout(() => {
+            reviewText.style.height = 'auto';
+          }, 500);
         } else {
-          reviewText.classList.add('collapsed');
-          button.textContent = 'Read more';
+          const currentHeight = reviewText.scrollHeight + 'px';
+          reviewText.style.height = currentHeight;
+
+          requestAnimationFrame(() => {
+            reviewText.style.height = collapsedHeight + 'px';
+            reviewText.classList.add('collapsed');
+            text.textContent = 'Read more';
+            arrow.classList.remove('rotate');
+          });
         }
       });
     });
