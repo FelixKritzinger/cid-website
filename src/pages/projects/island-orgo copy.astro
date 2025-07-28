@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const title = "Cornelius Primary Bathroom Remodel";
-const description = "Wandel Bathroom";
+const title = "Lake Norman Cottage Remodel";
+const description = "Daniel Lake House";
 ---
 <BaseLayout {title} {description} showScrollButton = true>
   <style>
@@ -17,10 +17,10 @@ const description = "Wandel Bathroom";
     }
 
     h1 {
-      font-size: clamp(.25rem, 1.3*(.6rem + .35dvw + .2dvh), 4.25rem);
+      font-size: clamp(.25rem, 1.8*(.6rem + .35dvw + .2dvh), 8.25rem);
       //font-size: clamp(.5rem, 1.8vw, 3rem);
       margin-bottom: 1rem;
-      margin-top: 2rem;
+      margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
     }
 
     p {
@@ -216,7 +216,9 @@ const description = "Wandel Bathroom";
   <div class="page-wrapper">
     <h1>{title}</h1>
     <p>
-      Organic elements warm up a bright white primary bathroom, creating a calm, spa like retreat.
+      This quaint lakeside cottage remodel transformed the interior of this 1970’s bungalow to a cozy, rustic/industrial style home ready for family and friends to enjoy its beautiful setting. 
+      We used reclaimed wood elements and antique light fixtures to add instant patina, making the home feel authentic to the time period it was built. 
+      Vaulting the ceilings in the main living spaces utilized prevoiusly unused attic space, opening up and adding visual interest to these rooms.
     </p>
 
     <div class="gallery" id="gallery">
@@ -245,8 +247,8 @@ const description = "Wandel Bathroom";
   </div>
 
   <script>
-  const manualLeftIndices = [4];   // zero-based index for images 26 and 27
-  const manualRightIndices = [5];      // zero-based index for image 28
+  const manualLeftIndices = [];   // zero-based index for images 26 and 27
+  const manualRightIndices = [];      // zero-based index for image 28
 
   const overlay = document.getElementById('overlay');
   const overlayImg = document.getElementById('overlayImg');
@@ -262,12 +264,25 @@ const description = "Wandel Bathroom";
   let failedCount = 0;
 
     const imageData = [
-      { src: "/project-imgs/wandel/1.jpg", caption: "" },
-      { src: "/project-imgs/wandel/2.jpg", caption: "" },
-      { src: "/project-imgs/wandel/3.jpg", caption: "" },
-      { src: "/project-imgs/wandel/4.jpg", caption: "" },
-      { src: "/project-imgs/wandel/5.jpg", caption: "" },
-      { src: "/project-imgs/wandel/6.jpg", caption: "BEFORE", badge: "◷ Before"}
+    { src: "/project-imgs/daniel/1.jpg", caption: "Reclaimed beams and flooring add instant character and patina to the cottage. The ceilings in the kitchen, living and dining room areas were vaulted to create more storage in the kitchen and open up the feel of the rooms." },
+    { src: "/project-imgs/daniel/2.jpg", caption: "The kitchen is small but mighty. Vaulting the ceilings added space for taller cabinets and additional storage. The reclaimed wood beams add a rustic wow factor. Concrete look countertops, textured white brick style tile with dark grout and two tone cabinets finish out the space." },
+    { src: "/project-imgs/daniel/3.jpg", caption: "DETAIL - Kitchen" },
+    { src: "/project-imgs/daniel/4.jpg", caption: "The kitchen is open to the dining and living rooms. The two panel dutch door allows cross flow of cool lake air through the home." },
+    { src: "/project-imgs/daniel/5.jpg", caption: "Custom railing and an antique light fixture add visual interest to the basement stairway. The second Dutch door opens to a lakeside covered porch." },
+    { src: "/project-imgs/daniel/6.jpg", caption: "This antique industrial pendant light brought the right amount of patina and interest to the stair case area which is open to the living and dining room." },
+    { src: "/project-imgs/daniel/7.jpg", caption: "The original brick fireplace was kept." },
+    { src: "/project-imgs/daniel/8.jpg", caption: "Living room and dining room with reclaimed wood beams on vaulted ceiling" },
+    { src: "/project-imgs/daniel/9.jpg", caption: "Vaulting the ceiling and adding a reclaimed wood beam adds drama and texture to the smallish primary bedroom. Sconce lights replace lamps that would normally have to be on the bedside tables taking up space." },
+    { src: "/project-imgs/daniel/10.jpg", caption: "DETAILS - The wooden fan blades and reclaimed wood beam work together to warm up the Primary bedroom." },
+    { src: "/project-imgs/daniel/11.jpg", caption: "The original lake cottage owners bedroom was very small and lacked storage. So we reconfigured three small bedrooms into two. The original flooring was kept in this space." },
+    { src: "/project-imgs/daniel/12.jpg", caption: "DETAIL - Master Bedroom Sconce" },
+    { src: "/project-imgs/daniel/13.jpg", caption: "The hall bathroom gave us the opportunity to have some fun. Navy brick tiles, green penny round shower pan tile and a copper sink add unexpected elements to the cottage." },
+    { src: "/project-imgs/daniel/14.jpg", caption: "DETAIL" },
+    { src: "/project-imgs/daniel/15.jpg", caption: "DETAIL" },
+    { src: "/project-imgs/daniel/16.jpg", caption: "A clean and classic color pallet was selected for the primary bathroom. Slate tile on the floor, Carrera marble counter tops and an antique vanity add interest and texture in the space." },
+    { src: "/project-imgs/daniel/17.jpg", caption: "DETAIL - repurposed antique cabinet. Carrera marble top with a semi recessed vessel sink finished the unit." },
+    { src: "/project-imgs/daniel/18.jpg", caption: "DETAIL - Carrera marble top with a semi recessed vessel sink finished the unit." },
+    { src: "/project-imgs/daniel/19.jpg", caption: "Guest bedroom" }
     ];
 
   function openOverlay(index) {
