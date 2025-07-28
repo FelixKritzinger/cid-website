@@ -98,7 +98,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       color: #000;
       font-family: 'MontserratRegular', sans-serif;
       cursor: pointer;
-      padding: 0;
       margin-top: 0.45rem;
       font-size: 1.1rem;
       font-weight: 600;
@@ -107,6 +106,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       align-items: center;
       gap: 0.5rem;
     }
+
+    .review-divider {
+      width: 100%;
+      margin: 2rem auto;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
 
     .arrow-icon {
       transition: transform 0.3s ease;
@@ -137,6 +144,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
     <div class="review">
@@ -156,6 +164,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
 
@@ -173,6 +182,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
     <div class="review">
@@ -208,6 +218,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
     
@@ -231,6 +242,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
     <div class="review">
@@ -248,6 +260,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      <hr class="review-divider" />
     </div>
 
     <div class="review">
@@ -265,6 +278,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
+      
     </div>
 
 
@@ -329,7 +343,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       // Smooth scroll to the review
       if (reviewText) {
-        const offset = -100; // adjust this to leave more/less space above
+        const offset = -250; // adjust this to leave more/less space above
         const top = reviewText.getBoundingClientRect().top + window.scrollY + offset;
         window.scrollTo({ top, behavior: 'smooth' });
       }
