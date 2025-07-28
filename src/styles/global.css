@@ -101,9 +101,7 @@ h6 {
   line-height: 1.2;
 }
 h1 {
-  font-family: 'MontserratRegular';
-  font-weight:900;
-  font-size: 3.052em;
+  font-size: clamp(.25rem, 1.6*(.6rem + .35dvw + .2dvh), 4.25rem);
 }
 h2 {
   font-size: 2.441em;
