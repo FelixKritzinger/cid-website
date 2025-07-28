@@ -9,7 +9,7 @@ const description = "Office for Two";
     .page-wrapper {
       max-width: 67.5vw;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 1rem 1rem;
     }
 
     h1, p {
@@ -17,19 +17,22 @@ const description = "Office for Two";
     }
 
     h1 {
-      font-size: clamp(.5rem, 1.8vw, 3rem);
+      font-size: clamp(.25rem, 1.5*(.6rem + .35dvw + .2dvh), 4.25rem);
+      //font-size: clamp(.5rem, 1.8vw, 3rem);
       margin-bottom: 1rem;
-      margin-top: 2rem;
+      margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
     }
 
     p {
-      font-size: clamp(.25rem, .85vw, 1.25rem);
+      //font-size: clamp(.25rem, 1vw, 2.25rem);
+      font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
       margin-bottom: 2.5rem;
     }
 
     .gallery {
       display: flex;
-      gap: 1.5rem;
+      gap: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      //gap: 1.5rem;
     }
 
     .column {
@@ -51,7 +54,8 @@ const description = "Office for Two";
       position: relative;
       display: inline-block;
       width: 100%;
-      margin-bottom: 1.5rem;
+      margin-bottom: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      cursor: pointer;
     }
 
     .image-badge-wrapper img {
@@ -73,8 +77,16 @@ const description = "Office for Two";
       pointer-events: none;
     }
 
-
-    @media (max-width: 768px) {
+    @media (max-width: 1300px) {
+        .page-wrapper {
+          padding: 1rem 0rem;
+          max-width: 90dvw;
+        }
+        /*.gallery {
+          gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
+        }*/
+      }
+    @media (max-width: 500px) {
       .gallery {
         flex-direction: column;
       }
@@ -91,7 +103,7 @@ const description = "Office for Two";
       z-index: 999;
       flex-direction: column;
       overflow: hidden;
-      padding-bottom: 3rem;
+      padding-bottom: 0rem;
     }
 
     .overlay.active {
@@ -99,12 +111,16 @@ const description = "Office for Two";
     }
 
     .caption-container {
-      margin-top: 1rem;
       color: white;
-      max-width: 70vw;
+      width: 80dvw;
+      height: 15dvh;
       text-align: center;
       transition: max-height 0.3s ease;
       overflow: hidden;
+    }
+
+    .caption-container p{
+      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
     }
 
     .caption-container.collapsed {
@@ -114,37 +130,34 @@ const description = "Office for Two";
     }
 
     .overlay.caption-collapsed img {
-      padding-top: 2.5vh;
-      max-height: 90vh;
-      max-width: 90vw;
+      padding-top: 0dvh;
+      max-height: 90dvh;
+      max-width: 85dvw;
     }
 
     .overlay img {
+      padding-top: 0dvh;
       border-radius: 0;
-      padding-top: 2px;
-      max-height: 80vh;
-      max-width: 90vw;
-      transition: max-height 0.3s ease;
+      max-height: 80dvh;
+      max-width: 85dvw;
+      transition: max-height 0.5s ease;
     }
 
     .image-wrapper {
-      border-radius: 0;
       position: relative;
-      display: inline-block;
-      max-width: 90vw;
-      max-height: 90vh;
+      display: inline-block; /* shrinkwrap the image */
+      width: auto;
+      height: auto;
     }
 
-    .image-wrapper img {
-      border-radius: 0;
-      width: 100%;
-      height: auto;
-      display: block;
+
+    .image-wrapper.caption-collapsed {
+      max-height: 90dvh;
     }
 
     .toggle-caption-btn {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
@@ -183,8 +196,8 @@ const description = "Office for Two";
     }
 
     .close-btn {
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 2.5dvh;
+      right: 2.5dvw;
     }
 
     .nav-btn.prev {
@@ -233,8 +246,8 @@ const description = "Office for Two";
   </div>
 
   <script>
-  const manualLeftIndices = [];   // zero-based index for images 26 and 27
-  const manualRightIndices = [];      // zero-based index for image 28
+  const manualLeftIndices = [];   // zero-based index 
+  const manualRightIndices = [];      // zero-based index
 
   const overlay = document.getElementById('overlay');
   const overlayImg = document.getElementById('overlayImg');
@@ -273,6 +286,7 @@ const description = "Office for Two";
         badge: "◷ Before"
       }
     ];
+
   function openOverlay(index) {
     currentIndex = index;
     const { src, caption } = imageData[index];
@@ -332,10 +346,39 @@ const description = "Office for Two";
 
   document.addEventListener('keydown', (e) => {
     if (!overlay.classList.contains('active')) return;
-    if (e.key === 'Escape') closeOverlay();
-    if (e.key === 'ArrowLeft') showPrev();
-    if (e.key === 'ArrowRight') showNext();
+
+    // Block repeated triggers only for caption-related keys
+    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
+
+    switch (e.key) {
+      case 'Escape':
+        closeOverlay();
+        break;
+      case 'ArrowLeft':
+        showPrev(); // Allow holding
+        break;
+      case 'ArrowRight':
+        showNext(); // Allow holding
+        break;
+      case 'ArrowDown':
+        if (!captionExpanded) {
+          toggleCaptionBtn.click(); // expand
+        }
+        break;
+      case 'ArrowUp':
+        if (captionExpanded) {
+          toggleCaptionBtn.click(); // collapse
+        }
+        break;
+      case 'c':
+      case 'C':
+        toggleCaptionBtn.click(); // toggle
+        break;
+    }
   });
+
+
+
 
   document.addEventListener('DOMContentLoaded', () => {
     const col1 = document.getElementById('col1');
@@ -399,7 +442,41 @@ const description = "Office for Two";
         };
       });
     }
+
+    if (window.innerWidth < 500) {
+      reflowColumnsForMobile();
+    }
   }
+
+  function reflowColumnsForMobile() {
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    const gallery = document.getElementById('gallery');
+
+    const combined = [];
+    const col1Children = Array.from(col1.children);
+    const col2Children = Array.from(col2.children);
+    const maxLength = Math.max(col1Children.length, col2Children.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      if (col1Children[i]) combined.push(col1Children[i]);
+      if (col2Children[i]) combined.push(col2Children[i]);
+    }
+
+    // Clear columns
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+
+    // Create single column
+    const singleCol = document.createElement('div');
+    singleCol.classList.add('column');
+    combined.forEach((el) => singleCol.appendChild(el));
+
+    gallery.innerHTML = '';
+    gallery.appendChild(singleCol);
+  }
+
+
 
 </script>
 

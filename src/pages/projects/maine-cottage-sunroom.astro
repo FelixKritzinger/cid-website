@@ -9,7 +9,7 @@ const description = "Polly Webb Sunroom";
     .page-wrapper {
       max-width: 67.5vw;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 1rem 1rem;
     }
 
     h1, p {
@@ -17,19 +17,22 @@ const description = "Polly Webb Sunroom";
     }
 
     h1 {
-      font-size: clamp(.5rem, 1.8vw, 3rem);
+      font-size: clamp(.25rem, 1.5*(.6rem + .35dvw + .2dvh), 4.25rem);
+      //font-size: clamp(.5rem, 1.8vw, 3rem);
       margin-bottom: 1rem;
-      margin-top: 2rem;
+      margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
     }
 
     p {
-      font-size: clamp(.25rem, .85vw, 1.25rem);
+      //font-size: clamp(.25rem, 1vw, 2.25rem);
+      font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
       margin-bottom: 2.5rem;
     }
 
     .gallery {
       display: flex;
-      gap: 1.5rem;
+      gap: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      //gap: 1.5rem;
     }
 
     .column {
@@ -47,8 +50,43 @@ const description = "Polly Webb Sunroom";
       cursor: pointer;
     }
 
+    :global(.image-badge-wrapper) {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      cursor: pointer;
+    }
 
-    @media (max-width: 768px) {
+    .image-badge-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+
+    :global(.badge) {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1300px) {
+        .page-wrapper {
+          padding: 1rem 0rem;
+          max-width: 90dvw;
+        }
+        /*.gallery {
+          gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
+        }*/
+      }
+    @media (max-width: 500px) {
       .gallery {
         flex-direction: column;
       }
@@ -65,7 +103,7 @@ const description = "Polly Webb Sunroom";
       z-index: 999;
       flex-direction: column;
       overflow: hidden;
-      padding-bottom: 3rem;
+      padding-bottom: 0rem;
     }
 
     .overlay.active {
@@ -73,12 +111,16 @@ const description = "Polly Webb Sunroom";
     }
 
     .caption-container {
-      margin-top: 1rem;
       color: white;
-      max-width: 70vw;
+      width: 80dvw;
+      height: 15dvh;
       text-align: center;
       transition: max-height 0.3s ease;
       overflow: hidden;
+    }
+
+    .caption-container p{
+      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
     }
 
     .caption-container.collapsed {
@@ -88,37 +130,34 @@ const description = "Polly Webb Sunroom";
     }
 
     .overlay.caption-collapsed img {
-      padding-top: 2.5vh;
-      max-height: 90vh;
-      max-width: 90vw;
+      padding-top: 0dvh;
+      max-height: 90dvh;
+      max-width: 85dvw;
     }
 
     .overlay img {
+      padding-top: 0dvh;
       border-radius: 0;
-      padding-top: 2px;
-      max-height: 80vh;
-      max-width: 90vw;
-      transition: max-height 0.3s ease;
+      max-height: 80dvh;
+      max-width: 85dvw;
+      transition: max-height 0.5s ease;
     }
 
     .image-wrapper {
-      border-radius: 0;
       position: relative;
-      display: inline-block;
-      max-width: 90vw;
-      max-height: 90vh;
+      display: inline-block; /* shrinkwrap the image */
+      width: auto;
+      height: auto;
     }
 
-    .image-wrapper img {
-      border-radius: 0;
-      width: 100%;
-      height: auto;
-      display: block;
+
+    .image-wrapper.caption-collapsed {
+      max-height: 90dvh;
     }
 
     .toggle-caption-btn {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
@@ -157,8 +196,8 @@ const description = "Polly Webb Sunroom";
     }
 
     .close-btn {
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 2.5dvh;
+      right: 2.5dvw;
     }
 
     .nav-btn.prev {
@@ -210,8 +249,8 @@ const description = "Polly Webb Sunroom";
   </div>
 
   <script>
-  const manualLeftIndices = [1];   // zero-based index for images 26 and 27
-  const manualRightIndices = [27];      // zero-based index for image 28
+  const manualLeftIndices = [1];   // zero-based index 
+  const manualRightIndices = [];      // zero-based index
 
   const overlay = document.getElementById('overlay');
   const overlayImg = document.getElementById('overlayImg');
@@ -300,10 +339,39 @@ const description = "Polly Webb Sunroom";
 
   document.addEventListener('keydown', (e) => {
     if (!overlay.classList.contains('active')) return;
-    if (e.key === 'Escape') closeOverlay();
-    if (e.key === 'ArrowLeft') showPrev();
-    if (e.key === 'ArrowRight') showNext();
+
+    // Block repeated triggers only for caption-related keys
+    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
+
+    switch (e.key) {
+      case 'Escape':
+        closeOverlay();
+        break;
+      case 'ArrowLeft':
+        showPrev(); // Allow holding
+        break;
+      case 'ArrowRight':
+        showNext(); // Allow holding
+        break;
+      case 'ArrowDown':
+        if (!captionExpanded) {
+          toggleCaptionBtn.click(); // expand
+        }
+        break;
+      case 'ArrowUp':
+        if (captionExpanded) {
+          toggleCaptionBtn.click(); // collapse
+        }
+        break;
+      case 'c':
+      case 'C':
+        toggleCaptionBtn.click(); // toggle
+        break;
+    }
   });
+
+
+
 
   document.addEventListener('DOMContentLoaded', () => {
     const col1 = document.getElementById('col1');
@@ -316,30 +384,36 @@ const description = "Polly Webb Sunroom";
     let col2Height = 0;
 
     for (let i = 0; i < images.length; i++) {
-      const { src } = images[i];
+      const { src, badge } = images[i];
       const img = new Image();
       img.src = src;
       img.alt = `Gallery image ${i + 1}`;
       img.dataset.index = i;
-      img.style.width = '100%';
-      img.style.display = 'block';
-      img.style.marginBottom = '1.5rem';
-      img.style.cursor = 'pointer';
 
       await new Promise((resolve) => {
         img.onload = () => {
-          // 🧠 Manual override first
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('image-badge-wrapper');
+
+          if (badge) {
+            const badgeElem = document.createElement('div');
+            badgeElem.classList.add('badge');
+            badgeElem.textContent = badge;
+            wrapper.appendChild(badgeElem);
+          }
+
+          wrapper.appendChild(img);
+
           if (manualLeftIndices.includes(i)) {
-            col1.appendChild(img);
+            col1.appendChild(wrapper);
           } else if (manualRightIndices.includes(i)) {
-            col2.appendChild(img);
+            col2.appendChild(wrapper);
           } else {
-            // 🤖 Automatic placement by column height
             if (col1Height <= col2Height) {
-              col1.appendChild(img);
+              col1.appendChild(wrapper);
               col1Height += img.getBoundingClientRect().height;
             } else {
-              col2.appendChild(img);
+              col2.appendChild(wrapper);
               col2Height += img.getBoundingClientRect().height;
             }
           }
@@ -361,7 +435,41 @@ const description = "Polly Webb Sunroom";
         };
       });
     }
+
+    if (window.innerWidth < 500) {
+      reflowColumnsForMobile();
+    }
   }
+
+  function reflowColumnsForMobile() {
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    const gallery = document.getElementById('gallery');
+
+    const combined = [];
+    const col1Children = Array.from(col1.children);
+    const col2Children = Array.from(col2.children);
+    const maxLength = Math.max(col1Children.length, col2Children.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      if (col1Children[i]) combined.push(col1Children[i]);
+      if (col2Children[i]) combined.push(col2Children[i]);
+    }
+
+    // Clear columns
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+
+    // Create single column
+    const singleCol = document.createElement('div');
+    singleCol.classList.add('column');
+    combined.forEach((el) => singleCol.appendChild(el));
+
+    gallery.innerHTML = '';
+    gallery.appendChild(singleCol);
+  }
+
+
 
 </script>
 
