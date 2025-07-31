@@ -1,10 +1,11 @@
 ---
+// island-orgo.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = "Lake Norman Indoor-Outdoor Living Remodel";
 const description = "Joye Design Photos";
 ---
-<BaseLayout {title} {description} showScrollButton = true>
+<BaseLayout {title} {description} showScrollButton={true}>
   <style>
     .page-wrapper {
       max-width: 67.5vw;
@@ -17,14 +18,11 @@ const description = "Joye Design Photos";
     }
 
     h1 {
-      //font-size: clamp(.25rem, 1.5*(.6rem + .35dvw + .2dvh), 4.25rem);
-      //font-size: clamp(.5rem, 1.8vw, 3rem);
       margin-bottom: 1rem;
       margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
     }
 
     p {
-      //font-size: clamp(.25rem, 1vw, 2.25rem);
       font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
       margin-bottom: 2.5rem;
     }
@@ -32,7 +30,6 @@ const description = "Joye Design Photos";
     .gallery {
       display: flex;
       gap: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
-      //gap: 1.5rem;
     }
 
     .column {
@@ -78,14 +75,12 @@ const description = "Joye Design Photos";
     }
 
     @media (max-width: 1300px) {
-        .page-wrapper {
-          padding: 1rem 0rem;
-          max-width: 90dvw;
-        }
-        /*.gallery {
-          gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
-        }*/
+      .page-wrapper {
+        padding: 1rem 0rem;
+        max-width: 90dvw;
       }
+    }
+
     @media (max-width: 500px) {
       .gallery {
         flex-direction: column;
@@ -103,85 +98,25 @@ const description = "Joye Design Photos";
       z-index: 999;
       flex-direction: column;
       overflow: hidden;
-      padding-bottom: 0rem;
     }
 
     .overlay.active {
       display: flex;
     }
 
-    .caption-container {
-      color: white;
-      width: 80dvw;
-      height: 15dvh;
-      text-align: center;
-      transition: max-height 0.3s ease;
-      overflow: hidden;
-    }
-
-    .caption-container p{
-      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
-    }
-
-    .caption-container.collapsed {
-      max-height: 0;
-      opacity: 0;
-      padding: 0;
-    }
-
-    .overlay.caption-collapsed img {
-      padding-top: 0dvh;
-      max-height: 90dvh;
-      max-width: 85dvw;
-    }
-
     .overlay img {
       padding-top: 0dvh;
       border-radius: 0;
-      max-height: 80dvh;
+      max-height: 90dvh;
       max-width: 85dvw;
       transition: max-height 0.5s ease;
     }
 
     .image-wrapper {
       position: relative;
-      display: inline-block; /* shrinkwrap the image */
+      display: inline-block;
       width: auto;
       height: auto;
-    }
-
-
-    .image-wrapper.caption-collapsed {
-      max-height: 90dvh;
-    }
-
-    .toggle-caption-btn {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.35);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      border-radius: 50%;
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease;
-      padding: 0;
-    }
-
-    .toggle-caption-btn .arrow-icon {
-      transition: transform 0.3s ease;
-    }
-
-    .toggle-caption-btn.expanded .arrow-icon {
-      transform: rotate(-180deg);
     }
 
     .close-btn,
@@ -234,269 +169,211 @@ const description = "Joye Design Photos";
     <button class="nav-btn prev" id="prevBtn">&#10094;</button>
     <div class="image-wrapper">
       <img id="overlayImg" src="" alt="Expanded view" />
-      <button class="toggle-caption-btn" id="toggleCaptionBtn" aria-label="Toggle Caption">
-        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </button>
     </div>
     <button class="nav-btn next" id="nextBtn">&#10095;</button>
-
-    <div class="caption-container" id="captionContainer">
-      <p id="overlayCaption"></p>
-    </div>
   </div>
 
   <script>
-  const manualLeftIndices = [];   // zero-based index for images 26 and 27
-  const manualRightIndices = [];      // zero-based index for image 28
+    const manualLeftIndices = [];
+    const manualRightIndices = [];
 
-  const overlay = document.getElementById('overlay');
-  const overlayImg = document.getElementById('overlayImg');
-  const overlayCaption = document.getElementById('overlayCaption');
-  const captionContainer = document.getElementById('captionContainer');
-  const toggleCaptionBtn = document.getElementById('toggleCaptionBtn');
-  const closeBtn = document.getElementById('closeBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlayImg');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-  let currentIndex = 0;
-  let captionExpanded = true;
-  let failedCount = 0;
+    let currentIndex = 0;
+    let failedCount = 0;
 
     const imageData = [
-    { src: "/project-imgs/joye/1.jpg", caption: "Dark paint and a pop of pink invite you into this families lakeside home. The cedar pergola over the garage contrasts beautifully with the dark paint." },
-    { src: "/project-imgs/joye/2.jpg", caption: " " },
-    { src: "/project-imgs/joye/3.jpg", caption: "The vivid pink Dutch door catches your eye and invites you in." },
-    { src: "/project-imgs/joye/4.jpg", caption: " " },
-    { src: "/project-imgs/joye/5.jpg", caption: "The outdoor dining room, sundeck and living room were added to the home, creating fantastic 3 season indoor-outdoor living. The dining and living room areas are roofed and screened with the sun deck area in between left open." },
-    { src: "/project-imgs/joye/6.jpg", caption: "Outdoor dining and living rooms are accessed from the central sundeck. Retractable screens on the living room walls were installed on both of the openings so the space can be fully connected to the sundeck when they are opened." },
-    { src: "/project-imgs/joye/7.jpg", caption: "The outdoor sundeck leads off of the indoor living room and is centered between the outdoor dining and outdoor living room. The 3 distinct spaces all serve a unique purpose and flow together and from inside to outside. String lights hung over this sundeck bring a fun and festive air to the back deck." },
-    { src: "/project-imgs/joye/8.jpg", caption: "The outdoor sundeck leads off of the indoor living room and is centered between the outdoor dining and outdoor living room. The 3 distinct spaces all serve a unique purpose and flow together and from inside to outside. String lights hung over this sundeck bring a fun and festive air to the back deck." },
-    { src: "/project-imgs/joye/9.jpg", caption: "The outdoor sundeck leads off of the indoor living room and is centered between the outdoor dining and outdoor living room. The 3 distinct spaces all serve a unique purpose and flow together and from inside to outside. String lights hung over this sundeck bring a fun and festive air to the back deck." },
-    { src: "/project-imgs/joye/10.jpg", caption: "A gas burning fireplace makes 3 season outdoor living a breeze." },
-    { src: "/project-imgs/joye/11.jpg", caption: "The outdoor living room was designed to provide lots of seating. The insect screens retract, opening the space to the sun deck in the center of the outdoor area. Beautiful outdoor furniture adds style and comfort to the space for year round enjoyment. The shutters add privacy and a sculptural element to the space." },
-    { src: "/project-imgs/joye/12.jpg", caption: "DETAILS - beautiful contemporary furniture, a brick fireplace and wooden shutters add privacy and a sculptural element to the space." },
-    { src: "/project-imgs/joye/13.jpg", caption: "The master bedroom opens to the outdoor living room. The deck was designed to be approximately 2 feet lower than the floor level of the main house so you are able to look over the outdoor furniture without it blocking the lake view." },
-    { src: "/project-imgs/joye/14.jpg", caption: "The outdoor dining room leads off the indoor kitchen and dining space. A built in grill area was a must have for the client. The table comfortably seats 8 with plenty of circulation space for everyone to move around with ease. A fun, contemporary tile was used around the grill area to add visual texture to the space." },
-    { src: "/project-imgs/joye/15.jpg", caption: "The outdoor dining room leads off the indoor kitchen and dining space. A built in grill area was a must have for the client. The table comfortably seats 8 with circulation space for everyone to move around with ease. A fun, contemporary tile was used around the grill area to add visual texture to the space." },
-    { src: "/project-imgs/joye/16.jpg", caption: "A vivid pink Dutch door invites you in. The interior of the home is painted primarily white, creating a crisp contrast from the dark exterior." },
-    { src: "/project-imgs/joye/17.jpg", caption: "A capiz shell chandelier hangs in the double volume front entry hall. This fixture is a show stopper and can be seen from the front door, living room and the upstairs walkway." },
-    { src: "/project-imgs/joye/18.jpg", caption: "Dark green/blue walls add depth to the home office. This space is seen from the front entry hall and invites your eye in. Woven wood shades were used throughout the home, adding warmth and texture." },
-    { src: "/project-imgs/joye/19.jpg", caption: "Dark green/blue walls add depth to the home office. This space is seen from the front entry hall and invites your eye in. Woven wood shades were used throughout the home, adding warmth and texture." },
-    { src: "/project-imgs/joye/20.jpg", caption: "A capiz shell chandelier hangs in the double volume front entry hall. This fixture is a show stopper and creates visual interest in this space that is seen from the front door, living room and the upstairs walkway." },
-    { src: "/project-imgs/joye/21.jpg", caption: "A peek of the outdoor dining room seen from the front entry hall." },
-    { src: "/project-imgs/joye/22.jpg", caption: "The indoor kitchen and dining room lead directly out to the outdoor kitchen and dining space. The screens on the outdoor space allow for the sliding doors to remain open." },
-    { src: "/project-imgs/joye/23.jpg", caption: "The indoor kitchen and dining room lead directly out to the outdoor grill and dining room. The screens on the outdoor space allow for the sliding door to remain open." },
-    { src: "/project-imgs/joye/24.jpg", caption: "Natural, organic materials were used throughout the home, adding warmth and texture to the crisp color palette." },
-    { src: "/project-imgs/joye/25.jpg", caption: "We took advantage of the double volume ceiling height in the living room and added millwork to the stone fireplace, a reclaimed wood beam and a gorgeous, chandelier. The sliding doors lead out to the sundeck and the lake beyond. TV's mounted above fireplaces tend to be a little high for comfortable viewing from the sofa, so this tv is mounted on an adjustable pull down bracket for use when the fireplace is not turned on. Floating white oak shelves replaced dated upper cabinets above the bar area." },
-    { src: "/project-imgs/joye/26.jpg", caption: "We took advantage of the double volume ceiling height in the living room and added millwork to the stone fireplace, a reclaimed wood beam and a gorgeous, chandelier. The sliding doors lead out to the sundeck and the lake beyond. TV's mounted above fireplaces tend to be a little high for comfortable viewing from the sofa, so this tv is mounted on an adjustable pull down bracket for use when the fireplace is not turned on." },
-    { src: "/project-imgs/joye/27.jpg", caption: "The staircase and catwalk form a large part of the open plan living space. We updated the handrails and spindles with more contemporary square options, transforming the space." },
-    { src: "/project-imgs/joye/28.jpg", caption: "The staircase and catwalk form a large part of the open plan living space. We updated the handrails and spindles with more contemporary square options, transforming the space." },
-    { src: "/project-imgs/joye/29.jpg", caption: "We took advantage of the double volume ceiling height in the living room and added millwork to the stone fireplace, a reclaimed wood beam and a gorgeous, chandelier. The sliding doors lead out to the sundeck and the lake beyond. TV's mounted above fireplaces tend to be a little high for comfortable viewing from the sofa, so this tv is mounted on an adjustable pull down bracket for use when the fireplace is not turned on. Floating white oak shelves replaced upper cabinets above the bar area." },
-    { src: "/project-imgs/joye/30.jpg", caption: "The primary bedroom opens onto the outdoor living area. The retractable screens on the outdoor space allow the bedroom doors to remain open when the weather is cool. Soft linen bedding, a leather bench cushion and wooden fan add beautiful layers to the space. The back wall is papered in a dark blue grass cloth and highlighted with a wooden beam in the corner. Sconce lights free up space on the bedside table and frame the bed." },
-    { src: "/project-imgs/joye/31.jpg", caption: "The primary bedroom opens onto the outdoor living area. The retractable screens on the outdoor space allow the bedroom doors to remain open when the weather is cool. Soft linen bedding, a leather bench cushion and wooden fan add beautiful layers to the space. The back wall is papered in a dark blue grass cloth and highlighted with a wooden beam in the corner. Sconce lights free up space on the bedside table and frame the bed." },
-    { src: "/project-imgs/joye/32.jpg", caption: "The primary bedroom opens onto the outdoor living area. The retractable screens allow the bedroom doors to remain open when the weather allows. Soft linen bedding, leather bench cushion and wooden fan add beautiful layers to the space." },
-    { src: "/project-imgs/joye/33.jpg", caption: "The upstairs Jack and Jill bathroom for two teenage boys was done in a black and white palette. Concrete look, hex shaped tiles on the floor add depth and \"cool\" to the space. The contemporary lights and round metal framed mirror were mounted on a shiplap wall, adding texture and layers to the space." },
-    { src: "/project-imgs/joye/34.jpg", caption: "One of the boys bedrooms upstairs was furnished with a leather chair and wooden framed bed. Linen fabrics for the bedding, velvet shams and a textured throw complete the layering in the space. The woven wood blinds soften and add warmth and functionality." },
-    { src: "/project-imgs/joye/35.jpg", caption: "The bonus room is light filled and set up for hanging out. A super comfortable sectional with plush shag rug invite lounging. Oversized chess board and displayed sports memorabilia complete the space."},
-    { src: "/project-imgs/joye/36.jpg", caption: "DETAILS - Dark green/blue walls add depth to the home office. This space is seen from the front entry hall and invites your eye in. Woven wood shades were used throughout the home, adding warmth and texture." },
-    { src: "/project-imgs/joye/37.jpg", caption: "DETAILS - textures, fabrics, colors, natural elements." },
-    { src: "/project-imgs/joye/38.jpg", caption: "DETAILS - textures, fabrics, colors, natural elements." }
-    ];
+    { src: "/project-imgs/joye/1.jpg" },
+    { src: "/project-imgs/joye/2.jpg" },
+    { src: "/project-imgs/joye/3.jpg" },
+    { src: "/project-imgs/joye/4.jpg" },
+    { src: "/project-imgs/joye/5.jpg" },
+    { src: "/project-imgs/joye/6.jpg" },
+    { src: "/project-imgs/joye/7.jpg" },
+    { src: "/project-imgs/joye/8.jpg" },
+    { src: "/project-imgs/joye/9.jpg" },
+    { src: "/project-imgs/joye/10.jpg" },
+    { src: "/project-imgs/joye/11.jpg" },
+    { src: "/project-imgs/joye/12.jpg" },
+    { src: "/project-imgs/joye/13.jpg" },
+    { src: "/project-imgs/joye/14.jpg" },
+    { src: "/project-imgs/joye/15.jpg" },
+    { src: "/project-imgs/joye/16.jpg" },
+    { src: "/project-imgs/joye/17.jpg" },
+    { src: "/project-imgs/joye/18.jpg" },
+    { src: "/project-imgs/joye/19.jpg" },
+    { src: "/project-imgs/joye/20.jpg" },
+    { src: "/project-imgs/joye/21.jpg" },
+    { src: "/project-imgs/joye/22.jpg" },
+    { src: "/project-imgs/joye/23.jpg" },
+    { src: "/project-imgs/joye/24.jpg" },
+    { src: "/project-imgs/joye/25.jpg" },
+    { src: "/project-imgs/joye/26.jpg" },
+    { src: "/project-imgs/joye/27.jpg" },
+    { src: "/project-imgs/joye/28.jpg" },
+    { src: "/project-imgs/joye/29.jpg" },
+    { src: "/project-imgs/joye/30.jpg" },
+    { src: "/project-imgs/joye/31.jpg" },
+    { src: "/project-imgs/joye/32.jpg" },
+    { src: "/project-imgs/joye/33.jpg" },
+    { src: "/project-imgs/joye/34.jpg" },
+    { src: "/project-imgs/joye/35.jpg" },
+    { src: "/project-imgs/joye/36.jpg" },
+    { src: "/project-imgs/joye/37.jpg" },
+    { src: "/project-imgs/joye/38.jpg" }
+  ];
 
-  function openOverlay(index) {
-    currentIndex = index;
-    const { src, caption } = imageData[index];
-    overlayImg.src = src;
-    overlayCaption.textContent = caption;
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    captionContainer.classList.remove('collapsed');
-    toggleCaptionBtn.classList.add('expanded');
-    captionExpanded = true;
-  }
 
-  function closeOverlay() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function preloadImage(index) {
-    const img = new Image();
-    img.src = imageData[index].src;
-  }
-
-  function showImage(index) {
-    const { src, caption } = imageData[index];
-    overlayImg.src = src;
-    overlayCaption.textContent = caption;
-
-    if (!captionExpanded) {
-      captionContainer.classList.add('collapsed');
-      toggleCaptionBtn.classList.remove('expanded');
+    function openOverlay(index) {
+      currentIndex = index;
+      const { src } = imageData[index];
+      overlayImg.src = src;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
-    preloadImage((index + 1) % imageData.length);
-    preloadImage((index - 1 + imageData.length) % imageData.length);
-  }
-
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
-    showImage(currentIndex);
-  }
-
-  function showNext() {
-    currentIndex = (currentIndex + 1) % imageData.length;
-    showImage(currentIndex);
-  }
-
-  toggleCaptionBtn.addEventListener('click', () => {
-    captionExpanded = !captionExpanded;
-    captionContainer.classList.toggle('collapsed');
-    toggleCaptionBtn.classList.toggle('expanded');
-    overlay.classList.toggle('caption-collapsed');
-  });
-
-  closeBtn.addEventListener('click', closeOverlay);
-  prevBtn.addEventListener('click', showPrev);
-  nextBtn.addEventListener('click', showNext);
-
-  document.addEventListener('keydown', (e) => {
-    if (!overlay.classList.contains('active')) return;
-
-    // Block repeated triggers only for caption-related keys
-    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
-
-    switch (e.key) {
-      case 'Escape':
-        closeOverlay();
-        break;
-      case 'ArrowLeft':
-        showPrev(); // Allow holding
-        break;
-      case 'ArrowRight':
-        showNext(); // Allow holding
-        break;
-      case 'ArrowDown':
-        if (!captionExpanded) {
-          toggleCaptionBtn.click(); // expand
-        }
-        break;
-      case 'ArrowUp':
-        if (captionExpanded) {
-          toggleCaptionBtn.click(); // collapse
-        }
-        break;
-      case 'c':
-      case 'C':
-        toggleCaptionBtn.click(); // toggle
-        break;
+    function closeOverlay() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
     }
-  });
 
-
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const col1 = document.getElementById('col1');
-    const col2 = document.getElementById('col2');
-    loadImagesInOrder(imageData, col1, col2);
-  });
-
-  async function loadImagesInOrder(images, col1, col2) {
-    let col1Height = 0;
-    let col2Height = 0;
-
-    for (let i = 0; i < images.length; i++) {
-      const { src, badge } = images[i];
+    function preloadImage(index) {
       const img = new Image();
-      img.src = src;
-      img.alt = `Gallery image ${i + 1}`;
-      img.dataset.index = i;
+      img.src = imageData[index].src;
+    }
 
-      await new Promise((resolve) => {
-        img.onload = () => {
-          const wrapper = document.createElement('div');
-          wrapper.classList.add('image-badge-wrapper');
+    function showImage(index) {
+      const { src } = imageData[index];
+      overlayImg.src = src;
+      preloadImage((index + 1) % imageData.length);
+      preloadImage((index - 1 + imageData.length) % imageData.length);
+    }
 
-          if (badge) {
-            const badgeElem = document.createElement('div');
-            badgeElem.classList.add('badge');
-            badgeElem.textContent = badge;
-            wrapper.appendChild(badgeElem);
-          }
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+      showImage(currentIndex);
+    }
 
-          wrapper.appendChild(img);
+    function showNext() {
+      currentIndex = (currentIndex + 1) % imageData.length;
+      showImage(currentIndex);
+    }
 
-          if (manualLeftIndices.includes(i)) {
-            col1.appendChild(wrapper);
-          } else if (manualRightIndices.includes(i)) {
-            col2.appendChild(wrapper);
-          } else {
-            if (col1Height <= col2Height) {
-              col1.appendChild(wrapper);
-              col1Height += img.getBoundingClientRect().height;
-            } else {
-              col2.appendChild(wrapper);
-              col2Height += img.getBoundingClientRect().height;
+    closeBtn.addEventListener('click', closeOverlay);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('active')) return;
+      switch (e.key) {
+        case 'Escape':
+          closeOverlay();
+          break;
+        case 'ArrowLeft':
+          showPrev();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const col1 = document.getElementById('col1');
+      const col2 = document.getElementById('col2');
+      loadImagesInOrder(imageData, col1, col2);
+    });
+
+    async function loadImagesInOrder(images, col1, col2) {
+      let col1Height = 0;
+      let col2Height = 0;
+
+      for (let i = 0; i < images.length; i++) {
+        const { src, badge } = images[i];
+        const img = new Image();
+        img.src = src;
+        img.alt = `Gallery image ${i + 1}`;
+        img.dataset.index = i;
+
+        await new Promise((resolve) => {
+          img.onload = () => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('image-badge-wrapper');
+
+            if (badge) {
+              const badgeElem = document.createElement('div');
+              badgeElem.classList.add('badge');
+              badgeElem.textContent = badge;
+              wrapper.appendChild(badgeElem);
             }
-          }
 
-          img.addEventListener('click', () => openOverlay(i));
-          resolve();
-        };
+            wrapper.appendChild(img);
 
-        img.onerror = () => {
-          failedCount++;
-          console.error(`Could not load ${src}`);
-          if (failedCount > 5) {
-            const warning = document.createElement('p');
-            warning.textContent = "Some images failed to load. Try refreshing the page.";
-            warning.style.color = 'red';
-            document.querySelector('.page-wrapper').appendChild(warning);
-          }
-          resolve();
-        };
-      });
+            if (manualLeftIndices.includes(i)) {
+              col1.appendChild(wrapper);
+            } else if (manualRightIndices.includes(i)) {
+              col2.appendChild(wrapper);
+            } else {
+              if (col1Height <= col2Height) {
+                col1.appendChild(wrapper);
+                col1Height += img.getBoundingClientRect().height;
+              } else {
+                col2.appendChild(wrapper);
+                col2Height += img.getBoundingClientRect().height;
+              }
+            }
+
+            img.addEventListener('click', () => openOverlay(i));
+            resolve();
+          };
+
+          img.onerror = () => {
+            failedCount++;
+            console.error(`Could not load ${src}`);
+            if (failedCount > 5) {
+              const warning = document.createElement('p');
+              warning.textContent = "Some images failed to load. Try refreshing the page.";
+              warning.style.color = 'red';
+              document.querySelector('.page-wrapper').appendChild(warning);
+            }
+            resolve();
+          };
+        });
+      }
+
+      if (window.innerWidth < 500) {
+        reflowColumnsForMobile();
+      }
     }
 
-    if (window.innerWidth < 500) {
-      reflowColumnsForMobile();
+    function reflowColumnsForMobile() {
+      const col1 = document.getElementById('col1');
+      const col2 = document.getElementById('col2');
+      const gallery = document.getElementById('gallery');
+
+      const combined = [];
+      const col1Children = Array.from(col1.children);
+      const col2Children = Array.from(col2.children);
+      const maxLength = Math.max(col1Children.length, col2Children.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        if (col1Children[i]) combined.push(col1Children[i]);
+        if (col2Children[i]) combined.push(col2Children[i]);
+      }
+
+      col1.innerHTML = '';
+      col2.innerHTML = '';
+
+      const singleCol = document.createElement('div');
+      singleCol.classList.add('column');
+      combined.forEach((el) => singleCol.appendChild(el));
+
+      gallery.innerHTML = '';
+      gallery.appendChild(singleCol);
     }
-  }
-
-  function reflowColumnsForMobile() {
-    const col1 = document.getElementById('col1');
-    const col2 = document.getElementById('col2');
-    const gallery = document.getElementById('gallery');
-
-    const combined = [];
-    const col1Children = Array.from(col1.children);
-    const col2Children = Array.from(col2.children);
-    const maxLength = Math.max(col1Children.length, col2Children.length);
-
-    for (let i = 0; i < maxLength; i++) {
-      if (col1Children[i]) combined.push(col1Children[i]);
-      if (col2Children[i]) combined.push(col2Children[i]);
-    }
-
-    // Clear columns
-    col1.innerHTML = '';
-    col2.innerHTML = '';
-
-    // Create single column
-    const singleCol = document.createElement('div');
-    singleCol.classList.add('column');
-    combined.forEach((el) => singleCol.appendChild(el));
-
-    gallery.innerHTML = '';
-    gallery.appendChild(singleCol);
-  }
-
-
-
-</script>
-
-
+  </script>
 </BaseLayout>

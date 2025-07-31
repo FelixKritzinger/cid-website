@@ -1,0 +1,482 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "Lake Norman Cottage Remodel";
+const description = "Daniel Lake House";
+---
+<BaseLayout {title} {description} showScrollButton = true>
+  <style>
+    .page-wrapper {
+      max-width: 67.5vw;
+      margin: 0 auto;
+      padding: 1rem 1rem;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    h1 {
+      //font-size: clamp(.25rem, 1.8*(.6rem + .35dvw + .2dvh), 4.25rem);
+      //font-size: clamp(.5rem, 1.8vw, 3rem);
+      margin-bottom: 1rem;
+      margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
+    }
+
+    p {
+      //font-size: clamp(.25rem, 1vw, 2.25rem);
+      font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
+      margin-bottom: 2.5rem;
+    }
+
+    .gallery {
+      display: flex;
+      gap: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      //gap: 1.5rem;
+    }
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column img {
+      border-radius: 0;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+
+    :global(.image-badge-wrapper) {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
+      cursor: pointer;
+    }
+
+    .image-badge-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+
+    :global(.badge) {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1300px) {
+        .page-wrapper {
+          padding: 1rem 0rem;
+          max-width: 90dvw;
+        }
+        /*.gallery {
+          gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
+        }*/
+      }
+    @media (max-width: 500px) {
+      .gallery {
+        flex-direction: column;
+      }
+    }
+
+    .overlay {
+      border-radius: 0;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      flex-direction: column;
+      overflow: hidden;
+      padding-bottom: 0rem;
+    }
+
+    .overlay.active {
+      display: flex;
+    }
+
+    .caption-container {
+      color: white;
+      width: 80dvw;
+      height: 15dvh;
+      text-align: center;
+      transition: max-height 0.3s ease;
+      overflow: hidden;
+    }
+
+    .caption-container p{
+      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
+    }
+
+    .caption-container.collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+    .overlay.caption-collapsed img {
+      padding-top: 0dvh;
+      max-height: 90dvh;
+      max-width: 85dvw;
+    }
+
+    .overlay img {
+      padding-top: 0dvh;
+      border-radius: 0;
+      max-height: 80dvh;
+      max-width: 85dvw;
+      transition: max-height 0.5s ease;
+    }
+
+    .image-wrapper {
+      position: relative;
+      display: inline-block; /* shrinkwrap the image */
+      width: auto;
+      height: auto;
+    }
+
+
+    .image-wrapper.caption-collapsed {
+      max-height: 90dvh;
+    }
+
+    .toggle-caption-btn {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.35);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      padding: 0;
+    }
+
+    .toggle-caption-btn .arrow-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-caption-btn.expanded .arrow-icon {
+      transform: rotate(-180deg);
+    }
+
+    .close-btn,
+    .nav-btn {
+      position: absolute;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .close-btn {
+      top: 2.5dvh;
+      right: 2.5dvw;
+    }
+
+    .nav-btn.prev {
+      top: 50%;
+      left: 2.5vw;
+      transform: translateY(-50%);
+    }
+
+    .nav-btn.next {
+      top: 50%;
+      right: 2.5vw;
+      transform: translateY(-50%);
+    }
+  </style>
+
+  <div class="page-wrapper">
+    <h1>{title}</h1>
+    <p>
+      This quaint lakeside cottage remodel transformed the interior of this 1970’s bungalow to a cozy, rustic/industrial style home ready for family and friends to enjoy its beautiful setting. 
+      We used reclaimed wood elements and antique light fixtures to add instant patina, making the home feel authentic to the time period it was built. 
+      Vaulting the ceilings in the main living spaces utilized prevoiusly unused attic space, opening up and adding visual interest to these rooms.
+    </p>
+
+    <div class="gallery" id="gallery">
+      <div class="column" id="col1"></div>
+      <div class="column" id="col2"></div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <button class="close-btn" id="closeBtn">&times;</button>
+    <button class="nav-btn prev" id="prevBtn">&#10094;</button>
+    <div class="image-wrapper">
+      <img id="overlayImg" src="" alt="Expanded view" />
+      <button class="toggle-caption-btn" id="toggleCaptionBtn" aria-label="Toggle Caption">
+        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+    </div>
+    <button class="nav-btn next" id="nextBtn">&#10095;</button>
+
+    <div class="caption-container" id="captionContainer">
+      <p id="overlayCaption"></p>
+    </div>
+  </div>
+
+  <script>
+  const manualLeftIndices = [];   // zero-based index for images 26 and 27
+  const manualRightIndices = [];      // zero-based index for image 28
+
+  const overlay = document.getElementById('overlay');
+  const overlayImg = document.getElementById('overlayImg');
+  const overlayCaption = document.getElementById('overlayCaption');
+  const captionContainer = document.getElementById('captionContainer');
+  const toggleCaptionBtn = document.getElementById('toggleCaptionBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let currentIndex = 0;
+  let captionExpanded = true;
+  let failedCount = 0;
+
+    const imageData = [
+    { src: "/project-imgs/daniel/1.jpg", caption: "Reclaimed beams and flooring add instant character and patina to the cottage. The ceilings in the kitchen, living and dining room areas were vaulted to create more storage in the kitchen and open up the feel of the rooms." },
+    { src: "/project-imgs/daniel/2.jpg", caption: "The kitchen is small but mighty. Vaulting the ceilings added space for taller cabinets and additional storage. The reclaimed wood beams add a rustic wow factor. Concrete look countertops, textured white brick style tile with dark grout and two tone cabinets finish out the space." },
+    { src: "/project-imgs/daniel/3.jpg", caption: "DETAIL - Kitchen" },
+    { src: "/project-imgs/daniel/4.jpg", caption: "The kitchen is open to the dining and living rooms. The two panel dutch door allows cross flow of cool lake air through the home." },
+    { src: "/project-imgs/daniel/5.jpg", caption: "Custom railing and an antique light fixture add visual interest to the basement stairway. The second Dutch door opens to a lakeside covered porch." },
+    { src: "/project-imgs/daniel/6.jpg", caption: "This antique industrial pendant light brought the right amount of patina and interest to the stair case area which is open to the living and dining room." },
+    { src: "/project-imgs/daniel/7.jpg", caption: "The original brick fireplace was kept." },
+    { src: "/project-imgs/daniel/8.jpg", caption: "Living room and dining room with reclaimed wood beams on vaulted ceiling" },
+    { src: "/project-imgs/daniel/9.jpg", caption: "Vaulting the ceiling and adding a reclaimed wood beam adds drama and texture to the smallish primary bedroom. Sconce lights replace lamps that would normally have to be on the bedside tables taking up space." },
+    { src: "/project-imgs/daniel/10.jpg", caption: "DETAILS - The wooden fan blades and reclaimed wood beam work together to warm up the Primary bedroom." },
+    { src: "/project-imgs/daniel/11.jpg", caption: "The original lake cottage owners bedroom was very small and lacked storage. So we reconfigured three small bedrooms into two. The original flooring was kept in this space." },
+    { src: "/project-imgs/daniel/12.jpg", caption: "DETAIL - Master Bedroom Sconce" },
+    { src: "/project-imgs/daniel/13.jpg", caption: "The hall bathroom gave us the opportunity to have some fun. Navy brick tiles, green penny round shower pan tile and a copper sink add unexpected elements to the cottage." },
+    { src: "/project-imgs/daniel/14.jpg", caption: "DETAIL" },
+    { src: "/project-imgs/daniel/15.jpg", caption: "DETAIL" },
+    { src: "/project-imgs/daniel/16.jpg", caption: "A clean and classic color pallet was selected for the primary bathroom. Slate tile on the floor, Carrera marble counter tops and an antique vanity add interest and texture in the space." },
+    { src: "/project-imgs/daniel/17.jpg", caption: "DETAIL - repurposed antique cabinet. Carrera marble top with a semi recessed vessel sink finished the unit." },
+    { src: "/project-imgs/daniel/18.jpg", caption: "DETAIL - Carrera marble top with a semi recessed vessel sink finished the unit." },
+    { src: "/project-imgs/daniel/19.jpg", caption: "Guest bedroom" }
+    ];
+
+  function openOverlay(index) {
+    currentIndex = index;
+    const { src, caption } = imageData[index];
+    overlayImg.src = src;
+    overlayCaption.textContent = caption;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    captionContainer.classList.remove('collapsed');
+    toggleCaptionBtn.classList.add('expanded');
+    captionExpanded = true;
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function preloadImage(index) {
+    const img = new Image();
+    img.src = imageData[index].src;
+  }
+
+  function showImage(index) {
+    const { src, caption } = imageData[index];
+    overlayImg.src = src;
+    overlayCaption.textContent = caption;
+
+    if (!captionExpanded) {
+      captionContainer.classList.add('collapsed');
+      toggleCaptionBtn.classList.remove('expanded');
+    }
+
+    preloadImage((index + 1) % imageData.length);
+    preloadImage((index - 1 + imageData.length) % imageData.length);
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+    showImage(currentIndex);
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % imageData.length;
+    showImage(currentIndex);
+  }
+
+  toggleCaptionBtn.addEventListener('click', () => {
+    captionExpanded = !captionExpanded;
+    captionContainer.classList.toggle('collapsed');
+    toggleCaptionBtn.classList.toggle('expanded');
+    overlay.classList.toggle('caption-collapsed');
+  });
+
+  closeBtn.addEventListener('click', closeOverlay);
+  prevBtn.addEventListener('click', showPrev);
+  nextBtn.addEventListener('click', showNext);
+
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('active')) return;
+
+    // Block repeated triggers only for caption-related keys
+    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
+
+    switch (e.key) {
+      case 'Escape':
+        closeOverlay();
+        break;
+      case 'ArrowLeft':
+        showPrev(); // Allow holding
+        break;
+      case 'ArrowRight':
+        showNext(); // Allow holding
+        break;
+      case 'ArrowDown':
+        if (!captionExpanded) {
+          toggleCaptionBtn.click(); // expand
+        }
+        break;
+      case 'ArrowUp':
+        if (captionExpanded) {
+          toggleCaptionBtn.click(); // collapse
+        }
+        break;
+      case 'c':
+      case 'C':
+        toggleCaptionBtn.click(); // toggle
+        break;
+    }
+  });
+
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    loadImagesInOrder(imageData, col1, col2);
+  });
+
+  async function loadImagesInOrder(images, col1, col2) {
+    let col1Height = 0;
+    let col2Height = 0;
+
+    for (let i = 0; i < images.length; i++) {
+      const { src, badge } = images[i];
+      const img = new Image();
+      img.src = src;
+      img.alt = `Gallery image ${i + 1}`;
+      img.dataset.index = i;
+
+      await new Promise((resolve) => {
+        img.onload = () => {
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('image-badge-wrapper');
+
+          if (badge) {
+            const badgeElem = document.createElement('div');
+            badgeElem.classList.add('badge');
+            badgeElem.textContent = badge;
+            wrapper.appendChild(badgeElem);
+          }
+
+          wrapper.appendChild(img);
+
+          if (manualLeftIndices.includes(i)) {
+            col1.appendChild(wrapper);
+          } else if (manualRightIndices.includes(i)) {
+            col2.appendChild(wrapper);
+          } else {
+            if (col1Height <= col2Height) {
+              col1.appendChild(wrapper);
+              col1Height += img.getBoundingClientRect().height;
+            } else {
+              col2.appendChild(wrapper);
+              col2Height += img.getBoundingClientRect().height;
+            }
+          }
+
+          img.addEventListener('click', () => openOverlay(i));
+          resolve();
+        };
+
+        img.onerror = () => {
+          failedCount++;
+          console.error(`Could not load ${src}`);
+          if (failedCount > 5) {
+            const warning = document.createElement('p');
+            warning.textContent = "Some images failed to load. Try refreshing the page.";
+            warning.style.color = 'red';
+            document.querySelector('.page-wrapper').appendChild(warning);
+          }
+          resolve();
+        };
+      });
+    }
+
+    if (window.innerWidth < 500) {
+      reflowColumnsForMobile();
+    }
+  }
+
+  function reflowColumnsForMobile() {
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    const gallery = document.getElementById('gallery');
+
+    const combined = [];
+    const col1Children = Array.from(col1.children);
+    const col2Children = Array.from(col2.children);
+    const maxLength = Math.max(col1Children.length, col2Children.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      if (col1Children[i]) combined.push(col1Children[i]);
+      if (col2Children[i]) combined.push(col2Children[i]);
+    }
+
+    // Clear columns
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+
+    // Create single column
+    const singleCol = document.createElement('div');
+    singleCol.classList.add('column');
+    combined.forEach((el) => singleCol.appendChild(el));
+
+    gallery.innerHTML = '';
+    gallery.appendChild(singleCol);
+  }
+
+
+
+</script>
+
+
+</BaseLayout>

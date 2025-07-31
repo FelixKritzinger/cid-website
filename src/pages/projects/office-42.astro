@@ -1,10 +1,11 @@
 ---
+// island-orgo.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = "Huntersville Home Office for Two";
 const description = "Office for Two";
 ---
-<BaseLayout {title} {description} showScrollButton = true>
+<BaseLayout {title} {description} showScrollButton={true}>
   <style>
     .page-wrapper {
       max-width: 67.5vw;
@@ -17,14 +18,11 @@ const description = "Office for Two";
     }
 
     h1 {
-      //font-size: clamp(.25rem, 1.5*(.6rem + .35dvw + .2dvh), 4.25rem);
-      //font-size: clamp(.5rem, 1.8vw, 3rem);
       margin-bottom: 1rem;
       margin-top: clamp(.25rem, 2.5*(.6rem + .35dvw + .2dvh), 4.25rem);
     }
 
     p {
-      //font-size: clamp(.25rem, 1vw, 2.25rem);
       font-size: clamp(.25rem, .6rem + .35dvw + .2dvh, 4.25rem);
       margin-bottom: 2.5rem;
     }
@@ -32,7 +30,6 @@ const description = "Office for Two";
     .gallery {
       display: flex;
       gap: clamp(.1rem, .25dvh + .75dvw + .5rem, 2rem);
-      //gap: 1.5rem;
     }
 
     .column {
@@ -78,14 +75,12 @@ const description = "Office for Two";
     }
 
     @media (max-width: 1300px) {
-        .page-wrapper {
-          padding: 1rem 0rem;
-          max-width: 90dvw;
-        }
-        /*.gallery {
-          gap: clamp(.25rem, .25dvh + 1.5dvw + .25rem, 2rem);
-        }*/
+      .page-wrapper {
+        padding: 1rem 0rem;
+        max-width: 90dvw;
       }
+    }
+
     @media (max-width: 500px) {
       .gallery {
         flex-direction: column;
@@ -103,85 +98,25 @@ const description = "Office for Two";
       z-index: 999;
       flex-direction: column;
       overflow: hidden;
-      padding-bottom: 0rem;
     }
 
     .overlay.active {
       display: flex;
     }
 
-    .caption-container {
-      color: white;
-      width: 80dvw;
-      height: 15dvh;
-      text-align: center;
-      transition: max-height 0.3s ease;
-      overflow: hidden;
-    }
-
-    .caption-container p{
-      font-size: clamp(.25rem, .75dvw + .85dvh, 2.25rem);
-    }
-
-    .caption-container.collapsed {
-      max-height: 0;
-      opacity: 0;
-      padding: 0;
-    }
-
-    .overlay.caption-collapsed img {
-      padding-top: 0dvh;
-      max-height: 90dvh;
-      max-width: 85dvw;
-    }
-
     .overlay img {
       padding-top: 0dvh;
       border-radius: 0;
-      max-height: 80dvh;
+      max-height: 90dvh;
       max-width: 85dvw;
       transition: max-height 0.5s ease;
     }
 
     .image-wrapper {
       position: relative;
-      display: inline-block; /* shrinkwrap the image */
+      display: inline-block;
       width: auto;
       height: auto;
-    }
-
-
-    .image-wrapper.caption-collapsed {
-      max-height: 90dvh;
-    }
-
-    .toggle-caption-btn {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.35);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      border-radius: 50%;
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease;
-      padding: 0;
-    }
-
-    .toggle-caption-btn .arrow-icon {
-      transition: transform 0.3s ease;
-    }
-
-    .toggle-caption-btn.expanded .arrow-icon {
-      transform: rotate(-180deg);
     }
 
     .close-btn,
@@ -232,253 +167,178 @@ const description = "Office for Two";
     <button class="nav-btn prev" id="prevBtn">&#10094;</button>
     <div class="image-wrapper">
       <img id="overlayImg" src="" alt="Expanded view" />
-      <button class="toggle-caption-btn" id="toggleCaptionBtn" aria-label="Toggle Caption">
-        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </button>
     </div>
     <button class="nav-btn next" id="nextBtn">&#10095;</button>
-
-    <div class="caption-container" id="captionContainer">
-      <p id="overlayCaption"></p>
-    </div>
   </div>
 
   <script>
-  const manualLeftIndices = [];   // zero-based index 
-  const manualRightIndices = [];      // zero-based index
+    const manualLeftIndices = [];
+    const manualRightIndices = [];
 
-  const overlay = document.getElementById('overlay');
-  const overlayImg = document.getElementById('overlayImg');
-  const overlayCaption = document.getElementById('overlayCaption');
-  const captionContainer = document.getElementById('captionContainer');
-  const toggleCaptionBtn = document.getElementById('toggleCaptionBtn');
-  const closeBtn = document.getElementById('closeBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlayImg');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-  let currentIndex = 0;
-  let captionExpanded = true;
-  let failedCount = 0;
+    let currentIndex = 0;
+    let failedCount = 0;
 
     const imageData = [
-      {
-        src: "/project-imgs/office/1.jpg",
-        caption: "The T-shaped custom built desk provides work surface and storage for two.",
-      },
-      {
-        src: "/project-imgs/office/2.jpg",
-        caption: "The open plan office as viewed from the front door entry hall.",
-      },
-      {
-        src: "/project-imgs/office/3.jpg",
-        caption: "Detailed view of the workspace decor.",
-      },
-      {
-        src: "/project-imgs/office/4.jpg",
-        caption: "Design concept hand sketch of the office space.",
-        badge: "Sketch"
-      },
-      {
-        src: "/project-imgs/office/5.jpg",
-        caption: "The office space before the redesign.",
-        badge: "◷ Before"
-      }
-    ];
+    { src: "/project-imgs/office/1.jpg" },
+    { src: "/project-imgs/office/2.jpg" },
+    { src: "/project-imgs/office/3.jpg" },
+    { src: "/project-imgs/office/4.jpg" },
+    { src: "/project-imgs/office/5.jpg", badge: "◷ Before" }
+  ];
 
-  function openOverlay(index) {
-    currentIndex = index;
-    const { src, caption } = imageData[index];
-    overlayImg.src = src;
-    overlayCaption.textContent = caption;
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    captionContainer.classList.remove('collapsed');
-    toggleCaptionBtn.classList.add('expanded');
-    captionExpanded = true;
-  }
 
-  function closeOverlay() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function preloadImage(index) {
-    const img = new Image();
-    img.src = imageData[index].src;
-  }
-
-  function showImage(index) {
-    const { src, caption } = imageData[index];
-    overlayImg.src = src;
-    overlayCaption.textContent = caption;
-
-    if (!captionExpanded) {
-      captionContainer.classList.add('collapsed');
-      toggleCaptionBtn.classList.remove('expanded');
+    function openOverlay(index) {
+      currentIndex = index;
+      const { src } = imageData[index];
+      overlayImg.src = src;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
-    preloadImage((index + 1) % imageData.length);
-    preloadImage((index - 1 + imageData.length) % imageData.length);
-  }
-
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
-    showImage(currentIndex);
-  }
-
-  function showNext() {
-    currentIndex = (currentIndex + 1) % imageData.length;
-    showImage(currentIndex);
-  }
-
-  toggleCaptionBtn.addEventListener('click', () => {
-    captionExpanded = !captionExpanded;
-    captionContainer.classList.toggle('collapsed');
-    toggleCaptionBtn.classList.toggle('expanded');
-    overlay.classList.toggle('caption-collapsed');
-  });
-
-  closeBtn.addEventListener('click', closeOverlay);
-  prevBtn.addEventListener('click', showPrev);
-  nextBtn.addEventListener('click', showNext);
-
-  document.addEventListener('keydown', (e) => {
-    if (!overlay.classList.contains('active')) return;
-
-    // Block repeated triggers only for caption-related keys
-    if (e.repeat && ['ArrowUp', 'ArrowDown', 'c', 'C'].includes(e.key)) return;
-
-    switch (e.key) {
-      case 'Escape':
-        closeOverlay();
-        break;
-      case 'ArrowLeft':
-        showPrev(); // Allow holding
-        break;
-      case 'ArrowRight':
-        showNext(); // Allow holding
-        break;
-      case 'ArrowDown':
-        if (!captionExpanded) {
-          toggleCaptionBtn.click(); // expand
-        }
-        break;
-      case 'ArrowUp':
-        if (captionExpanded) {
-          toggleCaptionBtn.click(); // collapse
-        }
-        break;
-      case 'c':
-      case 'C':
-        toggleCaptionBtn.click(); // toggle
-        break;
+    function closeOverlay() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
     }
-  });
 
-
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const col1 = document.getElementById('col1');
-    const col2 = document.getElementById('col2');
-    loadImagesInOrder(imageData, col1, col2);
-  });
-
-  async function loadImagesInOrder(images, col1, col2) {
-    let col1Height = 0;
-    let col2Height = 0;
-
-    for (let i = 0; i < images.length; i++) {
-      const { src, badge } = images[i];
+    function preloadImage(index) {
       const img = new Image();
-      img.src = src;
-      img.alt = `Gallery image ${i + 1}`;
-      img.dataset.index = i;
+      img.src = imageData[index].src;
+    }
 
-      await new Promise((resolve) => {
-        img.onload = () => {
-          const wrapper = document.createElement('div');
-          wrapper.classList.add('image-badge-wrapper');
+    function showImage(index) {
+      const { src } = imageData[index];
+      overlayImg.src = src;
+      preloadImage((index + 1) % imageData.length);
+      preloadImage((index - 1 + imageData.length) % imageData.length);
+    }
 
-          if (badge) {
-            const badgeElem = document.createElement('div');
-            badgeElem.classList.add('badge');
-            badgeElem.textContent = badge;
-            wrapper.appendChild(badgeElem);
-          }
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+      showImage(currentIndex);
+    }
 
-          wrapper.appendChild(img);
+    function showNext() {
+      currentIndex = (currentIndex + 1) % imageData.length;
+      showImage(currentIndex);
+    }
 
-          if (manualLeftIndices.includes(i)) {
-            col1.appendChild(wrapper);
-          } else if (manualRightIndices.includes(i)) {
-            col2.appendChild(wrapper);
-          } else {
-            if (col1Height <= col2Height) {
-              col1.appendChild(wrapper);
-              col1Height += img.getBoundingClientRect().height;
-            } else {
-              col2.appendChild(wrapper);
-              col2Height += img.getBoundingClientRect().height;
+    closeBtn.addEventListener('click', closeOverlay);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('active')) return;
+      switch (e.key) {
+        case 'Escape':
+          closeOverlay();
+          break;
+        case 'ArrowLeft':
+          showPrev();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const col1 = document.getElementById('col1');
+      const col2 = document.getElementById('col2');
+      loadImagesInOrder(imageData, col1, col2);
+    });
+
+    async function loadImagesInOrder(images, col1, col2) {
+      let col1Height = 0;
+      let col2Height = 0;
+
+      for (let i = 0; i < images.length; i++) {
+        const { src, badge } = images[i];
+        const img = new Image();
+        img.src = src;
+        img.alt = `Gallery image ${i + 1}`;
+        img.dataset.index = i;
+
+        await new Promise((resolve) => {
+          img.onload = () => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('image-badge-wrapper');
+
+            if (badge) {
+              const badgeElem = document.createElement('div');
+              badgeElem.classList.add('badge');
+              badgeElem.textContent = badge;
+              wrapper.appendChild(badgeElem);
             }
-          }
 
-          img.addEventListener('click', () => openOverlay(i));
-          resolve();
-        };
+            wrapper.appendChild(img);
 
-        img.onerror = () => {
-          failedCount++;
-          console.error(`Could not load ${src}`);
-          if (failedCount > 5) {
-            const warning = document.createElement('p');
-            warning.textContent = "Some images failed to load. Try refreshing the page.";
-            warning.style.color = 'red';
-            document.querySelector('.page-wrapper').appendChild(warning);
-          }
-          resolve();
-        };
-      });
+            if (manualLeftIndices.includes(i)) {
+              col1.appendChild(wrapper);
+            } else if (manualRightIndices.includes(i)) {
+              col2.appendChild(wrapper);
+            } else {
+              if (col1Height <= col2Height) {
+                col1.appendChild(wrapper);
+                col1Height += img.getBoundingClientRect().height;
+              } else {
+                col2.appendChild(wrapper);
+                col2Height += img.getBoundingClientRect().height;
+              }
+            }
+
+            img.addEventListener('click', () => openOverlay(i));
+            resolve();
+          };
+
+          img.onerror = () => {
+            failedCount++;
+            console.error(`Could not load ${src}`);
+            if (failedCount > 5) {
+              const warning = document.createElement('p');
+              warning.textContent = "Some images failed to load. Try refreshing the page.";
+              warning.style.color = 'red';
+              document.querySelector('.page-wrapper').appendChild(warning);
+            }
+            resolve();
+          };
+        });
+      }
+
+      if (window.innerWidth < 500) {
+        reflowColumnsForMobile();
+      }
     }
 
-    if (window.innerWidth < 500) {
-      reflowColumnsForMobile();
+    function reflowColumnsForMobile() {
+      const col1 = document.getElementById('col1');
+      const col2 = document.getElementById('col2');
+      const gallery = document.getElementById('gallery');
+
+      const combined = [];
+      const col1Children = Array.from(col1.children);
+      const col2Children = Array.from(col2.children);
+      const maxLength = Math.max(col1Children.length, col2Children.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        if (col1Children[i]) combined.push(col1Children[i]);
+        if (col2Children[i]) combined.push(col2Children[i]);
+      }
+
+      col1.innerHTML = '';
+      col2.innerHTML = '';
+
+      const singleCol = document.createElement('div');
+      singleCol.classList.add('column');
+      combined.forEach((el) => singleCol.appendChild(el));
+
+      gallery.innerHTML = '';
+      gallery.appendChild(singleCol);
     }
-  }
-
-  function reflowColumnsForMobile() {
-    const col1 = document.getElementById('col1');
-    const col2 = document.getElementById('col2');
-    const gallery = document.getElementById('gallery');
-
-    const combined = [];
-    const col1Children = Array.from(col1.children);
-    const col2Children = Array.from(col2.children);
-    const maxLength = Math.max(col1Children.length, col2Children.length);
-
-    for (let i = 0; i < maxLength; i++) {
-      if (col1Children[i]) combined.push(col1Children[i]);
-      if (col2Children[i]) combined.push(col2Children[i]);
-    }
-
-    // Clear columns
-    col1.innerHTML = '';
-    col2.innerHTML = '';
-
-    // Create single column
-    const singleCol = document.createElement('div');
-    singleCol.classList.add('column');
-    combined.forEach((el) => singleCol.appendChild(el));
-
-    gallery.innerHTML = '';
-    gallery.appendChild(singleCol);
-  }
-
-
-
-</script>
-
-
+  </script>
 </BaseLayout>
