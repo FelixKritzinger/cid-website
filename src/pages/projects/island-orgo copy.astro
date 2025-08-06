@@ -2,8 +2,8 @@
 // island-orgo.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const title = "Island Organic Modern";
-const description = "Edisto design photos";
+const title = "Huntersville Home Office for Two";
+const description = "Office for Two";
 ---
 <BaseLayout {title} {description} showScrollButton={true}>
   <style>
@@ -151,8 +151,8 @@ const description = "Edisto design photos";
   <div class="page-wrapper">
     <h1>{title}</h1>
     <p>
-      A family home on Edisto Island, designed to be relaxed and welcoming. A blend of modern forms and organic materials and furnishings encourages peaceful living and happy times. 
-      The home was designed to take full advantage of the sea breezes and the incredible views of the marsh and Atlantic Ocean beyond.
+      The homeowners were looking for a stylish update to their home office that would serve them both. 
+      The redesign adds function and a wow factor to their front entry area where the office is located with a custom built T-shape desk and floating shelves.
     </p>
 
     <div class="gallery" id="gallery">
@@ -172,8 +172,8 @@ const description = "Edisto design photos";
   </div>
 
   <script>
-    const manualLeftIndices = [25, 26];
-    const manualRightIndices = [27];
+    const manualLeftIndices = [];
+    const manualRightIndices = [];
 
     const overlay = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
@@ -185,35 +185,13 @@ const description = "Edisto design photos";
     let failedCount = 0;
 
     const imageData = [
-      { src: "/project-imgs/edisto/1.jpg" },
-      { src: "/project-imgs/edisto/2.jpg" },
-      { src: "/project-imgs/edisto/3.jpg" },
-      { src: "/project-imgs/edisto/4.jpg" },
-      { src: "/project-imgs/edisto/5.jpg" },
-      { src: "/project-imgs/edisto/6.jpg" },
-      { src: "/project-imgs/edisto/7.jpg" },
-      { src: "/project-imgs/edisto/8.jpg" },
-      { src: "/project-imgs/edisto/9.jpg" },
-      { src: "/project-imgs/edisto/10.jpg" },
-      { src: "/project-imgs/edisto/11.jpg" },
-      { src: "/project-imgs/edisto/12.jpg" },
-      { src: "/project-imgs/edisto/13.jpg" },
-      { src: "/project-imgs/edisto/14.jpg" },
-      { src: "/project-imgs/edisto/15.jpg" },
-      { src: "/project-imgs/edisto/16.jpg" },
-      { src: "/project-imgs/edisto/17.jpg" },
-      { src: "/project-imgs/edisto/18.jpg" },
-      { src: "/project-imgs/edisto/19.jpg" },
-      { src: "/project-imgs/edisto/20.jpg" },
-      { src: "/project-imgs/edisto/21.jpg" },
-      { src: "/project-imgs/edisto/22.jpg" },
-      { src: "/project-imgs/edisto/23.jpg" },
-      { src: "/project-imgs/edisto/24.jpg" },
-      { src: "/project-imgs/edisto/25.jpg" },
-      { src: "/project-imgs/edisto/26.jpg" },
-      { src: "/project-imgs/edisto/27.jpg" },
-      { src: "/project-imgs/edisto/28.jpg" },
-    ];
+    { src: "/project-imgs/office/1.jpg" },
+    { src: "/project-imgs/office/2.jpg" },
+    { src: "/project-imgs/office/3.jpg" },
+    { src: "/project-imgs/office/4.jpg" },
+    { src: "/project-imgs/office/5.jpg", badge: "◷ Before" }
+  ];
+
 
     function openOverlay(index) {
       currentIndex = index;
