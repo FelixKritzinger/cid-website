@@ -177,33 +177,15 @@ const currentPath = Astro.url.pathname;
       footer {
         background: #fafafa;
         color: #000;
-        padding: 2rem 5% 4rem;
+        padding: 2rem 5% 1.5rem;
         margin-top: 3rem;
         display: flex;
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: center;
         text-align: center;
         gap: 1.5rem;
         font-size: clamp(0.5rem, 1vw, 1.5rem);
-      }
-
-      footer > div:first-child {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      footer .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-
-      footer .contact-item svg {
-        width: 1.2em;
-        height: 1.2em;
-        fill: #777;
       }
 
       footer a {
@@ -217,14 +199,14 @@ const currentPath = Astro.url.pathname;
 
       footer .social-icons {
         display: flex;
-        gap: 1.5rem;
+        gap: 2.5rem;
         align-items: center;
         justify-content: center;
       }
 
       footer .social-icons a img {
-        width: 2em;
-        height: 2em;
+        width: 2.25em;
+        height: 2.25em;
       }
 
       #scrollToTopBtn {
@@ -335,6 +317,15 @@ const currentPath = Astro.url.pathname;
     </main>
 
     <footer>
+      <div class="social-icons">
+          <a href="https://www.instagram.com/collaborativeinterior/" target="_blank" aria-label="Instagram">
+            <img src="/instagram-icon.svg" alt="Instagram" />
+          </a>
+
+          <a href="https://www.houzz.com/professionals/interior-designers-and-decorators/collaborative-interior-design-pfvwus-pf~312298414" target="_blank" aria-label="Houzz">
+            <img src="/houzz_icon_black.svg" alt="Houzz" />
+          </a>
+        </div>
     </footer>
 
     {Astro.props.showScrollButton && (
