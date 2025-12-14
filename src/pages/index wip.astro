@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Slideshow from '../components/Slideshow.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+---
+
+<BaseLayout title="Home" description="Welcome to Collaborative Interior Design." hero={true}>
+
+  <!-- FULLSCREEN HERO SLIDESHOW -->
+  <section class="hero">
+    <Slideshow />
+
+    <div class="hero-overlay">
+      <img src="/CID Logo White.png" alt="Collaborative Interior Design" class="hero-logo" />
+      <div class="hero-banner"></div>
+    </div>
+  </section>
+
+  <style>
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero :global(.slideshow),
+    .hero :global(.slide) {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero :global(.slide img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay logo + inset banner */
+    .hero-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .hero-logo {
+      width: 5vw;
+      height: auto;
+    }
+
+    .hero-banner {
+      width: 180px;
+      height: 3px;
+      background-color: white;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .hero-logo { max-width: 70%; }
+      .hero-banner { width: 120px; height: 2px; }
+    }
+  </style>
+
+  <!-- WHO WE ARE -->
+  <section class="who-we-are">
+    <h2>WHAT WE DO</h2>
+    <p>Your home should be a place that looks and feels like a physical expression of you and your family. We help you translate your dreams and ideas into design that is personal.</p>
+  </section>
+
+  <!-- CONTENT SECTION -->
+  <section class="two-column-section">
+    <img class="two-column-section__image" src="/Maine_Cottage_Square.jpg" alt="Interior Design Example" />
+
+    <div class="two-column-section__content">
+      <h2>CREATE YOUR DREAM HOME</h2>
+      <p>Whether you are working with an architect or builder on a home design, looking to redo a kitchen or bathroom or choosing finishing touches like furniture, lighting, fabrics and colors etc. We are able to help ensure you are getting a beautiful and functional home.</p>
+    </div>
+  </section>
+
+  <ProjectGrid />
+
+</BaseLayout>

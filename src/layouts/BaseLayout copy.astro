@@ -1,0 +1,378 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+
+const { title, description, image, showScrollButton = false} = Astro.props;
+
+const navLinks = [
+  { name: 'HOME', href: '/' },
+  { name: 'ABOUT', href: '/about' },
+  { name: 'OUR WORK', href: '/our_work' },
+  { name: 'REVIEWS', href: '/reviews' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} {image} />
+    <style>
+      @font-face {
+        font-family: 'MontserratMedium';
+        src: url('/fonts/Montserrat-Medium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'MontserratMedium', sans-serif;
+        background: #fff;
+        color: #222;
+      }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 5%;
+        padding-left:3%;
+        background: #fafafa;
+        color: #000;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 9vh;
+        width: auto;
+      }
+
+      .navigation {
+        display: flex;
+        gap: 3rem;
+      }
+
+      .navigation a {
+        display: inline-block;
+        padding: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #000;
+        text-decoration: none;
+        transition: font-weight 0.2s;
+        letter-spacing:0.075em;
+      }
+
+      .navigation a.active {
+        font-weight: 700;
+      }
+
+      .navigation a:hover {
+        font-weight: 700;
+      }
+
+      .navigation:hover a.active:not(:hover) {
+        font-weight: 500;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color:#4f4f4f
+      }
+
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        background: #fafafa;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+        z-index: 100;
+        min-width: 150px;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        font-weight: 500;
+        color: #000;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: font-weight 0.2s;
+      }
+
+      .dropdown-menu a.active {
+        font-weight: 700;
+      }
+
+      .dropdown-menu a:hover {
+        font-weight: 700;
+      }
+
+      .dropdown-menu:hover a.active:not(:hover) {
+        font-weight: 500;
+      }
+
+      .dropdown-menu.open {
+        display: flex;
+      }
+
+      @media (max-width: 1024px) {
+        .site-header {
+          padding: 1rem 3%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .site-header {
+          flex-direction: row;
+          align-items: center;
+          padding: 1rem 5%;
+        }
+
+        .logo img {
+          height: 50px;
+          border-radius: 0;
+        }
+
+        .navigation {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+      }
+
+      .site-main {
+        width: 100%;
+        padding: 0 5%;
+      }
+
+      @media (max-width: 768px) {
+        .site-main {
+          padding: 0 3%;
+        }
+      }
+
+      footer {
+        background: #fafafa;
+        color: #000;
+        padding: 2rem 5% 1.5rem;
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+        font-size: clamp(0.5rem, 1vw, 1.5rem);
+      }
+
+      footer a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      footer .social-icons {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: center;
+      }
+
+      footer .social-icons a img {
+        width: 2.25em;
+        height: 2.25em;
+      }
+
+      #scrollToTopBtn {
+        position: fixed;
+        top: 87.5vh;
+        right: 3rem;
+        background-color: rgb(255,255,255,1);
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 200;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    #scrollToTopBtn.show {
+        opacity: 0.8;
+
+        visibility: visible;
+    }
+
+    #scrollToTopBtn:hover {
+        opacity: 1;
+        gap: .5rem;
+        height: 4.85rem;           /* taller to accommodate label */
+        border-radius: 1.5rem;  /* round vertical rectangle */
+    }
+
+    #scrollToTopBtn .label {
+        font-size: 1rem;
+        opacity: 0;
+        max-height: 0;
+        transition: opacity 0.3s, max-height 0.3s;
+        line-height: 1;
+    }
+
+    #scrollToTopBtn:hover .label {
+        opacity: 1;
+        max-height: 1rem;
+    }
+
+
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="logo">
+        <a href="/">
+          <img src="/CID Logo - txt seperated.png" alt="Collaborative Interior Design - Lake Norman" />
+        </a>
+      </div>
+
+      <nav class="navigation">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}
+          >
+            {link.name}
+          </a>
+        ))}
+      </nav>
+
+      <button
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        id="hamburgerBtn"
+        type="button"
+      >
+        ☰
+      </button>
+
+      <div
+        class="dropdown-menu"
+        id="dropdownMenu"
+        role="menu"
+        aria-hidden="true"
+      >
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}
+            role="menuitem"
+            tabindex="0"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="social-icons">
+          <a href="https://www.instagram.com/collaborativeinterior/" target="_blank" aria-label="Instagram">
+            <img src="/instagram-icon.svg" alt="Instagram" />
+          </a>
+
+          <a href="https://www.houzz.com/professionals/interior-designers-and-decorators/collaborative-interior-design-pfvwus-pf~312298414" target="_blank" aria-label="Houzz">
+            <img src="/houzz_icon_black.svg" alt="Houzz" />
+          </a>
+        </div>
+    </footer>
+
+    {Astro.props.showScrollButton && (
+      <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 12 9 20 17" />
+        </svg>
+        <span class="label">Top</span>
+      </button>
+    )}
+
+
+
+
+    <script>
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = dropdownMenu.classList.toggle('open');
+
+        if (isOpen) {
+          hamburgerBtn.innerHTML = '×';
+          hamburgerBtn.setAttribute('aria-expanded', 'true');
+          dropdownMenu.setAttribute('aria-hidden', 'false');
+        } else {
+          hamburgerBtn.innerHTML = '☰';
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          dropdownMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight) {
+          scrollToTopBtn.classList.add('show');
+        } else {
+          scrollToTopBtn.classList.remove('show');
+        }
+      });
+
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+    </script>
+
+  </body>
+</html>

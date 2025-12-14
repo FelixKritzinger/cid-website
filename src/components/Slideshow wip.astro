@@ -1,0 +1,96 @@
+---
+---
+<style>
+  .slideshow-wrapper {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .slideshow {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+  }
+
+  .slide {
+    min-width: 100%;
+    height: 100%;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* <-- crop allowed */
+    cursor: pointer;
+  }
+</style>
+
+<div class="slideshow-wrapper">
+  <div class="slideshow" id="slideshow">
+    <div class="slides" id="slides">
+      <div class="slide"><img src="/project-imgs/edisto/1.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide"><img src="/project-imgs/edisto/7.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide"><img src="/project-imgs/edisto/11.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide"><img src="/project-imgs/edisto/15.jpg" data-link="/projects/island-orgo" /></div>
+
+      <div class="slide"><img src="/project-imgs/joye/11.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide"><img src="/project-imgs/joye/13.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide"><img src="/project-imgs/joye/15.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide"><img src="/project-imgs/joye/22.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide"><img src="/project-imgs/joye/25.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide"><img src="/project-imgs/joye/31.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+
+      <div class="slide"><img src="/Huntersville_Office.jpg" data-link="/projects/office-42" /></div>
+
+      <div class="slide"><img src="/project-imgs/polly-webb/1.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide"><img src="/project-imgs/polly-webb/3.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+
+      <div class="slide"><img src="/project-imgs/saint/1.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide"><img src="/project-imgs/saint/2.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide"><img src="/project-imgs/saint/9.jpg" data-link="/projects/lkn-nature-bath" /></div>
+
+      <div class="slide"><img src="/project-imgs/wandel/2.jpg" data-link="/projects/cornelius-bath" /></div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Shuffle slides
+  const slidesContainer = document.getElementById('slides');
+  const slideElements = Array.from(slidesContainer.children);
+
+  for (let i = slideElements.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    slidesContainer.insertBefore(slideElements[j], slideElements[i]);
+  }
+
+  // Click-through navigation
+  document.querySelectorAll('#slides img').forEach(img => {
+    img.addEventListener('click', () => {
+      const link = img.getAttribute('data-link');
+      if (link) window.location.href = link;
+    });
+  });
+
+  let currentIndex = 0;
+  const totalSlides = slidesContainer.children.length;
+
+  function showSlide(index) {
+    currentIndex = (index + totalSlides) % totalSlides;
+    slidesContainer.style.transform =
+      `translateX(-${currentIndex * 100}%)`;
+  }
+
+  // Auto-advance ONLY
+  setInterval(() => {
+    showSlide(currentIndex + 1);
+  }, 4500);
+</script>

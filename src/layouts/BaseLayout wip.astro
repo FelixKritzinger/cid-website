@@ -1,0 +1,175 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+
+const { title, description, image, showScrollButton = false, hero = false } = Astro.props;
+
+const navLinks = [
+  { name: 'HOME', href: '/' },
+  { name: 'ABOUT', href: '/about' },
+  { name: 'OUR WORK', href: '/our_work' },
+  { name: 'REVIEWS', href: '/reviews' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} {image} />
+    <style>
+      @font-face {
+        font-family: 'MontserratMedium';
+        src: url('/fonts/Montserrat-Medium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: 'MontserratMedium', sans-serif;
+        background: #fff;
+        color: #222;
+      }
+
+      /* ================= HEADER ================= */
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 5%;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 20;
+      }
+
+      body.has-hero .site-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: transparent; /* fully transparent */
+        color: #fff;
+      }
+
+      .navigation {
+        display: flex;
+        gap: 3rem;
+      }
+
+      body.has-hero .navigation a { color: #fff; }
+
+      .navigation a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: font-weight 0.2s;
+        letter-spacing: 0.075em;
+      }
+
+      .navigation a.active { font-weight: 700; }
+
+      .hamburger { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+
+      /* Dropdown for mobile */
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        background: #fafafa;
+        border-radius: 6px;
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+        z-index: 100;
+        min-width: 150px;
+      }
+
+      .dropdown-menu.open { display: flex; }
+
+      @media (max-width: 768px) {
+        .navigation { display: none; }
+        .hamburger { display: block; }
+      }
+
+      /* ================= MAIN ================= */
+      .site-main {
+        width: 100%;
+        padding: 0 5%;
+      }
+
+      body.has-hero .site-main {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      /* ================= FOOTER ================= */
+      footer {
+        background: #fafafa;
+        color: #000;
+        padding: 2rem 5% 1.5rem;
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+      }
+
+      footer a { color: #000; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+
+      footer .social-icons {
+        display: flex;
+        gap: 2.5rem;
+        justify-content: center;
+      }
+
+      footer .social-icons a img { width: 2.25em; height: 2.25em; }
+    </style>
+  </head>
+
+  <body class={hero ? 'has-hero' : ''}>
+    <header class="site-header">
+      <nav class="navigation">
+        {navLinks.map((link) => (
+          <a href={link.href} class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}>
+            {link.name}
+          </a>
+        ))}
+      </nav>
+
+      <button class="hamburger" id="hamburgerBtn" type="button">☰</button>
+
+      <div class="dropdown-menu" id="dropdownMenu">
+        {navLinks.map((link) => (
+          <a href={link.href} class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}>{link.name}</a>
+        ))}
+      </div>
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/collaborativeinterior/" target="_blank"><img src="/instagram-icon.svg" alt="Instagram" /></a>
+        <a href="https://www.houzz.com/professionals/interior-designers-and-decorators/collaborative-interior-design-pfvwus-pf~312298414" target="_blank"><img src="/houzz_icon_black.svg" alt="Houzz" /></a>
+      </div>
+    </footer>
+
+    <script>
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = dropdownMenu.classList.toggle('open');
+        hamburgerBtn.innerHTML = isOpen ? '×' : '☰';
+      });
+    </script>
+  </body>
+</html>
