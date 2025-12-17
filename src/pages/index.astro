@@ -4,8 +4,11 @@ import Slideshow from '../components/Slideshow.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 ---
 
-<BaseLayout title="Home" description="Welcome to Collaborative Interior Design.">
-  <Slideshow />
+<BaseLayout title="Home" heroHeader={true} description="Welcome to Collaborative Interior Design.">
+  <div class="full-bleed">
+    <Slideshow />
+  </div>
+
 
   <style>
     @font-face {
@@ -29,6 +32,23 @@ import ProjectGrid from '../components/ProjectGrid.astro';
       outline: none;
       border-radius: 0;
     }
+
+    /* Break out of BaseLayout padding/margins */
+    .full-bleed {
+      position: relative;
+      width: 100%;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+    }
+
+    html, body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+
 
     .two-column-section {
       display: flex;

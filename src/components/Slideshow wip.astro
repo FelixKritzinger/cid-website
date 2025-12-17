@@ -1,96 +1,247 @@
----
----
+<!-- HERO SLIDESHOW -->
 <style>
-  .slideshow-wrapper {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-  }
+.slideshow-wrapper {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  opacity: 0; /* hide until first slide/theme is ready */
+  transition: opacity 0.5s ease-in-out;
+}
 
-  .slideshow {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+.slideshow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 
-  .slides {
-    display: flex;
-    height: 100%;
-    transition: transform 0.8s ease-in-out;
-  }
+/* Inset rectangle with dynamic color */
+.slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 2.5vh 2.5vw;
+  pointer-events: none;
+  z-index: 5;
+  border: 1px solid var(--inset-border-color, rgba(255,255,255,0.7));
+  box-shadow: 0 0 .5px rgba(0,0,0,0.35), 0 0 2px rgba(0,0,0,0.25);
+}
 
-  .slide {
-    min-width: 100%;
-    height: 100%;
-  }
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* <-- crop allowed */
-    cursor: pointer;
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+}
+
+/* Only show landscape by default */
+#landscape-slideshow { display: block; }
+#vertical-slideshow { display: none; }
+
+@media (max-width: 768px) {
+  .slideshow-wrapper, .slideshow {
+    height: 100svh;
   }
+}
+
+/* Header text/nav shadow dynamic */
+.site-header,
+.site-header nav a,
+.site-header .hamburger {
+  text-shadow: var(--text-shadow-color, 0 1px 2px rgba(0,0,0,0.35));
+}
 </style>
 
-<div class="slideshow-wrapper">
-  <div class="slideshow" id="slideshow">
-    <div class="slides" id="slides">
-      <div class="slide"><img src="/project-imgs/edisto/1.jpg" data-link="/projects/island-orgo" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/7.jpg" data-link="/projects/island-orgo" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/11.jpg" data-link="/projects/island-orgo" /></div>
-      <div class="slide"><img src="/project-imgs/edisto/15.jpg" data-link="/projects/island-orgo" /></div>
-
-      <div class="slide"><img src="/project-imgs/joye/11.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-      <div class="slide"><img src="/project-imgs/joye/13.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-      <div class="slide"><img src="/project-imgs/joye/15.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-      <div class="slide"><img src="/project-imgs/joye/22.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-      <div class="slide"><img src="/project-imgs/joye/25.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-      <div class="slide"><img src="/project-imgs/joye/31.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
-
-      <div class="slide"><img src="/Huntersville_Office.jpg" data-link="/projects/office-42" /></div>
-
-      <div class="slide"><img src="/project-imgs/polly-webb/1.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
-      <div class="slide"><img src="/project-imgs/polly-webb/3.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
-
-      <div class="slide"><img src="/project-imgs/saint/1.jpg" data-link="/projects/lkn-nature-bath" /></div>
-      <div class="slide"><img src="/project-imgs/saint/2.jpg" data-link="/projects/lkn-nature-bath" /></div>
-      <div class="slide"><img src="/project-imgs/saint/9.jpg" data-link="/projects/lkn-nature-bath" /></div>
-
-      <div class="slide"><img src="/project-imgs/wandel/2.jpg" data-link="/projects/cornelius-bath" /></div>
+<!-- LANDSCAPE SLIDESHOW -->
+<div class="slideshow-wrapper" id="landscape-slideshow">
+  <div class="slideshow">
+    <div class="slides" id="landscape-slides">
+      <!-- All landscape slides -->
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/1.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/7.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/11.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/15.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/11.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/13.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/15.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/22.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/25.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/joye/31.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/1.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/3.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/saint/1.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/saint/2.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/wandel/2.jpg" data-link="/projects/cornelius-bath" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/james/11.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/james/17.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/mcdonough/7.jpg" data-link="/projects/village-charmer" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/mcdonough/10.jpg" data-link="/projects/village-charmer" /></div>
     </div>
   </div>
 </div>
 
-<script is:inline>
-  // Shuffle slides
-  const slidesContainer = document.getElementById('slides');
-  const slideElements = Array.from(slidesContainer.children);
+<!-- VERTICAL SLIDESHOW -->
+<div class="slideshow-wrapper" id="vertical-slideshow">
+  <div class="slideshow">
+    <div class="slides" id="vertical-slides">
+      <!-- All vertical slides -->
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/17.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/20.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/edisto/28.jpg" data-link="/projects/island-orgo" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/2.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/7.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/8.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/12.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/13.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/15.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/16.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/james/18.jpg" data-link="/projects/village-nest" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/3.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/7.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/8.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/10.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/12.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/14.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/18.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/26.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/28.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/30.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/33.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="dark"><img src="/project-imgs/joye/38.jpg" data-link="/projects/lkn-indoor-outdoor" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/5.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/7.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/8.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/polly-webb/11.jpg" data-link="/projects/maine-cottage-sunroom" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/saint/5.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/saint/7.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/saint/13.jpg" data-link="/projects/lkn-nature-bath" /></div>
+      <div class="slide" data-theme="light"><img src="/project-imgs/wandel/1.jpg" data-link="/projects/cornelius-bath" /></div>
+    </div>
+  </div>
+</div>
 
-  for (let i = slideElements.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    slidesContainer.insertBefore(slideElements[j], slideElements[i]);
+<script>
+const themeMap = {
+  light: {
+    logo: "/CID Logo - txt seperated - white.png",
+    textColor: "#fff",
+    navColor: "#fff",
+    borderColor: "rgba(255,255,255,0.7)"
+  },
+  dark: {
+    logo: "/CID Logo - txt seperated.png",
+    textColor: "#222",
+    navColor: "#222",
+    borderColor: "rgba(0,0,0,0.3)"
   }
+};
 
-  // Click-through navigation
-  document.querySelectorAll('#slides img').forEach(img => {
-    img.addEventListener('click', () => {
-      const link = img.getAttribute('data-link');
-      if (link) window.location.href = link;
+function initSlideshow(slidesContainerId) {
+  const slidesContainer = document.getElementById(slidesContainerId);
+  const slides = Array.from(slidesContainer.children);
+
+  // Shuffle slides
+  for (let i = slides.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [slides[i], slides[j]] = [slides[j], slides[i]];
+  }
+  slidesContainer.innerHTML = '';
+  slides.forEach(slide => slidesContainer.appendChild(slide));
+
+  // Preload images
+  const preloadPromises = slides.map(slide => {
+    return new Promise(resolve => {
+      const img = slide.querySelector('img');
+      if(!img) return resolve();
+      if(img.complete) return resolve();
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
     });
   });
 
-  let currentIndex = 0;
-  const totalSlides = slidesContainer.children.length;
+  Promise.all(preloadPromises).then(() => {
+    const wrapper = slidesContainer.closest('.slideshow-wrapper');
+    if(wrapper) wrapper.style.opacity = 1;
 
-  function showSlide(index) {
-    currentIndex = (index + totalSlides) % totalSlides;
-    slidesContainer.style.transform =
-      `translateX(-${currentIndex * 100}%)`;
+    let currentIndex = 0;
+
+    function applyTheme(slide) {
+      const theme = slide.dataset.theme;
+      if(theme && themeMap[theme]) {
+        const { logo, textColor, navColor, borderColor } = themeMap[theme];
+        const logoEl = document.querySelector('.site-header .logo img');
+        const navLinks = document.querySelectorAll('.site-header nav a');
+        const slideshow = slidesContainer.closest('.slideshow');
+        const headerEl = document.querySelector('.site-header');
+
+        // Apply theme colors
+        if(logoEl) logoEl.src = logo;
+        if(slideshow) slideshow.style.setProperty('--inset-border-color', borderColor);
+        if(navLinks) navLinks.forEach(link => link.style.color = navColor || textColor);
+        if(headerEl) headerEl.style.color = textColor;
+
+        // Text shadow opposite of text color
+        const shadowColor = textColor === "#fff" ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)";
+        if(headerEl) headerEl.style.setProperty('--text-shadow-color', `0 1px 2px ${shadowColor}, 0 4px 10px ${shadowColor}`);
+      }
+    }
+
+    slides[currentIndex].classList.add('active');
+    applyTheme(slides[currentIndex]);
+
+    slides.forEach(slide => {
+      slide.addEventListener('click', () => {
+        const link = slide.querySelector('img')?.dataset.link;
+        if(link) window.location.href = link;
+      });
+    });
+
+    setInterval(() => {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+      applyTheme(slides[currentIndex]);
+    }, 5000);
+  });
+}
+
+initSlideshow('landscape-slides');
+initSlideshow('vertical-slides');
+
+function updateSlideshowVisibility() {
+  const landscape = document.getElementById('landscape-slideshow');
+  const vertical = document.getElementById('vertical-slideshow');
+  if(window.innerWidth > window.innerHeight) {
+    landscape.style.display = 'block';
+    vertical.style.display = 'none';
+  } else {
+    landscape.style.display = 'none';
+    vertical.style.display = 'block';
   }
+}
 
-  // Auto-advance ONLY
-  setInterval(() => {
-    showSlide(currentIndex + 1);
-  }, 4500);
+updateSlideshowVisibility();
+window.addEventListener('resize', updateSlideshowVisibility);
+window.addEventListener('orientationchange', updateSlideshowVisibility);
 </script>
