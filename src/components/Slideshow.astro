@@ -2,12 +2,15 @@
 <style>
 .slideshow-wrapper {
   width: 100vw;
-  height: 100vh;
+  height: 100vh;        /* fallback */
+  height: 100svh;       /* safe viewport */
+  height: 100dvh;       /* dynamic viewport */
   margin: 0;
   position: relative;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
+
 
 .slideshow {
   width: 100%;
@@ -59,13 +62,6 @@
 /* Orientation handling */
 #landscape-slideshow { display: block; }
 #vertical-slideshow { display: none; }
-
-@media (max-width: 768px) {
-  .slideshow-wrapper,
-  .slideshow {
-    height: 100svh;
-  }
-}
 
 </style>
 
