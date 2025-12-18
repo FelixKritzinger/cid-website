@@ -208,7 +208,19 @@ const currentPath = Astro.url.pathname;
           height: 50px;
           border-radius: 0;
         }
+      }
 
+      /* Default: LANDSCAPE → Tabs */
+      .navigation {
+        display: flex;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      /* PORTRAIT (taller than wide) → Hamburger */
+      @media (orientation: portrait) {
         .navigation {
           display: none;
         }
@@ -217,6 +229,7 @@ const currentPath = Astro.url.pathname;
           display: block;
         }
       }
+
 
       .site-main {
         width: 100%;
@@ -427,6 +440,18 @@ const currentPath = Astro.url.pathname;
         }
       });
 
+      function closeMenu() {
+        dropdownMenu.classList.remove('open');
+        hamburgerBtn.innerHTML = '☰';
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+      }
+
+      // Close menu if orientation/layout changes
+      window.addEventListener('resize', () => {
+        closeMenu();
+      });
+
       const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
       window.addEventListener('scroll', () => {
@@ -440,6 +465,8 @@ const currentPath = Astro.url.pathname;
       scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      
 
     </script>
 
