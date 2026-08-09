@@ -45,11 +45,12 @@ const projects = [
     href: '/projects/office-42',
     image: '/Huntersville_Office.jpg'
   },
-  {
-    title: 'TBD',
-    href: '/projects',
-    image: '/TBA_Project.jpg'
-  },
+  
+  //{
+  //  title: 'TBD',
+  //  href: '/projects',
+  //  image: '/TBA_Project.jpg'
+  //},
 ];
 ---
 
@@ -80,6 +81,12 @@ const projects = [
     height: 100%;
     display: block;
     transition: transform 0.3s ease;
+  }
+
+  .project:last-child {
+    grid-column: 1 / -1;
+    max-width: calc(50% - clamp(0.5rem, 1vw, 1rem)); /* half the grid width minus half the gap */
+    justify-self: center;
   }
 
   .hover-card__overlay {
@@ -127,6 +134,10 @@ const projects = [
     .grid {
       grid-template-columns: 1fr;
       padding: 1rem;
+    }
+
+    .project:last-child {
+      max-width: 100%;
     }
   }
 </style>
